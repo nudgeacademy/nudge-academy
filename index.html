@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
+    <script>
+    // Check if the page has already been refreshed
+    if (!sessionStorage.getItem('refreshedOnce')) {
+        sessionStorage.setItem('refreshedOnce', 'true');
+        location.reload(); // Reload the page once
+    }
+    </script>
   </head>
 
 <body>
@@ -480,6 +487,7 @@
   </body>
 
 </html>
+
 
 
 
