@@ -9,20 +9,6 @@
 
     <title>Nudge Academy - CUET UG COACHING</title>
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
-<script>
-    window.onload = function() {
-      // Check if refresh has already happened
-      if (!localStorage.getItem("refreshed")) {
-        localStorage.setItem("refreshed", "true");
-        setTimeout(function() {
-          location.reload();
-        }, 1000); // refresh after 5 seconds
-      } else {
-        // Clear the flag so next time the user opens page again it can refresh once more
-        localStorage.removeItem("refreshed");
-      }
-    };
-  </script>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -499,6 +485,7 @@ https://templatemo.com/tm-586-scholar
 
   </body>
 </html>
+
 
 
 
