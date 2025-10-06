@@ -19,21 +19,6 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
-
-    <script>
-    window.onload = function() {
-      // Check if refresh has already happened
-      if (!localStorage.getItem("refreshed")) {
-        localStorage.setItem("refreshed", "true");
-        setTimeout(function() {
-          location.reload();
-        }, 5000); // refresh after 5 seconds
-      } else {
-        // Clear the flag so next time the user opens page again it can refresh once more
-        localStorage.removeItem("refreshed");
-      }
-    };
-  </script>
   </head>
 
 <body>
@@ -495,6 +480,7 @@
   </body>
 
 </html>
+
 
 
 
