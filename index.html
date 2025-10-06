@@ -29,7 +29,19 @@ https://templatemo.com/tm-586-scholar
   </head>
 
 <body>
-
+<script>
+    window.onload = function() {
+      // Check if refresh has already happened
+     if (!sessionStorage.getItem("refreshed")) {
+  sessionStorage.setItem("refreshed", "true");
+  setTimeout(() => location.reload(), 3000);
+      } 
+     else {
+        // Clear the flag so next time the user opens page again it can refresh once more
+        localStorage.removeItem("refreshed");
+      }
+    };
+  </script>
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -486,3 +498,4 @@ https://templatemo.com/tm-586-scholar
 
   </body>
 </html>
+
