@@ -26,6 +26,16 @@ TemplateMo 586 Scholar
 https://templatemo.com/tm-586-scholar
 
 -->
+    <script>
+    window.onload = function() {
+      // Check if the page has already refreshed once
+      if (!sessionStorage.getItem("refreshedOnce")) {
+        sessionStorage.setItem("refreshedOnce", "true");
+        location.reload(); // instantly refresh
+      }
+    };
+  </script>
+    
   </head>
 
 <body>
@@ -485,6 +495,7 @@ https://templatemo.com/tm-586-scholar
 
   </body>
 </html>
+
 
 
 
