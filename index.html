@@ -8,7 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <title>Nudge Academy - CUET UG COACHING</title>
-
+<script>
+    window.onload = function() {
+      // Check if refresh has already happened
+      if (!localStorage.getItem("refreshed")) {
+        localStorage.setItem("refreshed", "true");
+        setTimeout(function() {
+          location.reload();
+        }, 4000); // refresh after 5 seconds
+      } else {
+        // Clear the flag so next time the user opens page again it can refresh once more
+        localStorage.removeItem("refreshed");
+      }
+    };
+  </script>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,19 +42,6 @@ https://templatemo.com/tm-586-scholar
   </head>
 
 <body>
-<script>
-    window.onload = function() {
-      // Check if refresh has already happened
-     if (!sessionStorage.getItem("refreshed")) {
-  sessionStorage.setItem("refreshed", "true");
-  setTimeout(() => location.reload(), 3000);
-      } 
-     else {
-        // Clear the flag so next time the user opens page again it can refresh once more
-        localStorage.removeItem("refreshed");
-      }
-    };
-  </script>
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -498,4 +498,5 @@ https://templatemo.com/tm-586-scholar
 
   </body>
 </html>
+
 
