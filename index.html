@@ -27,7 +27,7 @@
         localStorage.setItem("refreshed", "true");
         setTimeout(function() {
           location.reload();
-        }, 3000); // refresh after 5 seconds
+        }, 5000); // refresh after 5 seconds
       } else {
         // Clear the flag so next time the user opens page again it can refresh once more
         localStorage.removeItem("refreshed");
@@ -495,6 +495,7 @@
   </body>
 
 </html>
+
 
 
 
