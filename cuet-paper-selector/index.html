@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUET UG Paper Selector 2025 | Find Your Required CUET Subjects</title>
+    <meta name="description" content="Select your preferred university and course to instantly know which CUET papers to choose. Covers 48 Central Universities and 339+ courses.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Decorative background elements -->
+    <div class="bg-decoration">
+        <div class="bg-circle bg-circle-1"></div>
+        <div class="bg-circle bg-circle-2"></div>
+        <div class="bg-circle bg-circle-3"></div>
+        <div class="bg-grid"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="badge-icon">📚</span>
+                <span class="badge-text">CUET 2025</span>
+            </div>
+            <h1 class="title">
+                <span class="title-accent">Paper</span> Selector
+            </h1>
+            <p class="subtitle">
+                Find exactly which CUET papers you need for your dream university and course. 
+                <span class="highlight">48 Universities • 339 Programs</span>
+            </p>
+        </header>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-card">
+                <div class="filter-header">
+                    <div class="filter-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="filter-title">Filter Programs</h2>
+                        <p class="filter-subtitle">Select university and/or course to find CUET requirements</p>
+                    </div>
+                </div>
+
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="university-select" class="filter-label">
+                            <span class="label-icon">🏛️</span>
+                            University
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="university-select" class="filter-select">
+                                <option value="">All Universities</option>
+                            </select>
+                            <span class="select-arrow">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="course-select" class="filter-label">
+                            <span class="label-icon">📖</span>
+                            Course / Program
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="course-select" class="filter-select">
+                                <option value="">All Courses</option>
+                            </select>
+                            <span class="select-arrow">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="category-select" class="filter-label">
+                            <span class="label-icon">📂</span>
+                            Course Category
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="category-select" class="filter-select">
+                                <option value="">All Categories</option>
+                            </select>
+                            <span class="select-arrow">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="stream-select" class="filter-label">
+                            <span class="label-icon">🎓</span>
+                            12th Stream
+                        </label>
+                        <div class="select-wrapper">
+                            <select id="stream-select" class="filter-select">
+                                <option value="">Any Stream</option>
+                                <option value="Science">Science</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Arts">Arts/Humanities</option>
+                                <option value="Any">Open to All Streams</option>
+                            </select>
+                            <span class="select-arrow">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button id="search-btn" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        Show CUET Papers
+                    </button>
+                    <button id="reset-btn" class="btn btn-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                            <path d="M3 3v5h5"></path>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <div class="results-header">
+                <div class="results-info">
+                    <h2 class="results-title">Results</h2>
+                    <p id="results-count" class="results-count">Select filters and click "Show CUET Papers" to see results</p>
+                </div>
+                <div class="results-actions">
+                    <div class="search-box">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input type="text" id="table-search" placeholder="Search in results..." class="search-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th class="th-university">
+                                <button class="sort-btn" data-sort="university">
+                                    University
+                                    <span class="sort-icon">↕</span>
+                                </button>
+                            </th>
+                            <th class="th-course">
+                                <button class="sort-btn" data-sort="course">
+                                    Course
+                                    <span class="sort-icon">↕</span>
+                                </button>
+                            </th>
+                            <th class="th-language">Language Paper</th>
+                            <th class="th-domain">Domain Subjects</th>
+                            <th class="th-gat">GAT Required</th>
+                            <th class="th-stream">12th Stream</th>
+                            <th class="th-notes">Eligibility Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <!-- Results will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state">
+                <div class="empty-icon">🎯</div>
+                <h3 class="empty-title">Ready to Find Your CUET Papers</h3>
+                <p class="empty-text">Use the filters above to search for universities and courses. We'll show you exactly which CUET papers you need to appear for.</p>
+            </div>
+
+            <!-- No Results State -->
+            <div id="no-results" class="no-results" style="display: none;">
+                <div class="empty-icon">🔍</div>
+                <h3 class="empty-title">No Matching Results</h3>
+                <p class="empty-text">Try adjusting your filters. Perhaps broaden your search by selecting "All Universities" or "All Courses".</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state" style="display: none;">
+                <div class="loader"></div>
+                <p>Loading data...</p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏛️</div>
+                    <div class="stat-value" id="stat-universities">48</div>
+                    <div class="stat-label">Central Universities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value" id="stat-courses">339</div>
+                    <div class="stat-label">Programs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🗺️</div>
+                    <div class="stat-value" id="stat-states">20+</div>
+                    <div class="stat-label">States Covered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-value" id="stat-categories">24</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h3 class="faq-question">What is CUET UG?</h3>
+                    <p class="faq-answer">CUET UG (Common University Entrance Test - Undergraduate) is a national-level entrance exam conducted by NTA for admission to undergraduate programs in Central, State, Deemed, and Private Universities across India.</p>
+                </div>
+                <div class="faq-card">
+                    <h3 class="faq-question">How accurate is this tool?</h3>
+                    <p class="faq-answer">This database is compiled from official university prospectuses and CUET 2025 guidelines. However, always verify critical information from the official university website before making decisions.</p>
+                </div>
+                <div class="faq-card">
+                    <h3 class="faq-question">Can I apply to multiple universities?</h3>
+                    <p class="faq-answer">Yes! You can apply to multiple universities through CUET. Choose your CUET papers strategically to maximize options across universities.</p>
+                </div>
+                <div class="faq-card">
+                    <h3 class="faq-question">What is GAT?</h3>
+                    <p class="faq-answer">GAT (General Aptitude Test) is a section in CUET that tests general knowledge, reasoning, and analytical skills. Many Arts and Vocational programs require GAT instead of specific domain subjects.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-disclaimer">
+                    <strong>⚠️ Important:</strong> This tool is for guidance only. Always verify admission requirements from official university websites and the NTA CUET portal before applying.
+                </div>
+                <div class="footer-meta">
+                    <span>Last Updated: December 2025</span>
+                    <span>•</span>
+                    <span>Data Source: Official University Prospectuses</span>
+                    <span>•</span>
+                    <span>Version 1.1</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
