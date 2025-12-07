@@ -260,7 +260,7 @@ function createResultRow(course, index) {
     const row = document.createElement('tr');
     row.style.animationDelay = `${index * 0.02}s`;
     
-    // Format GAT requirement
+    // Format GT (General Test) requirement
     const gatClass = course.cuet_general_test_req?.toLowerCase() === 'yes' ? 'yes' : 'no';
     const gatText = course.cuet_general_test_req || 'Not specified';
     const gatIcon = gatClass === 'yes' ? '✓' : '✗';
