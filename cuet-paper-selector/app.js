@@ -71,8 +71,8 @@ function populateFilters() {
         }])
     ).values()].sort((a, b) => a.name.localeCompare(b.name));
     
-    // Get unique courses
-    const courses = [...new Set(allCourses.map(c => c.course_name))].sort();
+    // Get unique courses (using standard_course_name)
+    const courses = [...new Set(allCourses.map(c => c.standard_course_name))].sort();
     
     // Get unique categories
     const categories = [...new Set(allCourses.map(c => c.course_category))].sort();
@@ -152,8 +152,8 @@ function updateCourseOptions() {
         relevantCourses = relevantCourses.filter(c => c.course_category === selectedCategory);
     }
     
-    // Get unique courses
-    const courses = [...new Set(relevantCourses.map(c => c.course_name))].sort();
+    // Get unique courses (using standard_course_name)
+    const courses = [...new Set(relevantCourses.map(c => c.standard_course_name))].sort();
     
     // Save current selection
     const currentSelection = elements.courseSelect.value;
@@ -189,7 +189,7 @@ function performSearch() {
     }
     
     if (selectedCourse) {
-        filteredResults = filteredResults.filter(c => c.course_name === selectedCourse);
+        filteredResults = filteredResults.filter(c => c.standard_course_name === selectedCourse);
     }
     
     if (selectedCategory) {
@@ -261,9 +261,10 @@ function createResultRow(course, index) {
     row.style.animationDelay = `${index * 0.02}s`;
     
     // Format GT (General Test) requirement
-    const gatClass = course.cuet_general_test_req?.toLowerCase() === 'yes' ? 'yes' : 'no';
-    const gatText = course.cuet_general_test_req || 'Not specified';
-    const gatIcon = gatClass === 'yes' ? '✓' : '✗';
+    const gtRequired = course.cuet_general_test_req?.toLowerCase() === 'yes';
+    const gatClass = gtRequired ? 'yes' : 'no';
+    const gatText = gtRequired ? 'Required' : 'Not Required';
+    const gatIcon = gtRequired ? '✓' : '✗';
     
     row.innerHTML = `
         <td>
@@ -271,7 +272,7 @@ function createResultRow(course, index) {
             <span class="cell-university-short">${escapeHtml(course.university_short)} • ${escapeHtml(course.location)}</span>
         </td>
         <td>
-            <div class="cell-course">${escapeHtml(course.course_name)}</div>
+            <div class="cell-course">${escapeHtml(course.standard_course_name || course.course_name)}</div>
             <span class="cell-category">${escapeHtml(course.course_category)}</span>
         </td>
         <td>${escapeHtml(course.cuet_language_req || 'Not specified')}</td>
@@ -297,6 +298,7 @@ function filterTableResults() {
         return (
             course.university_name?.toLowerCase().includes(searchTerm) ||
             course.university_short?.toLowerCase().includes(searchTerm) ||
+            course.standard_course_name?.toLowerCase().includes(searchTerm) ||
             course.course_name?.toLowerCase().includes(searchTerm) ||
             course.course_category?.toLowerCase().includes(searchTerm) ||
             course.cuet_domain_subjects_req?.toLowerCase().includes(searchTerm) ||
@@ -324,8 +326,8 @@ function handleSort(field) {
             aVal = a.university_name || '';
             bVal = b.university_name || '';
         } else if (field === 'course') {
-            aVal = a.course_name || '';
-            bVal = b.course_name || '';
+            aVal = a.standard_course_name || '';
+            bVal = b.standard_course_name || '';
         }
         
         const comparison = aVal.localeCompare(bVal);
@@ -367,7 +369,7 @@ function resetFilters() {
 }
 
 function populateCourseDropdown(courses) {
-    const uniqueCourses = [...new Set(courses.map(c => c.course_name))].sort();
+    const uniqueCourses = [...new Set(courses.map(c => c.standard_course_name))].sort();
     elements.courseSelect.innerHTML = '<option value="">All Courses</option>';
     uniqueCourses.forEach(course => {
         const option = document.createElement('option');
