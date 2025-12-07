@@ -271,7 +271,7 @@ function createResultRow(course, index) {
             <span class="cell-university-short">${escapeHtml(course.university_short)} • ${escapeHtml(course.location)}</span>
         </td>
         <td>
-            <div class="cell-course">${escapeHtml(course.standard_course_name || course.course_name)}</div>
+            <div class="cell-course">${escapeHtml(course.course_name)}</div>
             <span class="cell-category">${escapeHtml(course.course_category)}</span>
         </td>
         <td>${escapeHtml(course.cuet_language_req || 'Not specified')}</td>
