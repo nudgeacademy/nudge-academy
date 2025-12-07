@@ -261,10 +261,9 @@ function createResultRow(course, index) {
     row.style.animationDelay = `${index * 0.02}s`;
     
     // Format GT (General Test) requirement
-    const gtRequired = course.cuet_general_test_req?.toLowerCase() === 'yes';
-    const gatClass = gtRequired ? 'yes' : 'no';
-    const gatText = gtRequired ? 'Required' : 'Not Required';
-    const gatIcon = gtRequired ? '✓' : '✗';
+    const gatClass = course.cuet_general_test_req?.toLowerCase() === 'yes' ? 'yes' : 'no';
+    const gatText = course.cuet_general_test_req || 'Not specified';
+    const gatIcon = gatClass === 'yes' ? '✓' : '✗';
     
     row.innerHTML = `
         <td>
