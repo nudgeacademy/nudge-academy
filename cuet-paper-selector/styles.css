@@ -1,9 +1,9 @@
 /* ===== CSS Variables ===== */
 :root {
     /* Primary Colors - Nudge Red */
-    --color-primary: #CF0F0F;
+    --color-primary: #e3383a;
     --color-primary-light: #e3383a;
-    --color-primary-dark: #b00d0d;
+    --color-primary-dark: #e3383a;
     --color-primary-subtle: #fde8e8;
     
     /* Accent - Warm Amber */
