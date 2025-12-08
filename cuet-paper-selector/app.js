@@ -1,6 +1,6 @@
 /**
  * CUET UG Paper Selector 2025
- * Application Logic
+ * Application Logic with Header Functionality
  */
 
 // ===== Global State =====
@@ -30,6 +30,9 @@ const elements = {
 
 // ===== Initialize Application =====
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize header functionality
+    initHeader();
+    
     showLoading(true);
     
     try {
@@ -38,11 +41,118 @@ document.addEventListener('DOMContentLoaded', async () => {
         setupEventListeners();
         updateStats();
         showLoading(false);
+        
+        // Hide preloader after everything is loaded
+        hidePreloader();
     } catch (error) {
         console.error('Failed to initialize application:', error);
         showError('Failed to load data. Please refresh the page.');
+        hidePreloader();
     }
 });
+
+// ===== Header Functionality =====
+function initHeader() {
+    // Mobile menu toggle
+    const menuTrigger = document.querySelector('.menu-trigger');
+    const nav = document.querySelector('.header-area .nav');
+    
+    if (menuTrigger && nav) {
+        menuTrigger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            $(nav).slideToggle(200);
+        });
+    }
+    
+    // Smooth scroll for navigation links
+    setupSmoothScroll();
+    
+    // Active link highlighting on scroll
+    setupScrollSpy();
+}
+
+// ===== Preloader =====
+function hidePreloader() {
+    const preloader = document.getElementById('js-preloader');
+    if (preloader) {
+        preloader.classList.add('loaded');
+    }
+}
+
+// ===== Smooth Scroll =====
+function setupSmoothScroll() {
+    document.querySelectorAll('.scroll-to-section a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's an external link
+            if (!href.startsWith('#')) return;
+            
+            e.preventDefault();
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Close mobile menu if open
+                const menuTrigger = document.querySelector('.menu-trigger');
+                const nav = document.querySelector('.header-area .nav');
+                
+                if (window.innerWidth < 768 && menuTrigger && nav) {
+                    menuTrigger.classList.remove('active');
+                    $(nav).slideUp(200);
+                }
+                
+                // Update active state
+                document.querySelectorAll('.nav a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Smooth scroll to target
+                const headerHeight = 90;
+                const targetPosition = targetElement.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// ===== Scroll Spy for Active Navigation =====
+function setupScrollSpy() {
+    const sections = document.querySelectorAll('section[id], .container[id]');
+    const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollPos = window.scrollY + 150;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        // Also check if we're at the top
+        if (window.scrollY < 100) {
+            current = 'top';
+        }
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
 
 // ===== Data Loading =====
 async function loadData() {
@@ -263,7 +373,7 @@ function createResultRow(course, index) {
     // Format GT (General Test) requirement
     const gatClass = course.cuet_general_test_req?.toLowerCase() === 'yes' ? 'yes' : 'no';
     const gatText = course.cuet_general_test_req || 'Not specified';
-    const gatIcon = gatClass === 'yes' ? '✓' : '✗';
+    const gatIcon = gatClass === 'yes' ? '✔' : '✗';
     
     row.innerHTML = `
         <td>

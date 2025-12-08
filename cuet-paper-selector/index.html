@@ -5,12 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CUET UG Paper Selector 2025 | Find Your Required CUET Subjects</title>
     <meta name="description" content="Select your preferred university and course to instantly know which CUET papers to choose. Covers 49 Central Universities and 982+ courses.">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="header-container">
+            <div class="header-row">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="NUDGE_LOGO_RED_NO_BG.png" alt="Nudge Logo" style="height: 38px; width: auto;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="#filter-section">Paper Selector</a></li>
+                        <li class="scroll-to-section"><a href="#stats-section">Stats</a></li>
+                        <li class="scroll-to-section"><a href="#faq-section">FAQ</a></li>
+                        <li class="scroll-to-section"><a href="https://web.classplusapp.com/login?orgCode=wjfzco" target="_blank">Login</a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
     <!-- Decorative background elements -->
     <div class="bg-decoration">
         <div class="bg-circle bg-circle-1"></div>
@@ -19,27 +68,26 @@
         <div class="bg-grid"></div>
     </div>
 
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-logo">
-                <img src="NUDGE LOGO RED NO BG.png" alt="Nudge Logo" class="logo-img">
+    <div class="container" id="top">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="header-badge">
+                    <span class="badge-icon">📚</span>
+                    <span class="badge-text">CUET UG 2025</span>
+                </div>
+                <h1 class="title">
+                    <span class="title-accent">Paper</span> Selector
+                </h1>
+                <p class="subtitle">
+                    Find exactly which CUET papers you need for your dream university and course. 
+                    <span class="highlight">49 Universities • 982 Programs</span>
+                </p>
             </div>
-            <div class="header-badge">
-                <span class="badge-icon">📚</span>
-                <span class="badge-text">CUET UG</span>
-            </div>
-            <h1 class="title">
-                <span class="title-accent">Paper</span> Selector
-            </h1>
-            <p class="subtitle">
-                Find exactly which CUET papers you need for your dream university and course. 
-                <span class="highlight">49 Universities • 982 Programs</span>
-            </p>
-        </header>
+        </section>
 
         <!-- Filter Section -->
-        <section class="filter-section">
+        <section class="filter-section" id="filter-section">
             <div class="filter-card">
                 <div class="filter-header">
                     <div class="filter-icon">
@@ -215,7 +263,7 @@
         </section>
 
         <!-- Stats Section -->
-        <section class="stats-section">
+        <section class="stats-section" id="stats-section">
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">🏛️</div>
@@ -241,7 +289,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
+        <section class="faq-section" id="faq-section">
             <h2 class="faq-title">Frequently Asked Questions</h2>
             <div class="faq-grid">
                 <div class="faq-card">
@@ -280,6 +328,10 @@
         </footer>
     </div>
 
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- Main Application Script -->
     <script src="app.js"></script>
 </body>
 </html>
