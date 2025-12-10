@@ -935,7 +935,8 @@
       </div>
 
       <div class="action-bar">
-        <button id="save-entries" class="btn btn-success">💾 Save All Entries</button>
+        <button id="save-entries" class="btn btn-success">💾 Save Now</button>
+        <span id="auto-save-status" style="color: var(--text-muted); font-size: 0.875rem; display: flex; align-items: center; gap: 6px;"></span>
       </div>
     </section>
 
@@ -1077,6 +1078,24 @@
     let currentCustomerDate = '';
     let currentEntryDate = '';
     let currentTokenDate = '';
+    let autoSaveTimeout = null;
+
+    // Auto-save function with debounce
+    function triggerAutoSave() {
+      const statusEl = $('#auto-save-status');
+      if (statusEl) statusEl.innerHTML = '<span class="spinner" style="width:16px;height:16px;margin-right:0;"></span> Saving...';
+      
+      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = setTimeout(async () => {
+        await saveEntries(true); // true = silent save (no toast)
+        if (statusEl) {
+          statusEl.innerHTML = '✅ Auto-saved';
+          setTimeout(() => {
+            if (statusEl) statusEl.innerHTML = '';
+          }, 2000);
+        }
+      }, 1500); // Save 1.5 seconds after last change
+    }
 
     // ===== DOM ELEMENTS =====
     const $ = (sel) => document.querySelector(sel);
@@ -1235,14 +1254,16 @@
         mobileCards.appendChild(card);
       });
 
-      // Attach delete handlers
-      $$('.customer-delete').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
+      // Attach delete handlers using event delegation
+      document.querySelectorAll('.customer-delete').forEach(btn => {
+        btn.onclick = async function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const id = this.getAttribute('data-id');
           if (id && confirm('Delete this customer?')) {
             await deleteCustomer(id);
           }
-        });
+        };
       });
     }
 
@@ -1444,6 +1465,14 @@
         input.addEventListener('input', (e) => {
           const container = e.target.closest('tr') || e.target.closest('.entry-card');
           updateRowBalance(container);
+          triggerAutoSave();
+        });
+      });
+
+      // Handle customer select change
+      $$('.customer-select').forEach(select => {
+        select.addEventListener('change', () => {
+          triggerAutoSave();
         });
       });
 
@@ -1454,6 +1483,14 @@
           const loanDir = container.querySelector('.loan-dir-select');
           loanDir.disabled = e.target.value !== 'Loan';
           if (e.target.value !== 'Loan') loanDir.value = '';
+          triggerAutoSave();
+        });
+      });
+
+      // Handle loan direction change
+      $$('.loan-dir-select').forEach(select => {
+        select.addEventListener('change', () => {
+          triggerAutoSave();
         });
       });
 
@@ -1473,16 +1510,28 @@
             container.classList.remove('is-cleared');
             updateRowBalance(container);
           }
+          triggerAutoSave();
         });
       });
 
       // Handle delete in entries table
       $$('.entry-delete').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
           const index = parseInt(e.target.dataset.index);
           if (!isNaN(index)) {
+            const entry = entries[index];
+            // If entry exists in Airtable, delete it there too
+            if (entry && entry.id) {
+              try {
+                await airtableFetch(CONFIG.entriesTable + '/' + entry.id, { method: 'DELETE' });
+              } catch (err) {
+                showToast('Failed to delete entry', 'error');
+                return;
+              }
+            }
             entries.splice(index, 1);
             renderEntriesTable();
+            showToast('Entry deleted', 'success');
           }
         });
       });
@@ -1544,14 +1593,16 @@
       showToast('New entry added', 'success');
     }
 
-    async function saveEntries() {
+    async function saveEntries(silent = false) {
       const dateStr = currentEntryDate || $('#entry-date').value;
       if (!dateStr) {
-        showToast('Please select a date', 'error');
+        if (!silent) showToast('Please select a date', 'error');
         return;
       }
 
       const rows = $$('#entries-table tbody tr');
+      if (rows.length === 0) return;
+      
       const updates = [];
 
       rows.forEach((tr, index) => {
@@ -1588,16 +1639,24 @@
         }
 
         if (toCreate.length) {
-          await airtableFetch(CONFIG.entriesTable, {
+          const res = await airtableFetch(CONFIG.entriesTable, {
             method: 'POST',
             body: { records: toCreate }
           });
+          // Update local entries with new IDs
+          res.records.forEach((newRec, i) => {
+            const createIndex = entries.findIndex(e => !e.id);
+            if (createIndex !== -1) {
+              entries[createIndex].id = newRec.id;
+            }
+          });
+          // Re-render to update record IDs in DOM
+          renderEntriesTable();
         }
 
-        showToast('Entries saved successfully!', 'success');
-        await loadEntriesForDate(dateStr);
+        if (!silent) showToast('Entries saved successfully!', 'success');
       } catch (e) {
-        showToast('Failed to save entries', 'error');
+        if (!silent) showToast('Failed to save entries', 'error');
       }
     }
 
@@ -1956,7 +2015,17 @@
       $('#add-entry').addEventListener('click', addNewEntry);
 
       // Save entries
-      $('#save-entries').addEventListener('click', saveEntries);
+      $('#save-entries').addEventListener('click', async () => {
+        const statusEl = $('#auto-save-status');
+        if (statusEl) statusEl.innerHTML = '<span class="spinner" style="width:16px;height:16px;margin-right:0;"></span> Saving...';
+        await saveEntries(false);
+        if (statusEl) {
+          statusEl.innerHTML = '✅ Saved';
+          setTimeout(() => {
+            if (statusEl) statusEl.innerHTML = '';
+          }, 2000);
+        }
+      });
 
       // Load report
       $('#load-report').addEventListener('click', () => {
