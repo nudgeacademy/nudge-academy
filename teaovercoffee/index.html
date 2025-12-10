@@ -804,22 +804,18 @@
   <header>
     <h1>Account <span>Manager</span></h1>
     <nav>
-      <button data-page="customers" class="active">Customers</button>
-      <button data-page="entries">Entries</button>
+      <button data-page="entries" class="active">Entries</button>
+      <button data-page="customers">Customers</button>
+      <button data-page="token">Token</button>
       <button data-page="reports">Reports</button>
     </nav>
   </header>
 
   <main>
     <!-- Customers Section -->
-    <section id="customers" class="page active">
+    <section id="customers" class="page">
       <div class="section-header">
         <h2>Daily Customers</h2>
-      </div>
-
-      <div id="connection-status" class="connection-status disconnected">
-        <span class="connection-dot"></span>
-        <span>Not connected to Airtable</span>
       </div>
 
       <div class="date-row">
@@ -890,9 +886,14 @@
     </section>
 
     <!-- Daily Entries Section -->
-    <section id="entries" class="page">
+    <section id="entries" class="page active">
       <div class="section-header">
         <h2>Daily Entries</h2>
+      </div>
+
+      <div id="connection-status" class="connection-status disconnected">
+        <span class="connection-dot"></span>
+        <span>Not connected to Airtable</span>
       </div>
 
       <div class="date-row">
@@ -938,6 +939,48 @@
       </div>
     </section>
 
+    <!-- Token Section -->
+    <section id="token" class="page">
+      <div class="section-header">
+        <h2>Daily Token</h2>
+      </div>
+
+      <div class="date-row">
+        <label>📅 Date:</label>
+        <input type="date" id="token-date">
+        <button id="load-token" class="btn btn-primary">Load</button>
+      </div>
+
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-header">💰 Token for <span id="token-date-label">Today</span></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="token-amount">Token Amount (Cash Received)</label>
+              <input type="number" id="token-amount" placeholder="0.00" min="0" step="0.01" style="font-size: 1.5rem; font-weight: 700;">
+            </div>
+            <div class="form-group">
+              <label for="token-notes">Notes (Optional)</label>
+              <input type="text" id="token-notes" placeholder="Any notes for today">
+            </div>
+          </div>
+          <div class="action-bar">
+            <button id="save-token" class="btn btn-success">💾 Save Token</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">📊 Daily Comparison</div>
+        <div id="token-comparison" class="card-body">
+          <div class="empty-state">
+            <div class="empty-state-icon">💰</div>
+            <p>Select a date and load to see comparison.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Reports Section -->
     <section id="reports" class="page">
       <div class="section-header">
@@ -977,13 +1020,13 @@
       <div class="modal-body">
         <div class="info-box">
           <strong>How to get these values:</strong><br>
-          1. Go to <a href="https://airtable.com/create/tokens" target="_blank">Airtable Token Page</a><br>
-          2. Create a Personal Access Token with <code>data.records:read</code> and <code>data.records:write</code> scopes<br>
+          1. Go to <a href="https://airtable.com/create/tokenns" target="_blank">Airtable Tokenn Page</a><br>
+          2. Create a Personal Access Tokenn with <code>data.records:read</code> and <code>data.records:write</code> scopes<br>
           3. Get your Base ID from the URL: <code>airtable.com/appXXXXX/...</code>
         </div>
         <div class="form-grid">
           <div class="form-group full-width">
-            <label for="api-key">Personal Access Token</label>
+            <label for="api-key">Personal Access Tokenn</label>
             <input type="password" id="api-key" placeholder="pat...">
           </div>
           <div class="form-group full-width">
@@ -997,6 +1040,10 @@
           <div class="form-group full-width">
             <label for="entries-table">Entries Table Name</label>
             <input type="text" id="entries-table" value="Entries" placeholder="Entries">
+          </div>
+          <div class="form-group full-width">
+            <label for="token-table">Token Table Name</label>
+            <input type="text" id="token-table" value="Token" placeholder="Token">
           </div>
         </div>
       </div>
@@ -1016,7 +1063,8 @@
       apiKey: localStorage.getItem('airtable_api_key') || '',
       baseId: localStorage.getItem('airtable_base_id') || '',
       customersTable: localStorage.getItem('airtable_customers_table') || 'Customers',
-      entriesTable: localStorage.getItem('airtable_entries_table') || 'Entries'
+      entriesTable: localStorage.getItem('airtable_entries_table') || 'Entries',
+      tokenTable: localStorage.getItem('airtable_token_table') || 'Token'
     };
 
     const BANKS = ['SBI', 'HDFC', 'ICICI', 'Axis', 'Canara', 'PNB', 'BOB', 'Union', 'IDBI', 'Kotak', 'Yes Bank', 'IndusInd', 'Other'];
@@ -1024,9 +1072,11 @@
     // ===== STATE =====
     let customers = [];
     let entries = [];
+    let currentToken = null;
     let isConnected = false;
     let currentCustomerDate = '';
     let currentEntryDate = '';
+    let currentTokenDate = '';
 
     // ===== DOM ELEMENTS =====
     const $ = (sel) => document.querySelector(sel);
@@ -1412,8 +1462,13 @@
         checkbox.addEventListener('change', (e) => {
           const container = e.target.closest('tr') || e.target.closest('.entry-card');
           if (e.target.checked) {
+            // Auto-fill paid amount to match "to pay" amount
+            const amtToPay = container.querySelector('.amt-to-pay').value || 0;
+            container.querySelector('.amt-paid').value = amtToPay;
+            
             container.classList.add('is-cleared');
             container.classList.remove('has-balance');
+            updateRowBalance(container);
           } else {
             container.classList.remove('is-cleared');
             updateRowBalance(container);
@@ -1670,6 +1725,117 @@
       }
     }
 
+    // ===== TOKE =====
+    async function loadTokenForDate(dateStr) {
+      if (!isConnected) {
+        showToast('Please configure Airtable first', 'error');
+        return;
+      }
+
+      currentTokenDate = dateStr;
+      $('#token-date-label').textContent = formatDateForDisplay(dateStr);
+
+      try {
+        // Load token record
+        const tokenFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const tokenData = await airtableFetch(CONFIG.tokenTable, {
+          queryString: `?filterByFormula=${tokenFilter}`
+        });
+
+        if (tokenData.records.length > 0) {
+          currentToken = tokenData.records[0];
+          $('#token-amount').value = currentToken.fields['Amount'] || 0;
+          $('#token-notes').value = currentToken.fields['Notes'] || '';
+        } else {
+          currentToken = null;
+          $('#token-amount').value = '';
+          $('#token-notes').value = '';
+        }
+
+        // Load entries for comparison
+        const entryFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const entryData = await airtableFetch(CONFIG.entriesTable, {
+          queryString: `?filterByFormula=${entryFilter}`
+        });
+
+        // Calculate totals from entries
+        let totalPaidFromEntries = 0;
+        entryData.records.forEach(r => {
+          const f = r.fields;
+          if (f['Type'] !== 'Loan') {
+            totalPaidFromEntries += (f['Amount paid'] || 0);
+          }
+        });
+
+        const tokenAmount = currentToken ? (currentToken.fields['Amount'] || 0) : 0;
+        const difference = tokenAmount - totalPaidFromEntries;
+
+        // Update comparison display
+        const compDiv = $('#token-comparison');
+        compDiv.innerHTML = `
+          <div class="report-grid">
+            <div class="report-card">
+              <div class="report-card-label">💰 Token Amount</div>
+              <div class="report-card-value">${formatCurrency(tokenAmount)}</div>
+            </div>
+            <div class="report-card">
+              <div class="report-card-label">📝 Total Paid (from Entries)</div>
+              <div class="report-card-value">${formatCurrency(totalPaidFromEntries)}</div>
+            </div>
+            <div class="report-card ${difference === 0 ? '' : (difference > 0 ? 'highlight' : '')}">
+              <div class="report-card-label">📊 Difference</div>
+              <div class="report-card-value ${difference > 0 ? '' : difference < 0 ? 'positive' : ''}">${formatCurrency(difference)}</div>
+              <div style="font-size: 0.75rem; margin-top: 4px; ${difference === 0 ? 'color: var(--success)' : 'color: var(--text-secondary)'}">
+                ${difference === 0 ? '✅ Matched!' : difference > 0 ? 'Extra cash received' : 'Less cash than entries'}
+              </div>
+            </div>
+          </div>
+        `;
+
+      } catch (e) {
+        console.error(e);
+        showToast('Failed to load token', 'error');
+      }
+    }
+
+    async function saveToken() {
+      const dateStr = currentTokenDate || $('#token-date').value;
+      if (!dateStr) {
+        showToast('Please select a date', 'error');
+        return;
+      }
+
+      const amount = parseFloat($('#token-amount').value) || 0;
+      const notes = $('#token-notes').value || '';
+
+      const fields = {
+        'Date': dateStr,
+        'Amount': amount,
+        'Notes': notes
+      };
+
+      try {
+        if (currentToken) {
+          // Update existing
+          await airtableFetch(CONFIG.tokenTable, {
+            method: 'PATCH',
+            body: { records: [{ id: currentToken.id, fields }] }
+          });
+        } else {
+          // Create new
+          await airtableFetch(CONFIG.tokenTable, {
+            method: 'POST',
+            body: { records: [{ fields }] }
+          });
+        }
+
+        showToast('Token saved successfully!', 'success');
+        await loadTokenForDate(dateStr);
+      } catch (e) {
+        showToast('Failed to save token', 'error');
+      }
+    }
+
     // ===== NAVIGATION =====
     function initNavigation() {
       $$('nav button').forEach(btn => {
@@ -1692,6 +1858,7 @@
         $('#base-id').value = CONFIG.baseId;
         $('#customers-table').value = CONFIG.customersTable;
         $('#entries-table').value = CONFIG.entriesTable;
+        $('#token-table').value = CONFIG.tokenTable;
         $('#config-modal').classList.add('active');
       });
 
@@ -1708,11 +1875,13 @@
         CONFIG.baseId = $('#base-id').value.trim();
         CONFIG.customersTable = $('#customers-table').value.trim() || 'Customers';
         CONFIG.entriesTable = $('#entries-table').value.trim() || 'Entries';
+        CONFIG.tokenTable = $('#token-table').value.trim() || 'Token';
 
         localStorage.setItem('airtable_api_key', CONFIG.apiKey);
         localStorage.setItem('airtable_base_id', CONFIG.baseId);
         localStorage.setItem('airtable_customers_table', CONFIG.customersTable);
         localStorage.setItem('airtable_entries_table', CONFIG.entriesTable);
+        localStorage.setItem('airtable_token_table', CONFIG.tokenTable);
 
         $('#config-modal').classList.remove('active');
 
@@ -1799,11 +1968,25 @@
         }
       });
 
+      // Load token
+      $('#load-token').addEventListener('click', () => {
+        const dateStr = $('#token-date').value;
+        if (dateStr) {
+          loadTokenForDate(dateStr);
+        } else {
+          showToast('Please select a date', 'error');
+        }
+      });
+
+      // Save token
+      $('#save-token').addEventListener('click', saveToken);
+
       // Set default dates to today
       const today = getTodayDate();
       $('#customer-date').value = today;
       $('#entry-date').value = today;
       $('#report-date').value = today;
+      $('#token-date').value = today;
     }
 
     // ===== MAIN INIT =====
@@ -1816,7 +1999,7 @@
       if (CONFIG.apiKey && CONFIG.baseId) {
         const connected = await testConnection();
         if (connected) {
-          await loadCustomersForDate(getTodayDate());
+          await loadEntriesForDate(getTodayDate());
         }
       } else {
         updateConnectionStatus();
