@@ -1134,7 +1134,14 @@
         throw new Error('Airtable not configured');
       }
 
-      const url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(tableName)}`;
+      // Handle record ID in table name (e.g., "Customers/recXXX")
+      let url;
+      if (tableName.includes('/')) {
+        const [table, recordId] = tableName.split('/');
+        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(table)}/${recordId}`;
+      } else {
+        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(tableName)}`;
+      }
       const fullUrl = url + (options.queryString || '');
 
       const res = await fetch(fullUrl, {
@@ -1150,6 +1157,11 @@
         const errorText = await res.text();
         console.error('Airtable error:', errorText);
         throw new Error('Airtable request failed');
+      }
+
+      // DELETE returns empty response
+      if (options.method === 'DELETE') {
+        return { deleted: true };
       }
 
       return res.json();
@@ -1274,11 +1286,18 @@
       const newCustomer = {
         'Date': dateStr,
         'Serial': serial,
-        'Agent Code': formData.get('agentCode'),
-        'Customer Name': formData.get('name'),
-        'Address': formData.get('address'),
-        'Bank': formData.get('bank')
+        'Customer Name': formData.get('name')
       };
+
+      // Only add optional fields if they have values
+      const agentCode = formData.get('agentCode');
+      if (agentCode) newCustomer['Agent Code'] = agentCode;
+
+      const address = formData.get('address');
+      if (address) newCustomer['Address'] = address;
+
+      const bank = formData.get('bank');
+      if (bank) newCustomer['Bank'] = bank;
 
       try {
         const res = await airtableFetch(CONFIG.customersTable, {
@@ -1290,6 +1309,7 @@
         $('#customer-count').textContent = customers.length;
         showToast(`Customer ${serial} added successfully`, 'success');
       } catch (e) {
+        console.error('Add customer error:', e);
         showToast('Failed to add customer', 'error');
       }
     }
@@ -1302,6 +1322,7 @@
         $('#customer-count').textContent = customers.length;
         showToast('Customer deleted', 'success');
       } catch (e) {
+        console.error('Delete customer error:', e);
         showToast('Failed to delete customer', 'error');
       }
     }
@@ -1613,9 +1634,14 @@
           'Amount to be paid': parseFloat(tr.querySelector('.amt-to-pay').value) || 0,
           'Amount paid': parseFloat(tr.querySelector('.amt-paid').value) || 0,
           'Is Cleared': tr.querySelector('.cleared-check').checked,
-          'Type': tr.querySelector('.type-select').value,
-          'Loan Direction': tr.querySelector('.loan-dir-select').value || null
+          'Type': tr.querySelector('.type-select').value
         };
+
+        // Only add Loan Direction if it has a value (Airtable doesn't accept null for single select)
+        const loanDir = tr.querySelector('.loan-dir-select').value;
+        if (loanDir) {
+          fields['Loan Direction'] = loanDir;
+        }
 
         const customerId = tr.querySelector('.customer-select').value;
         if (customerId) fields['Customer'] = [customerId];
@@ -1656,6 +1682,7 @@
 
         if (!silent) showToast('Entries saved successfully!', 'success');
       } catch (e) {
+        console.error('Save entries error:', e);
         if (!silent) showToast('Failed to save entries', 'error');
       }
     }
