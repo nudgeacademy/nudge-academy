@@ -31,11 +31,7 @@
       --radius-sm: 8px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -45,7 +41,6 @@
       line-height: 1.5;
     }
 
-    /* Header */
     header {
       background: var(--bg-dark);
       color: white;
@@ -59,43 +54,31 @@
     header h1 {
       font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
       margin-bottom: 12px;
     }
 
-    header h1 span {
-      color: var(--accent);
-    }
+    header h1 span { color: var(--accent); }
 
-    nav {
-      display: flex;
-      gap: 8px;
-    }
+    nav { display: flex; gap: 6px; flex-wrap: wrap; }
 
     nav button {
       flex: 1;
-      padding: 10px 16px;
+      min-width: 70px;
+      padding: 10px 12px;
       border: none;
       border-radius: var(--radius-sm);
       background: rgba(255,255,255,0.1);
       color: rgba(255,255,255,0.7);
       font-family: inherit;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    nav button:hover {
-      background: rgba(255,255,255,0.15);
-    }
+    nav button:hover { background: rgba(255,255,255,0.15); }
+    nav button.active { background: var(--accent); color: white; }
 
-    nav button.active {
-      background: var(--accent);
-      color: white;
-    }
-
-    /* Main Content */
     main {
       padding: 20px;
       max-width: 1200px;
@@ -103,21 +86,14 @@
       padding-bottom: 100px;
     }
 
-    .page {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
+    .page { display: none; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Section Headers */
     .section-header {
       display: flex;
       align-items: center;
@@ -127,19 +103,15 @@
       gap: 12px;
     }
 
-    .section-header h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+    .section-header h2 { font-size: 1.5rem; font-weight: 700; }
 
-    /* Cards */
     .card {
       background: var(--bg-card);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
       overflow: hidden;
+      margin-bottom: 20px;
     }
 
     .card-header {
@@ -151,32 +123,18 @@
       gap: 8px;
     }
 
-    .card-body {
-      padding: 20px;
-    }
+    .card-body { padding: 20px; }
 
-    /* Forms */
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 16px;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full-width { grid-column: 1 / -1; }
 
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
+    label { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); }
 
     input, select, textarea {
       padding: 12px 14px;
@@ -194,16 +152,10 @@
       box-shadow: 0 0 0 3px var(--accent-light);
     }
 
-    input[type="number"] {
-      -moz-appearance: textfield;
-    }
-
+    input[type="number"] { -moz-appearance: textfield; }
     input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
-    /* Buttons */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -219,75 +171,20 @@
       transition: all 0.2s ease;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary { background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #059669; }
+    .btn-sm { padding: 8px 12px; font-size: 0.8125rem; }
+    .btn-icon { width: 36px; height: 36px; padding: 0; border-radius: 50%; }
 
-    .btn-primary:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
-    }
+    .table-wrapper { overflow-x: auto; margin: 0 -20px; padding: 0 20px; }
 
-    .btn-secondary {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      border: 1px solid var(--border);
-    }
+    table { width: 100%; border-collapse: collapse; min-width: 500px; }
 
-    .btn-secondary:hover {
-      background: var(--border);
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: #059669;
-    }
-
-    .btn-danger {
-      background: var(--danger);
-      color: white;
-    }
-
-    .btn-danger:hover {
-      background: #dc2626;
-    }
-
-    .btn-sm {
-      padding: 8px 12px;
-      font-size: 0.8125rem;
-    }
-
-    .btn-icon {
-      width: 36px;
-      height: 36px;
-      padding: 0;
-      border-radius: 50%;
-    }
-
-    /* Tables */
-    .table-wrapper {
-      overflow-x: auto;
-      margin: 0 -20px;
-      padding: 0 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 500px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
 
     th {
       background: var(--bg-primary);
@@ -296,38 +193,17 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-secondary);
-      position: sticky;
-      top: 0;
     }
 
-    tbody tr:hover {
-      background: var(--bg-primary);
-    }
+    tbody tr:hover { background: var(--bg-primary); }
+    tbody tr.has-balance { background: var(--danger-light); }
+    tbody tr.is-cleared { opacity: 0.5; background: var(--success-light); }
 
-    tbody tr.has-balance {
-      background: var(--danger-light);
-    }
-
-    tbody tr.is-cleared {
-      opacity: 0.5;
-      background: var(--success-light);
-    }
-
-    /* Mobile Cards */
-    .mobile-cards {
-      display: none;
-    }
+    .mobile-cards { display: none; }
 
     @media (max-width: 768px) {
-      .table-wrapper {
-        display: none;
-      }
-
-      .mobile-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
+      .table-wrapper { display: none; }
+      .mobile-cards { display: flex; flex-direction: column; gap: 12px; }
     }
 
     .entry-card {
@@ -337,16 +213,8 @@
       padding: 16px;
     }
 
-    .entry-card.has-balance {
-      border-left: 4px solid var(--danger);
-      background: var(--danger-light);
-    }
-
-    .entry-card.is-cleared {
-      border-left: 4px solid var(--success);
-      background: var(--success-light);
-      opacity: 0.7;
-    }
+    .entry-card.has-balance { border-left: 4px solid var(--danger); background: var(--danger-light); }
+    .entry-card.is-cleared { border-left: 4px solid var(--success); background: var(--success-light); opacity: 0.7; }
 
     .entry-card-header {
       display: flex;
@@ -355,40 +223,10 @@
       margin-bottom: 12px;
     }
 
-    .entry-card-customer {
-      font-weight: 600;
-    }
+    .entry-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .entry-card-type {
-      font-size: 0.75rem;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: var(--bg-primary);
-      color: var(--text-secondary);
-    }
-
-    .entry-card-type.loan {
-      background: var(--warning-light);
-      color: var(--warning);
-    }
-
-    .entry-card-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .entry-card-field label {
-      display: block;
-      font-size: 0.75rem;
-      margin-bottom: 4px;
-    }
-
-    .entry-card-field input,
-    .entry-card-field select {
-      width: 100%;
-      padding: 10px 12px;
-    }
+    .entry-card-field label { display: block; font-size: 0.75rem; margin-bottom: 4px; }
+    .entry-card-field input, .entry-card-field select { width: 100%; padding: 10px 12px; }
 
     .entry-card-footer {
       display: flex;
@@ -399,28 +237,12 @@
       border-top: 1px solid var(--border);
     }
 
-    .entry-card-balance {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
+    .entry-card-balance { font-size: 1.25rem; font-weight: 700; }
+    .entry-card-balance.positive { color: var(--danger); }
+    .entry-card-balance.zero { color: var(--success); }
 
-    .entry-card-balance.positive {
-      color: var(--danger);
-    }
+    .status { font-size: 1.25rem; }
 
-    .entry-card-balance.zero {
-      color: var(--success);
-    }
-
-    /* Status Badges */
-    .status {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-    }
-
-    /* Date Picker Row */
     .date-row {
       display: flex;
       gap: 12px;
@@ -433,23 +255,13 @@
       border: 1px solid var(--border);
     }
 
-    .date-row label {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
+    .date-row label { font-weight: 600; color: var(--text-primary); }
+    .date-row input[type="date"] { flex: 1; min-width: 150px; max-width: 200px; }
 
-    .date-row input[type="date"] {
-      flex: 1;
-      min-width: 150px;
-      max-width: 200px;
-    }
-
-    /* Reports */
     .report-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
-      margin-bottom: 24px;
     }
 
     .report-card {
@@ -459,51 +271,23 @@
       padding: 20px;
     }
 
-    .report-card-label {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
+    .report-card-label { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .report-card-value { font-size: 1.5rem; font-weight: 700; }
+    .report-card-value.positive { color: var(--danger); }
+    .report-card-value.negative { color: var(--success); }
 
-    .report-card-value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+    .report-card.highlight { background: var(--accent); color: white; border-color: var(--accent); }
+    .report-card.highlight .report-card-label { color: rgba(255,255,255,0.8); }
 
-    .report-card-value.positive {
-      color: var(--danger);
-    }
+    .report-card.success { background: var(--success); color: white; border-color: var(--success); }
+    .report-card.success .report-card-label { color: rgba(255,255,255,0.8); }
 
-    .report-card-value.negative {
-      color: var(--success);
-    }
+    .report-divider { grid-column: 1 / -1; height: 1px; background: var(--border); margin: 8px 0; }
 
-    .report-card.highlight {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-
-    .report-card.highlight .report-card-label {
-      color: rgba(255,255,255,0.8);
-    }
-
-    .report-divider {
-      grid-column: 1 / -1;
-      height: 1px;
-      background: var(--border);
-      margin: 8px 0;
-    }
-
-    /* Config Modal */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5);
       z-index: 200;
       align-items: center;
@@ -511,9 +295,7 @@
       padding: 20px;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal {
       background: var(--bg-card);
@@ -522,7 +304,6 @@
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: var(--shadow-lg);
     }
 
     .modal-header {
@@ -533,24 +314,10 @@
       align-items: center;
     }
 
-    .modal-header h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
+    .modal-header h3 { font-size: 1.25rem; font-weight: 700; }
+    .modal-body { padding: 20px; }
+    .modal-footer { padding: 20px; border-top: 1px solid var(--border); display: flex; gap: 12px; justify-content: flex-end; }
 
-    .modal-body {
-      padding: 20px;
-    }
-
-    .modal-footer {
-      padding: 20px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 12px;
-      justify-content: flex-end;
-    }
-
-    /* Config Button */
     .config-btn {
       position: fixed;
       bottom: 20px;
@@ -564,18 +331,9 @@
       box-shadow: var(--shadow-lg);
       cursor: pointer;
       font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
       z-index: 50;
     }
 
-    .config-btn:hover {
-      transform: scale(1.05);
-    }
-
-    /* Connection Status */
     .connection-status {
       display: flex;
       align-items: center;
@@ -586,35 +344,14 @@
       margin-bottom: 20px;
     }
 
-    .connection-status.connected {
-      background: var(--success-light);
-      color: var(--success);
-    }
+    .connection-status.connected { background: var(--success-light); color: var(--success); }
+    .connection-status.disconnected { background: var(--danger-light); color: var(--danger); }
+    .connection-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
-    .connection-status.disconnected {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
-
-    .connection-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* Loading */
-    .loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      color: var(--text-muted);
-    }
+    .loading { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--text-muted); }
 
     .spinner {
-      width: 24px;
-      height: 24px;
+      width: 24px; height: 24px;
       border: 3px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
@@ -622,41 +359,13 @@
       margin-right: 12px;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-    }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; }
 
-    .empty-state-icon {
-      font-size: 3rem;
-      margin-bottom: 12px;
-    }
+    input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent); }
 
-    .empty-state p {
-      font-size: 1rem;
-    }
-
-    /* Checkbox */
-    .checkbox-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: var(--accent);
-    }
-
-    /* Toast */
     .toast {
       position: fixed;
       bottom: 100px;
@@ -666,34 +375,17 @@
       color: white;
       padding: 12px 24px;
       border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-lg);
       z-index: 300;
       opacity: 0;
       transition: all 0.3s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
 
-    .toast.success {
-      background: var(--success);
-    }
+    .action-bar { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 
-    .toast.error {
-      background: var(--danger);
-    }
-
-    /* Action Bar */
-    .action-bar {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    /* Delete Button */
     .delete-btn {
       color: var(--danger);
       background: none;
@@ -702,37 +394,10 @@
       padding: 4px;
       font-size: 1.25rem;
       opacity: 0.6;
-      transition: opacity 0.2s;
     }
 
-    .delete-btn:hover {
-      opacity: 1;
-    }
+    .delete-btn:hover { opacity: 1; }
 
-    /* Info Box */
-    .info-box {
-      background: var(--accent-light);
-      border: 1px solid var(--accent);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      margin-bottom: 20px;
-      font-size: 0.875rem;
-      color: var(--accent);
-    }
-
-    .info-box a {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .info-box code {
-      background: rgba(0,0,0,0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-
-    /* Serial Badge */
     .serial-badge {
       display: inline-block;
       background: var(--accent-light);
@@ -743,60 +408,36 @@
       font-weight: 600;
     }
 
-    /* Customer Card Mobile */
-    .customer-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-    }
-
-    .customer-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .customer-card-name {
+    .loan-type-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
       font-weight: 600;
-      font-size: 1rem;
     }
 
-    .customer-card-details {
+    .loan-type-badge.given { background: var(--success-light); color: var(--success); }
+    .loan-type-badge.received { background: var(--warning-light); color: var(--warning); }
+
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 20px;
       font-size: 0.875rem;
-      color: var(--text-secondary);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      color: var(--accent);
     }
 
-    /* Responsive */
+    .amount-display { font-weight: 600; color: var(--text-primary); }
+
     @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.125rem;
-      }
-
-      nav button {
-        padding: 8px 12px;
-        font-size: 0.8125rem;
-      }
-
-      main {
-        padding: 16px;
-      }
-
-      .section-header h2 {
-        font-size: 1.25rem;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .report-card-value {
-        font-size: 1.5rem;
-      }
+      header h1 { font-size: 1.125rem; }
+      nav button { padding: 8px 10px; font-size: 0.75rem; }
+      main { padding: 16px; }
+      .section-header h2 { font-size: 1.25rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .report-card-value { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -805,87 +446,14 @@
     <h1>Account <span>Manager</span></h1>
     <nav>
       <button data-page="entries" class="active">Entries</button>
-      <button data-page="customers">Customers</button>
+      <button data-page="loan">Loan</button>
       <button data-page="token">Token</button>
       <button data-page="reports">Reports</button>
     </nav>
   </header>
 
   <main>
-    <!-- Customers Section -->
-    <section id="customers" class="page">
-      <div class="section-header">
-        <h2>Daily Customers</h2>
-      </div>
-
-      <div class="date-row">
-        <label>📅 Date:</label>
-        <input type="date" id="customer-date">
-        <button id="load-customers" class="btn btn-primary">Load</button>
-      </div>
-
-      <div class="card" style="margin-bottom: 24px;">
-        <div class="card-header">➕ Add Customer for <span id="customer-date-label">Today</span></div>
-        <div class="card-body">
-          <form id="customer-form">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="agentCode">Agent Code</label>
-                <input type="text" id="agentCode" name="agentCode" placeholder="e.g. AG01">
-              </div>
-              <div class="form-group">
-                <label for="customerName">Customer Name *</label>
-                <input type="text" id="customerName" name="name" placeholder="Full name" required>
-              </div>
-              <div class="form-group">
-                <label for="bank">Bank</label>
-                <select id="bank" name="bank">
-                  <option value="">Select Bank</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" placeholder="Customer address">
-              </div>
-            </div>
-            <div class="action-bar">
-              <button type="submit" class="btn btn-primary">Add Customer</button>
-              <button type="reset" class="btn btn-secondary">Clear</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">📋 Customers for <span id="customer-list-date-label">Today</span> (<span id="customer-count">0</span>)</div>
-        <div id="customers-loading" class="loading" style="display: none;">
-          <div class="spinner"></div>
-          Loading customers...
-        </div>
-        <div id="customers-empty" class="empty-state" style="display: none;">
-          <div class="empty-state-icon">👥</div>
-          <p>No customers for this date. Add customers above.</p>
-        </div>
-        <div class="table-wrapper">
-          <table id="customer-table">
-            <thead>
-              <tr>
-                <th>Serial</th>
-                <th>Agent</th>
-                <th>Name</th>
-                <th>Bank</th>
-                <th>Address</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div id="customer-mobile-cards" class="mobile-cards" style="padding: 16px;"></div>
-      </div>
-    </section>
-
-    <!-- Daily Entries Section -->
+    <!-- Combined Entries + Customers Section -->
     <section id="entries" class="page active">
       <div class="section-header">
         <h2>Daily Entries</h2>
@@ -900,26 +468,25 @@
         <label>📅 Date:</label>
         <input type="date" id="entry-date">
         <button id="load-entries" class="btn btn-primary">Load</button>
-        <button id="add-entry" class="btn btn-secondary">+ Add Entry</button>
       </div>
 
+      <!-- Entries Table -->
       <div class="card">
-        <div class="card-header">📝 Entries for <span id="entries-date-label">Today</span></div>
+        <div class="card-header">📝 Entries for <span id="entries-date-label">Today</span> (<span id="entry-count">0</span>)</div>
         <div id="entries-loading" class="loading" style="display: none;">
           <div class="spinner"></div>
-          Loading entries...
+          Loading...
         </div>
         <div id="entries-empty" class="empty-state" style="display: none;">
           <div class="empty-state-icon">📝</div>
-          <p>No entries for this date. Click "+ Add Entry" to start.</p>
+          <p>No customers for this date. Add below.</p>
         </div>
         <div class="table-wrapper">
           <table id="entries-table">
             <thead>
               <tr>
+                <th>Serial</th>
                 <th>Customer</th>
-                <th>Type</th>
-                <th>Direction</th>
                 <th>To Pay</th>
                 <th>Paid</th>
                 <th>Balance</th>
@@ -931,12 +498,125 @@
             <tbody></tbody>
           </table>
         </div>
-        <div id="entries-mobile-cards" class="mobile-cards"></div>
+        <div id="entries-mobile-cards" class="mobile-cards" style="padding: 16px;"></div>
       </div>
 
       <div class="action-bar">
-        <button id="save-entries" class="btn btn-success">💾 Save Now</button>
+        <button id="save-entries" class="btn btn-success">💾 Save</button>
         <span id="auto-save-status" style="color: var(--text-muted); font-size: 0.875rem; display: flex; align-items: center; gap: 6px;"></span>
+      </div>
+
+      <!-- Add Customer Form -->
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">➕ Add New Customer</div>
+        <div class="card-body">
+          <form id="customer-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="customerName">Customer Name *</label>
+                <input type="text" id="customerName" name="name" placeholder="Full name" required>
+              </div>
+              <div class="form-group">
+                <label for="amountToPay">Amount to Pay *</label>
+                <input type="number" id="amountToPay" name="amountToPay" placeholder="0.00" min="0" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label for="agentCode">Agent Code</label>
+                <input type="text" id="agentCode" name="agentCode" placeholder="e.g. AG01">
+              </div>
+              <div class="form-group">
+                <label for="bank">Bank</label>
+                <select id="bank" name="bank">
+                  <option value="">Select Bank</option>
+                </select>
+              </div>
+            </div>
+            <div class="action-bar">
+              <button type="submit" class="btn btn-primary">Add Customer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loan Section -->
+    <section id="loan" class="page">
+      <div class="section-header">
+        <h2>Loan Management</h2>
+      </div>
+
+      <div class="date-row">
+        <label>📅 Date:</label>
+        <input type="date" id="loan-date">
+        <button id="load-loans" class="btn btn-primary">Load</button>
+      </div>
+
+      <!-- Add Loan Form -->
+      <div class="card">
+        <div class="card-header">➕ Add Loan Entry</div>
+        <div class="card-body">
+          <form id="loan-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="loanType">Type *</label>
+                <select id="loanType" name="type" required>
+                  <option value="Given">Loan Given (They owe us)</option>
+                  <option value="Received">Loan Received (We owe them)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="loanCustomerName">Customer Name *</label>
+                <input type="text" id="loanCustomerName" name="name" placeholder="Full name" required>
+              </div>
+              <div class="form-group">
+                <label for="loanAmount">Amount *</label>
+                <input type="number" id="loanAmount" name="amount" placeholder="0.00" min="0" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label for="loanNotes">Notes</label>
+                <input type="text" id="loanNotes" name="notes" placeholder="Any notes">
+              </div>
+            </div>
+            <div class="action-bar">
+              <button type="submit" class="btn btn-primary">Add Loan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Loans Table -->
+      <div class="card">
+        <div class="card-header">💰 Loans for <span id="loan-date-label">Today</span></div>
+        <div id="loans-loading" class="loading" style="display: none;">
+          <div class="spinner"></div>
+          Loading...
+        </div>
+        <div id="loans-empty" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">💰</div>
+          <p>No loans for this date.</p>
+        </div>
+        <div class="table-wrapper">
+          <table id="loan-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Paid</th>
+                <th>Balance</th>
+                <th>Status</th>
+                <th>Clear</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="loan-mobile-cards" class="mobile-cards" style="padding: 16px;"></div>
+      </div>
+
+      <div class="action-bar">
+        <button id="save-loans" class="btn btn-success">💾 Save Loans</button>
       </div>
     </section>
 
@@ -952,7 +632,7 @@
         <button id="load-token" class="btn btn-primary">Load</button>
       </div>
 
-      <div class="card" style="margin-bottom: 24px;">
+      <div class="card">
         <div class="card-header">💰 Token for <span id="token-date-label">Today</span></div>
         <div class="card-body">
           <div class="form-grid">
@@ -961,8 +641,8 @@
               <input type="number" id="token-amount" placeholder="0.00" min="0" step="0.01" style="font-size: 1.5rem; font-weight: 700;">
             </div>
             <div class="form-group">
-              <label for="token-notes">Notes (Optional)</label>
-              <input type="text" id="token-notes" placeholder="Any notes for today">
+              <label for="token-notes">Notes</label>
+              <input type="text" id="token-notes" placeholder="Any notes">
             </div>
           </div>
           <div class="action-bar">
@@ -972,11 +652,11 @@
       </div>
 
       <div class="card">
-        <div class="card-header">📊 Daily Comparison</div>
+        <div class="card-header">📊 Comparison</div>
         <div id="token-comparison" class="card-body">
           <div class="empty-state">
             <div class="empty-state-icon">💰</div>
-            <p>Select a date and load to see comparison.</p>
+            <p>Load a date to see comparison.</p>
           </div>
         </div>
       </div>
@@ -996,55 +676,40 @@
 
       <div id="report-loading" class="loading" style="display: none;">
         <div class="spinner"></div>
-        Generating report...
+        Generating...
       </div>
 
       <div id="report-results">
         <div class="empty-state">
           <div class="empty-state-icon">📊</div>
-          <p>Select a date and click "Generate Report" to view the summary.</p>
+          <p>Select a date and generate report.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Config Button -->
   <button class="config-btn" id="config-btn" title="Settings">⚙️</button>
 
-  <!-- Config Modal -->
   <div class="modal-overlay" id="config-modal">
     <div class="modal">
       <div class="modal-header">
-        <h3>Airtable Configuration</h3>
+        <h3>Airtable Setup</h3>
         <button class="btn btn-icon btn-secondary" id="close-modal">✕</button>
       </div>
       <div class="modal-body">
         <div class="info-box">
-          <strong>How to get these values:</strong><br>
-          1. Go to <a href="https://airtable.com/create/tokenns" target="_blank">Airtable Tokenn Page</a><br>
-          2. Create a Personal Access Tokenn with <code>data.records:read</code> and <code>data.records:write</code> scopes<br>
-          3. Get your Base ID from the URL: <code>airtable.com/appXXXXX/...</code>
+          1. Go to <a href="https://airtable.com/create/tokens" target="_blank">Airtable Tokens</a><br>
+          2. Create token with <code>data.records:read</code> & <code>data.records:write</code><br>
+          3. Get Base ID from URL
         </div>
         <div class="form-grid">
           <div class="form-group full-width">
-            <label for="api-key">Personal Access Tokenn</label>
+            <label>Personal Access Token</label>
             <input type="password" id="api-key" placeholder="pat...">
           </div>
           <div class="form-group full-width">
-            <label for="base-id">Base ID</label>
-            <input type="text" id="base-id" placeholder="appXXXXXXXXXXXXXX">
-          </div>
-          <div class="form-group full-width">
-            <label for="customers-table">Customers Table Name</label>
-            <input type="text" id="customers-table" value="Customers" placeholder="Customers">
-          </div>
-          <div class="form-group full-width">
-            <label for="entries-table">Entries Table Name</label>
-            <input type="text" id="entries-table" value="Entries" placeholder="Entries">
-          </div>
-          <div class="form-group full-width">
-            <label for="token-table">Token Table Name</label>
-            <input type="text" id="token-table" value="Token" placeholder="Token">
+            <label>Base ID</label>
+            <input type="text" id="base-id" placeholder="appXXXXX">
           </div>
         </div>
       </div>
@@ -1055,1051 +720,633 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // ===== CONFIGURATION =====
+    // ===== CONFIG =====
     let CONFIG = {
       apiKey: localStorage.getItem('airtable_api_key') || '',
-      baseId: localStorage.getItem('airtable_base_id') || '',
-      customersTable: localStorage.getItem('airtable_customers_table') || 'Customers',
-      entriesTable: localStorage.getItem('airtable_entries_table') || 'Entries',
-      tokenTable: localStorage.getItem('airtable_token_table') || 'Token'
+      baseId: localStorage.getItem('airtable_base_id') || ''
     };
 
+    const TABLES = { customers: 'Customers', loans: 'Loans', token: 'Token' };
     const BANKS = ['SBI', 'HDFC', 'ICICI', 'Axis', 'Canara', 'PNB', 'BOB', 'Union', 'IDBI', 'Kotak', 'Yes Bank', 'IndusInd', 'Other'];
 
     // ===== STATE =====
     let customers = [];
-    let entries = [];
+    let loans = [];
     let currentToken = null;
     let isConnected = false;
-    let currentCustomerDate = '';
     let currentEntryDate = '';
+    let currentLoanDate = '';
     let currentTokenDate = '';
     let autoSaveTimeout = null;
 
-    // Auto-save function with debounce
-    function triggerAutoSave() {
-      const statusEl = $('#auto-save-status');
-      if (statusEl) statusEl.innerHTML = '<span class="spinner" style="width:16px;height:16px;margin-right:0;"></span> Saving...';
-      
-      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
-      autoSaveTimeout = setTimeout(async () => {
-        await saveEntries(true); // true = silent save (no toast)
-        if (statusEl) {
-          statusEl.innerHTML = '✅ Auto-saved';
-          setTimeout(() => {
-            if (statusEl) statusEl.innerHTML = '';
-          }, 2000);
-        }
-      }, 1500); // Save 1.5 seconds after last change
-    }
-
-    // ===== DOM ELEMENTS =====
     const $ = (sel) => document.querySelector(sel);
     const $$ = (sel) => document.querySelectorAll(sel);
 
-    // ===== UTILITY FUNCTIONS =====
-    function showToast(message, type = 'info') {
-      const toast = $('#toast');
-      toast.textContent = message;
-      toast.className = `toast ${type} show`;
-      setTimeout(() => toast.classList.remove('show'), 3000);
+    // ===== UTILS =====
+    function showToast(msg, type = 'info') {
+      const t = $('#toast');
+      t.textContent = msg;
+      t.className = `toast ${type} show`;
+      setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    function formatCurrency(amount) {
-      return '₹' + (amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function formatCurrency(amt) {
+      return '₹' + (amt || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function getTodayDate() {
       return new Date().toISOString().split('T')[0];
     }
 
-    function formatDateForDisplay(dateStr) {
-      if (!dateStr) return 'No date';
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    function formatDate(d) {
+      if (!d) return '-';
+      return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    function generateSerial(existingCount) {
-      const num = existingCount + 1;
-      return 'C' + String(num).padStart(3, '0');
+    function getPreviousDate(dateStr) {
+      const d = new Date(dateStr);
+      d.setDate(d.getDate() - 1);
+      return d.toISOString().split('T')[0];
     }
 
-    // ===== AIRTABLE API =====
-    async function airtableFetch(tableName, options = {}) {
-      if (!CONFIG.apiKey || !CONFIG.baseId) {
-        throw new Error('Airtable not configured');
-      }
+    function generateSerial(count, prefix = 'C') {
+      return prefix + String(count + 1).padStart(3, '0');
+    }
 
-      // Handle record ID in table name (e.g., "Customers/recXXX")
+    function triggerAutoSave() {
+      const s = $('#auto-save-status');
+      if (s) s.innerHTML = '<span class="spinner" style="width:16px;height:16px;margin:0;"></span> Saving...';
+      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = setTimeout(async () => {
+        await saveCustomerEntries(true);
+        if (s) { s.innerHTML = '✅ Saved'; setTimeout(() => s.innerHTML = '', 2000); }
+      }, 1500);
+    }
+
+    // ===== API =====
+    async function api(table, opts = {}) {
+      if (!CONFIG.apiKey || !CONFIG.baseId) throw new Error('Not configured');
       let url;
-      if (tableName.includes('/')) {
-        const [table, recordId] = tableName.split('/');
-        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(table)}/${recordId}`;
+      if (table.includes('/')) {
+        const [t, id] = table.split('/');
+        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(t)}/${id}`;
       } else {
-        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(tableName)}`;
+        url = `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(table)}`;
       }
-      const fullUrl = url + (options.queryString || '');
-
-      const res = await fetch(fullUrl, {
-        method: options.method || 'GET',
-        headers: {
-          'Authorization': `Bearer ${CONFIG.apiKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: options.body ? JSON.stringify(options.body) : undefined
+      const res = await fetch(url + (opts.qs || ''), {
+        method: opts.method || 'GET',
+        headers: { 'Authorization': `Bearer ${CONFIG.apiKey}`, 'Content-Type': 'application/json' },
+        body: opts.body ? JSON.stringify(opts.body) : undefined
       });
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error('Airtable error:', errorText);
-        throw new Error('Airtable request failed');
-      }
-
-      // DELETE returns empty response
-      if (options.method === 'DELETE') {
-        return { deleted: true };
-      }
-
+      if (!res.ok) { console.error(await res.text()); throw new Error('API failed'); }
+      if (opts.method === 'DELETE') return { deleted: true };
       return res.json();
     }
 
     async function testConnection() {
       try {
-        await airtableFetch(CONFIG.customersTable, { queryString: '?maxRecords=1' });
+        await api(TABLES.customers, { qs: '?maxRecords=1' });
         isConnected = true;
         updateConnectionStatus();
         return true;
-      } catch (e) {
-        isConnected = false;
-        updateConnectionStatus();
-        return false;
-      }
+      } catch { isConnected = false; updateConnectionStatus(); return false; }
     }
 
     function updateConnectionStatus() {
-      const status = $('#connection-status');
-      if (isConnected) {
-        status.className = 'connection-status connected';
-        status.innerHTML = '<span class="connection-dot"></span><span>Connected to Airtable</span>';
-      } else {
-        status.className = 'connection-status disconnected';
-        status.innerHTML = '<span class="connection-dot"></span><span>Not connected - Click ⚙️ to configure</span>';
-      }
+      const s = $('#connection-status');
+      s.className = `connection-status ${isConnected ? 'connected' : 'disconnected'}`;
+      s.innerHTML = `<span class="connection-dot"></span><span>${isConnected ? 'Connected' : 'Not connected - Click ⚙️'}</span>`;
     }
 
-    // ===== CUSTOMERS =====
-    async function loadCustomersForDate(dateStr) {
-      if (!isConnected) {
-        showToast('Please configure Airtable first', 'error');
-        return;
-      }
-
-      currentCustomerDate = dateStr;
-      $('#customers-loading').style.display = 'flex';
-      $('#customers-empty').style.display = 'none';
-      $('#customer-date-label').textContent = formatDateForDisplay(dateStr);
-      $('#customer-list-date-label').textContent = formatDateForDisplay(dateStr);
-
-      try {
-        const filter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const data = await airtableFetch(CONFIG.customersTable, {
-          queryString: `?filterByFormula=${filter}&sort%5B0%5D%5Bfield%5D=Serial&sort%5B0%5D%5Bdirection%5D=asc`
-        });
-        customers = data.records;
-        renderCustomerTable();
-        $('#customer-count').textContent = customers.length;
-      } catch (e) {
-        showToast('Failed to load customers', 'error');
-      } finally {
-        $('#customers-loading').style.display = 'none';
-      }
-    }
-
-    function renderCustomerTable() {
-      const tbody = $('#customer-table tbody');
-      const mobileCards = $('#customer-mobile-cards');
-      tbody.innerHTML = '';
-      mobileCards.innerHTML = '';
-
-      if (customers.length === 0) {
-        $('#customers-empty').style.display = 'block';
-        return;
-      }
-
-      $('#customers-empty').style.display = 'none';
-
-      customers.forEach(rec => {
-        const f = rec.fields;
-
-        // Desktop row
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><span class="serial-badge">${f['Serial'] || ''}</span></td>
-          <td>${f['Agent Code'] || '-'}</td>
-          <td><strong>${f['Customer Name'] || ''}</strong></td>
-          <td>${f['Bank'] || '-'}</td>
-          <td>${f['Address'] || '-'}</td>
-          <td><button class="delete-btn customer-delete" data-id="${rec.id}" title="Delete">🗑️</button></td>
-        `;
-        tbody.appendChild(tr);
-
-        // Mobile card
-        const card = document.createElement('div');
-        card.className = 'customer-card';
-        card.innerHTML = `
-          <div class="customer-card-header">
-            <div>
-              <span class="serial-badge">${f['Serial'] || ''}</span>
-              <span class="customer-card-name" style="margin-left: 8px;">${f['Customer Name'] || 'No name'}</span>
-            </div>
-            <button class="delete-btn customer-delete" data-id="${rec.id}" title="Delete">🗑️</button>
-          </div>
-          <div class="customer-card-details">
-            <span>Agent: ${f['Agent Code'] || '-'} | Bank: ${f['Bank'] || '-'}</span>
-            <span>Address: ${f['Address'] || '-'}</span>
-          </div>
-        `;
-        mobileCards.appendChild(card);
-      });
-
-      // Attach delete handlers using event delegation
-      document.querySelectorAll('.customer-delete').forEach(btn => {
-        btn.onclick = async function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const id = this.getAttribute('data-id');
-          if (id && confirm('Delete this customer?')) {
-            await deleteCustomer(id);
-          }
-        };
-      });
-    }
-
-    async function addCustomer(formData) {
-      const dateStr = currentCustomerDate || getTodayDate();
-      const serial = generateSerial(customers.length);
-
-      const newCustomer = {
-        'Date': dateStr,
-        'Serial': serial,
-        'Customer Name': formData.get('name')
-      };
-
-      // Only add optional fields if they have values
-      const agentCode = formData.get('agentCode');
-      if (agentCode) newCustomer['Agent Code'] = agentCode;
-
-      const address = formData.get('address');
-      if (address) newCustomer['Address'] = address;
-
-      const bank = formData.get('bank');
-      if (bank) newCustomer['Bank'] = bank;
-
-      try {
-        const res = await airtableFetch(CONFIG.customersTable, {
-          method: 'POST',
-          body: { records: [{ fields: newCustomer }] }
-        });
-        customers.push(res.records[0]);
-        renderCustomerTable();
-        $('#customer-count').textContent = customers.length;
-        showToast(`Customer ${serial} added successfully`, 'success');
-      } catch (e) {
-        console.error('Add customer error:', e);
-        showToast('Failed to add customer', 'error');
-      }
-    }
-
-    async function deleteCustomer(recordId) {
-      try {
-        await airtableFetch(CONFIG.customersTable + '/' + recordId, { method: 'DELETE' });
-        customers = customers.filter(c => c.id !== recordId);
-        renderCustomerTable();
-        $('#customer-count').textContent = customers.length;
-        showToast('Customer deleted', 'success');
-      } catch (e) {
-        console.error('Delete customer error:', e);
-        showToast('Failed to delete customer', 'error');
-      }
-    }
-
-    // ===== ENTRIES =====
+    // ===== ENTRIES/CUSTOMERS =====
     async function loadEntriesForDate(dateStr) {
-      if (!isConnected) {
-        showToast('Please configure Airtable first', 'error');
-        return;
-      }
-
+      if (!isConnected) return showToast('Configure Airtable first', 'error');
       currentEntryDate = dateStr;
       $('#entries-loading').style.display = 'flex';
       $('#entries-empty').style.display = 'none';
-      $('#entries-date-label').textContent = formatDateForDisplay(dateStr);
+      $('#entries-date-label').textContent = formatDate(dateStr);
 
       try {
-        // Load customers for this date first (for dropdown)
-        const customerFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const customerData = await airtableFetch(CONFIG.customersTable, {
-          queryString: `?filterByFormula=${customerFilter}&sort%5B0%5D%5Bfield%5D=Serial&sort%5B0%5D%5Bdirection%5D=asc`
-        });
-        customers = customerData.records;
-
-        // Load entries
-        const entryFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const data = await airtableFetch(CONFIG.entriesTable, {
-          queryString: `?filterByFormula=${entryFilter}`
-        });
-        entries = data.records;
+        const filter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const data = await api(TABLES.customers, { qs: `?filterByFormula=${filter}&sort%5B0%5D%5Bfield%5D=Serial&sort%5B0%5D%5Bdirection%5D=asc` });
+        customers = data.records;
         renderEntriesTable();
-      } catch (e) {
-        showToast('Failed to load entries', 'error');
-      } finally {
-        $('#entries-loading').style.display = 'none';
-      }
+        $('#entry-count').textContent = customers.length;
+      } catch { showToast('Failed to load', 'error'); }
+      finally { $('#entries-loading').style.display = 'none'; }
     }
 
     function renderEntriesTable() {
       const tbody = $('#entries-table tbody');
-      const mobileCards = $('#entries-mobile-cards');
+      const mobile = $('#entries-mobile-cards');
       tbody.innerHTML = '';
-      mobileCards.innerHTML = '';
+      mobile.innerHTML = '';
 
-      if (entries.length === 0) {
-        $('#entries-empty').style.display = 'block';
-        return;
-      }
-
+      if (customers.length === 0) { $('#entries-empty').style.display = 'block'; return; }
       $('#entries-empty').style.display = 'none';
 
-      entries.forEach((rec, index) => {
+      customers.forEach((rec, i) => {
         const f = rec.fields;
-        const balance = (f['Amount to be paid'] || 0) - (f['Amount paid'] || 0);
+        const toPay = f['Amount to Pay'] || 0;
+        const paid = f['Amount Paid'] || 0;
+        const balance = toPay - paid;
         const status = balance === 0 ? '✅' : '🔴';
-        const isCleared = f['Is Cleared'];
-        const isLoan = f['Type'] === 'Loan';
+        const cleared = f['Is Cleared'];
 
-        const customerOptions = customers.map(c => {
-          const name = c.fields['Customer Name'];
-          const serial = c.fields['Serial'];
-          const selected = (f['Customer'] && f['Customer'][0] === c.id) ? 'selected' : '';
-          return `<option value="${c.id}" ${selected}>${serial} - ${name}</option>`;
-        }).join('');
-
-        // Desktop row
         const tr = document.createElement('tr');
         tr.dataset.recordId = rec.id;
-        tr.dataset.index = index;
-        if (balance !== 0 && !isCleared) tr.classList.add('has-balance');
-        if (isCleared) tr.classList.add('is-cleared');
+        tr.dataset.index = i;
+        tr.dataset.toPay = toPay;
+        if (balance !== 0 && !cleared) tr.classList.add('has-balance');
+        if (cleared) tr.classList.add('is-cleared');
 
         tr.innerHTML = `
-          <td>
-            <select class="customer-select" style="min-width: 150px;">
-              <option value="">-- Select --</option>
-              ${customerOptions}
-            </select>
-          </td>
-          <td>
-            <select class="type-select">
-              <option ${f['Type'] === 'Normal' ? 'selected' : ''}>Normal</option>
-              <option ${f['Type'] === 'Loan' ? 'selected' : ''}>Loan</option>
-            </select>
-          </td>
-          <td>
-            <select class="loan-dir-select" ${!isLoan ? 'disabled' : ''}>
-              <option value="">N/A</option>
-              <option value="We Gave Loan" ${f['Loan Direction'] === 'We Gave Loan' ? 'selected' : ''}>We Gave</option>
-              <option value="We Took Loan" ${f['Loan Direction'] === 'We Took Loan' ? 'selected' : ''}>We Took</option>
-            </select>
-          </td>
-          <td><input type="number" class="amt-to-pay" value="${f['Amount to be paid'] || 0}" min="0" step="0.01" style="width: 100px;"></td>
-          <td><input type="number" class="amt-paid" value="${f['Amount paid'] || 0}" min="0" step="0.01" style="width: 100px;"></td>
+          <td><span class="serial-badge">${f['Serial'] || ''}</span></td>
+          <td><strong>${f['Customer Name'] || ''}</strong></td>
+          <td class="amount-display">${formatCurrency(toPay)}</td>
+          <td><input type="number" class="amt-paid" value="${paid}" min="0" step="0.01" style="width:90px;"></td>
           <td class="balance-cell"><strong>${formatCurrency(balance)}</strong></td>
           <td class="status-cell"><span class="status">${status}</span></td>
-          <td><input type="checkbox" class="cleared-check" ${isCleared ? 'checked' : ''}></td>
-          <td><button class="delete-btn entry-delete" data-index="${index}" title="Remove">🗑️</button></td>
+          <td><input type="checkbox" class="cleared-check" ${cleared ? 'checked' : ''}></td>
+          <td><button class="delete-btn" data-id="${rec.id}">🗑️</button></td>
         `;
         tbody.appendChild(tr);
 
-        // Mobile card
         const card = document.createElement('div');
-        card.className = `entry-card ${balance !== 0 && !isCleared ? 'has-balance' : ''} ${isCleared ? 'is-cleared' : ''}`;
-        card.dataset.index = index;
+        card.className = `entry-card ${balance !== 0 && !cleared ? 'has-balance' : ''} ${cleared ? 'is-cleared' : ''}`;
         card.dataset.recordId = rec.id;
-
+        card.dataset.index = i;
+        card.dataset.toPay = toPay;
         card.innerHTML = `
           <div class="entry-card-header">
-            <select class="customer-select" style="flex: 1; font-weight: 600;">
-              <option value="">-- Select Customer --</option>
-              ${customerOptions}
-            </select>
-            <span class="entry-card-type ${isLoan ? 'loan' : ''}">${f['Type'] || 'Normal'}</span>
+            <span><span class="serial-badge">${f['Serial'] || ''}</span> <strong>${f['Customer Name'] || ''}</strong></span>
+            <button class="delete-btn" data-id="${rec.id}">🗑️</button>
           </div>
           <div class="entry-card-grid">
-            <div class="entry-card-field">
-              <label>Type</label>
-              <select class="type-select">
-                <option ${f['Type'] === 'Normal' ? 'selected' : ''}>Normal</option>
-                <option ${f['Type'] === 'Loan' ? 'selected' : ''}>Loan</option>
-              </select>
-            </div>
-            <div class="entry-card-field">
-              <label>Direction</label>
-              <select class="loan-dir-select" ${!isLoan ? 'disabled' : ''}>
-                <option value="">N/A</option>
-                <option value="We Gave Loan" ${f['Loan Direction'] === 'We Gave Loan' ? 'selected' : ''}>We Gave</option>
-                <option value="We Took Loan" ${f['Loan Direction'] === 'We Took Loan' ? 'selected' : ''}>We Took</option>
-              </select>
-            </div>
-            <div class="entry-card-field">
-              <label>To Pay</label>
-              <input type="number" class="amt-to-pay" value="${f['Amount to be paid'] || 0}" min="0" step="0.01">
-            </div>
-            <div class="entry-card-field">
-              <label>Paid</label>
-              <input type="number" class="amt-paid" value="${f['Amount paid'] || 0}" min="0" step="0.01">
-            </div>
+            <div class="entry-card-field"><label>To Pay</label><div class="amount-display" style="padding:10px 0;">${formatCurrency(toPay)}</div></div>
+            <div class="entry-card-field"><label>Paid</label><input type="number" class="amt-paid" value="${paid}" min="0" step="0.01"></div>
           </div>
           <div class="entry-card-footer">
-            <div>
-              <span class="entry-card-balance ${balance === 0 ? 'zero' : 'positive'}">${formatCurrency(balance)}</span>
-              <span class="status" style="margin-left: 8px;">${status}</span>
-            </div>
-            <div class="checkbox-wrapper">
-              <input type="checkbox" class="cleared-check" ${isCleared ? 'checked' : ''} id="clear-${index}">
-              <label for="clear-${index}">Cleared</label>
-            </div>
+            <span class="entry-card-balance ${balance === 0 ? 'zero' : 'positive'}">${formatCurrency(balance)} ${status}</span>
+            <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" class="cleared-check" ${cleared ? 'checked' : ''}> Clear</label>
           </div>
         `;
-        mobileCards.appendChild(card);
+        mobile.appendChild(card);
       });
 
       attachEntryEvents();
     }
 
     function attachEntryEvents() {
-      // Handle amount changes
-      $$('.amt-to-pay, .amt-paid').forEach(input => {
-        input.addEventListener('input', (e) => {
-          const container = e.target.closest('tr') || e.target.closest('.entry-card');
-          updateRowBalance(container);
-          triggerAutoSave();
-        });
-      });
+      $$('#entries .amt-paid').forEach(inp => inp.addEventListener('input', e => {
+        updateBalance(e.target.closest('tr') || e.target.closest('.entry-card'));
+        triggerAutoSave();
+      }));
 
-      // Handle customer select change
-      $$('.customer-select').forEach(select => {
-        select.addEventListener('change', () => {
-          triggerAutoSave();
-        });
-      });
+      $$('#entries .cleared-check').forEach(chk => chk.addEventListener('change', e => {
+        const c = e.target.closest('tr') || e.target.closest('.entry-card');
+        const toPay = parseFloat(c.dataset.toPay) || 0;
+        if (e.target.checked) {
+          c.querySelector('.amt-paid').value = toPay;
+          c.classList.add('is-cleared');
+          c.classList.remove('has-balance');
+        } else { c.classList.remove('is-cleared'); }
+        updateBalance(c);
+        triggerAutoSave();
+      }));
 
-      // Handle type change
-      $$('.type-select').forEach(select => {
-        select.addEventListener('change', (e) => {
-          const container = e.target.closest('tr') || e.target.closest('.entry-card');
-          const loanDir = container.querySelector('.loan-dir-select');
-          loanDir.disabled = e.target.value !== 'Loan';
-          if (e.target.value !== 'Loan') loanDir.value = '';
-          triggerAutoSave();
-        });
-      });
-
-      // Handle loan direction change
-      $$('.loan-dir-select').forEach(select => {
-        select.addEventListener('change', () => {
-          triggerAutoSave();
-        });
-      });
-
-      // Handle clear checkbox
-      $$('.cleared-check').forEach(checkbox => {
-        checkbox.addEventListener('change', (e) => {
-          const container = e.target.closest('tr') || e.target.closest('.entry-card');
-          if (e.target.checked) {
-            // Auto-fill paid amount to match "to pay" amount
-            const amtToPay = container.querySelector('.amt-to-pay').value || 0;
-            container.querySelector('.amt-paid').value = amtToPay;
-            
-            container.classList.add('is-cleared');
-            container.classList.remove('has-balance');
-            updateRowBalance(container);
-          } else {
-            container.classList.remove('is-cleared');
-            updateRowBalance(container);
-          }
-          triggerAutoSave();
-        });
-      });
-
-      // Handle delete in entries table
-      $$('.entry-delete').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const index = parseInt(e.target.dataset.index);
-          if (!isNaN(index)) {
-            const entry = entries[index];
-            // If entry exists in Airtable, delete it there too
-            if (entry && entry.id) {
-              try {
-                await airtableFetch(CONFIG.entriesTable + '/' + entry.id, { method: 'DELETE' });
-              } catch (err) {
-                showToast('Failed to delete entry', 'error');
-                return;
-              }
-            }
-            entries.splice(index, 1);
-            renderEntriesTable();
-            showToast('Entry deleted', 'success');
-          }
-        });
-      });
-    }
-
-    function updateRowBalance(container) {
-      const amtToPay = parseFloat(container.querySelector('.amt-to-pay').value) || 0;
-      const amtPaid = parseFloat(container.querySelector('.amt-paid').value) || 0;
-      const balance = amtToPay - amtPaid;
-      const isCleared = container.querySelector('.cleared-check').checked;
-
-      // Update desktop
-      const balanceCell = container.querySelector('.balance-cell');
-      const statusCell = container.querySelector('.status-cell');
-      if (balanceCell) balanceCell.innerHTML = `<strong>${formatCurrency(balance)}</strong>`;
-      if (statusCell) statusCell.innerHTML = `<span class="status">${balance === 0 ? '✅' : '🔴'}</span>`;
-
-      // Update mobile
-      const mobileBalance = container.querySelector('.entry-card-balance');
-      if (mobileBalance) {
-        mobileBalance.textContent = formatCurrency(balance);
-        mobileBalance.className = `entry-card-balance ${balance === 0 ? 'zero' : 'positive'}`;
-      }
-
-      // Update row styling (only if not cleared)
-      if (!isCleared) {
-        if (balance === 0) {
-          container.classList.remove('has-balance');
-        } else {
-          container.classList.add('has-balance');
-        }
-      }
-    }
-
-    function addNewEntry() {
-      const dateStr = currentEntryDate || $('#entry-date').value;
-      if (!dateStr) {
-        showToast('Please select a date first', 'error');
-        return;
-      }
-
-      if (customers.length === 0) {
-        showToast('No customers for this date. Add customers first.', 'error');
-        return;
-      }
-
-      entries.push({
-        id: null,
-        fields: {
-          'Date': dateStr,
-          'Type': 'Normal',
-          'Amount to be paid': 0,
-          'Amount paid': 0,
-          'Is Cleared': false
+      $$('#entries .delete-btn').forEach(btn => btn.onclick = async function() {
+        const id = this.dataset.id;
+        if (id && confirm('Delete?')) {
+          try { await api(TABLES.customers + '/' + id, { method: 'DELETE' }); customers = customers.filter(c => c.id !== id); renderEntriesTable(); $('#entry-count').textContent = customers.length; showToast('Deleted', 'success'); }
+          catch { showToast('Failed', 'error'); }
         }
       });
-
-      renderEntriesTable();
-      showToast('New entry added', 'success');
     }
 
-    async function saveEntries(silent = false) {
-      const dateStr = currentEntryDate || $('#entry-date').value;
-      if (!dateStr) {
-        if (!silent) showToast('Please select a date', 'error');
-        return;
-      }
+    function updateBalance(c) {
+      const toPay = parseFloat(c.dataset.toPay) || 0;
+      const paid = parseFloat(c.querySelector('.amt-paid').value) || 0;
+      const balance = toPay - paid;
+      const cleared = c.querySelector('.cleared-check').checked;
 
+      const bc = c.querySelector('.balance-cell');
+      const sc = c.querySelector('.status-cell');
+      if (bc) bc.innerHTML = `<strong>${formatCurrency(balance)}</strong>`;
+      if (sc) sc.innerHTML = `<span class="status">${balance === 0 ? '✅' : '🔴'}</span>`;
+
+      const mb = c.querySelector('.entry-card-balance');
+      if (mb) { mb.textContent = `${formatCurrency(balance)} ${balance === 0 ? '✅' : '🔴'}`; mb.className = `entry-card-balance ${balance === 0 ? 'zero' : 'positive'}`; }
+
+      if (!cleared) { balance === 0 ? c.classList.remove('has-balance') : c.classList.add('has-balance'); }
+    }
+
+    async function saveCustomerEntries(silent = false) {
+      if (!currentEntryDate) return;
       const rows = $$('#entries-table tbody tr');
       if (rows.length === 0) return;
-      
+
       const updates = [];
-
-      rows.forEach((tr, index) => {
-        const recordId = tr.dataset.recordId;
-
-        const fields = {
-          'Date': dateStr,
-          'Amount to be paid': parseFloat(tr.querySelector('.amt-to-pay').value) || 0,
-          'Amount paid': parseFloat(tr.querySelector('.amt-paid').value) || 0,
-          'Is Cleared': tr.querySelector('.cleared-check').checked,
-          'Type': tr.querySelector('.type-select').value
-        };
-
-        // Only add Loan Direction if it has a value (Airtable doesn't accept null for single select)
-        const loanDir = tr.querySelector('.loan-dir-select').value;
-        if (loanDir) {
-          fields['Loan Direction'] = loanDir;
-        }
-
-        const customerId = tr.querySelector('.customer-select').value;
-        if (customerId) fields['Customer'] = [customerId];
-
-        if (recordId && recordId !== 'null' && recordId !== 'undefined') {
-          updates.push({ id: recordId, fields });
-        } else {
-          updates.push({ fields });
-        }
+      rows.forEach(tr => {
+        const id = tr.dataset.recordId;
+        if (!id) return;
+        updates.push({ id, fields: { 'Amount Paid': parseFloat(tr.querySelector('.amt-paid').value) || 0, 'Is Cleared': tr.querySelector('.cleared-check').checked } });
       });
 
-      const toUpdate = updates.filter(u => u.id);
-      const toCreate = updates.filter(u => !u.id);
+      try { if (updates.length) await api(TABLES.customers, { method: 'PATCH', body: { records: updates } }); if (!silent) showToast('Saved!', 'success'); }
+      catch { if (!silent) showToast('Failed', 'error'); }
+    }
+
+    async function addCustomer(fd) {
+      const dateStr = currentEntryDate || getTodayDate();
+      const serial = generateSerial(customers.length);
+      const fields = { 'Date': dateStr, 'Serial': serial, 'Customer Name': fd.get('name'), 'Amount to Pay': parseFloat(fd.get('amountToPay')) || 0, 'Amount Paid': 0, 'Is Cleared': false };
+      const ac = fd.get('agentCode'); if (ac) fields['Agent Code'] = ac;
+      const bk = fd.get('bank'); if (bk) fields['Bank'] = bk;
+
+      try { const res = await api(TABLES.customers, { method: 'POST', body: { records: [{ fields }] } }); customers.push(res.records[0]); renderEntriesTable(); $('#entry-count').textContent = customers.length; showToast(`${serial} added`, 'success'); }
+      catch { showToast('Failed', 'error'); }
+    }
+
+    // ===== LOANS =====
+    async function loadLoansForDate(dateStr) {
+      if (!isConnected) return showToast('Configure Airtable first', 'error');
+      currentLoanDate = dateStr;
+      $('#loans-loading').style.display = 'flex';
+      $('#loans-empty').style.display = 'none';
+      $('#loan-date-label').textContent = formatDate(dateStr);
 
       try {
-        if (toUpdate.length) {
-          await airtableFetch(CONFIG.entriesTable, {
-            method: 'PATCH',
-            body: { records: toUpdate }
-          });
-        }
+        const filter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const data = await api(TABLES.loans, { qs: `?filterByFormula=${filter}` });
+        loans = data.records;
+        renderLoanTable();
+      } catch { showToast('Failed', 'error'); }
+      finally { $('#loans-loading').style.display = 'none'; }
+    }
 
-        if (toCreate.length) {
-          const res = await airtableFetch(CONFIG.entriesTable, {
-            method: 'POST',
-            body: { records: toCreate }
-          });
-          // Update local entries with new IDs
-          res.records.forEach((newRec, i) => {
-            const createIndex = entries.findIndex(e => !e.id);
-            if (createIndex !== -1) {
-              entries[createIndex].id = newRec.id;
-            }
-          });
-          // Re-render to update record IDs in DOM
-          renderEntriesTable();
-        }
+    function renderLoanTable() {
+      const tbody = $('#loan-table tbody');
+      const mobile = $('#loan-mobile-cards');
+      tbody.innerHTML = '';
+      mobile.innerHTML = '';
 
-        if (!silent) showToast('Entries saved successfully!', 'success');
-      } catch (e) {
-        console.error('Save entries error:', e);
-        if (!silent) showToast('Failed to save entries', 'error');
-      }
+      if (loans.length === 0) { $('#loans-empty').style.display = 'block'; return; }
+      $('#loans-empty').style.display = 'none';
+
+      loans.forEach((rec, i) => {
+        const f = rec.fields;
+        const type = f['Type'] || 'Given';
+        const amount = f['Amount'] || 0;
+        const paid = f['Paid'] || 0;
+        const balance = amount - paid;
+        const status = balance === 0 ? '✅' : '🔴';
+        const cleared = f['Is Cleared'];
+        const typeClass = type === 'Given' ? 'given' : 'received';
+
+        const tr = document.createElement('tr');
+        tr.dataset.recordId = rec.id;
+        tr.dataset.index = i;
+        tr.dataset.amount = amount;
+        if (balance !== 0 && !cleared) tr.classList.add('has-balance');
+        if (cleared) tr.classList.add('is-cleared');
+
+        tr.innerHTML = `
+          <td><span class="loan-type-badge ${typeClass}">${type}</span></td>
+          <td><strong>${f['Customer Name'] || ''}</strong></td>
+          <td class="amount-display">${formatCurrency(amount)}</td>
+          <td><input type="number" class="loan-paid" value="${paid}" min="0" step="0.01" style="width:90px;"></td>
+          <td class="balance-cell"><strong>${formatCurrency(balance)}</strong></td>
+          <td class="status-cell"><span class="status">${status}</span></td>
+          <td><input type="checkbox" class="loan-cleared" ${cleared ? 'checked' : ''}></td>
+          <td><button class="delete-btn" data-id="${rec.id}">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+
+        const card = document.createElement('div');
+        card.className = `entry-card ${balance !== 0 && !cleared ? 'has-balance' : ''} ${cleared ? 'is-cleared' : ''}`;
+        card.dataset.recordId = rec.id;
+        card.dataset.index = i;
+        card.dataset.amount = amount;
+        card.innerHTML = `
+          <div class="entry-card-header">
+            <span><span class="loan-type-badge ${typeClass}">${type}</span> <strong>${f['Customer Name'] || ''}</strong></span>
+            <button class="delete-btn" data-id="${rec.id}">🗑️</button>
+          </div>
+          <div class="entry-card-grid">
+            <div class="entry-card-field"><label>Amount</label><div class="amount-display" style="padding:10px 0;">${formatCurrency(amount)}</div></div>
+            <div class="entry-card-field"><label>Paid</label><input type="number" class="loan-paid" value="${paid}" min="0" step="0.01"></div>
+          </div>
+          <div class="entry-card-footer">
+            <span class="entry-card-balance ${balance === 0 ? 'zero' : 'positive'}">${formatCurrency(balance)} ${status}</span>
+            <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" class="loan-cleared" ${cleared ? 'checked' : ''}> Clear</label>
+          </div>
+        `;
+        mobile.appendChild(card);
+      });
+
+      attachLoanEvents();
+    }
+
+    function attachLoanEvents() {
+      $$('#loan .loan-paid').forEach(inp => inp.addEventListener('input', e => updateLoanBalance(e.target.closest('tr') || e.target.closest('.entry-card'))));
+
+      $$('#loan .loan-cleared').forEach(chk => chk.addEventListener('change', e => {
+        const c = e.target.closest('tr') || e.target.closest('.entry-card');
+        const amt = parseFloat(c.dataset.amount) || 0;
+        if (e.target.checked) { c.querySelector('.loan-paid').value = amt; c.classList.add('is-cleared'); c.classList.remove('has-balance'); }
+        else { c.classList.remove('is-cleared'); }
+        updateLoanBalance(c);
+      }));
+
+      $$('#loan .delete-btn').forEach(btn => btn.onclick = async function() {
+        const id = this.dataset.id;
+        if (id && confirm('Delete?')) {
+          try { await api(TABLES.loans + '/' + id, { method: 'DELETE' }); loans = loans.filter(l => l.id !== id); renderLoanTable(); showToast('Deleted', 'success'); }
+          catch { showToast('Failed', 'error'); }
+        }
+      });
+    }
+
+    function updateLoanBalance(c) {
+      const amt = parseFloat(c.dataset.amount) || 0;
+      const paid = parseFloat(c.querySelector('.loan-paid').value) || 0;
+      const balance = amt - paid;
+      const cleared = c.querySelector('.loan-cleared').checked;
+
+      const bc = c.querySelector('.balance-cell');
+      const sc = c.querySelector('.status-cell');
+      if (bc) bc.innerHTML = `<strong>${formatCurrency(balance)}</strong>`;
+      if (sc) sc.innerHTML = `<span class="status">${balance === 0 ? '✅' : '🔴'}</span>`;
+
+      const mb = c.querySelector('.entry-card-balance');
+      if (mb) { mb.textContent = `${formatCurrency(balance)} ${balance === 0 ? '✅' : '🔴'}`; mb.className = `entry-card-balance ${balance === 0 ? 'zero' : 'positive'}`; }
+
+      if (!cleared) { balance === 0 ? c.classList.remove('has-balance') : c.classList.add('has-balance'); }
+    }
+
+    async function addLoan(fd) {
+      const dateStr = currentLoanDate || getTodayDate();
+      const fields = { 'Date': dateStr, 'Type': fd.get('type'), 'Customer Name': fd.get('name'), 'Amount': parseFloat(fd.get('amount')) || 0, 'Paid': 0, 'Is Cleared': false };
+      const notes = fd.get('notes'); if (notes) fields['Notes'] = notes;
+
+      try { const res = await api(TABLES.loans, { method: 'POST', body: { records: [{ fields }] } }); loans.push(res.records[0]); renderLoanTable(); showToast('Loan added', 'success'); }
+      catch { showToast('Failed', 'error'); }
+    }
+
+    async function saveLoans() {
+      const rows = $$('#loan-table tbody tr');
+      if (rows.length === 0) return;
+
+      const updates = [];
+      rows.forEach(tr => {
+        const id = tr.dataset.recordId;
+        if (!id) return;
+        updates.push({ id, fields: { 'Paid': parseFloat(tr.querySelector('.loan-paid').value) || 0, 'Is Cleared': tr.querySelector('.loan-cleared').checked } });
+      });
+
+      try { if (updates.length) await api(TABLES.loans, { method: 'PATCH', body: { records: updates } }); showToast('Saved!', 'success'); }
+      catch { showToast('Failed', 'error'); }
+    }
+
+    // ===== TOKEN =====
+    async function loadTokenForDate(dateStr) {
+      if (!isConnected) return showToast('Configure first', 'error');
+      currentTokenDate = dateStr;
+      $('#token-date-label').textContent = formatDate(dateStr);
+
+      try {
+        const filter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const tData = await api(TABLES.token, { qs: `?filterByFormula=${filter}` });
+        currentToken = tData.records[0] || null;
+        $('#token-amount').value = currentToken?.fields['Amount'] || '';
+        $('#token-notes').value = currentToken?.fields['Notes'] || '';
+
+        const cData = await api(TABLES.customers, { qs: `?filterByFormula=${filter}` });
+        let totalPaid = 0;
+        cData.records.forEach(r => totalPaid += (r.fields['Amount Paid'] || 0));
+
+        const tokenAmt = currentToken?.fields['Amount'] || 0;
+        const diff = tokenAmt - totalPaid;
+
+        $('#token-comparison').innerHTML = `
+          <div class="report-grid">
+            <div class="report-card"><div class="report-card-label">💰 Token</div><div class="report-card-value">${formatCurrency(tokenAmt)}</div></div>
+            <div class="report-card"><div class="report-card-label">📝 Total Paid</div><div class="report-card-value">${formatCurrency(totalPaid)}</div></div>
+            <div class="report-card"><div class="report-card-label">📊 Difference</div><div class="report-card-value ${diff < 0 ? 'positive' : ''}">${formatCurrency(diff)}</div>
+              <div style="font-size:0.75rem;margin-top:4px;${diff === 0 ? 'color:var(--success)' : ''}">${diff === 0 ? '✅ Matched' : diff > 0 ? 'Extra cash' : 'Less cash'}</div>
+            </div>
+          </div>
+        `;
+      } catch { showToast('Failed', 'error'); }
+    }
+
+    async function saveToken() {
+      const dateStr = currentTokenDate || getTodayDate();
+      const fields = { 'Date': dateStr, 'Amount': parseFloat($('#token-amount').value) || 0, 'Notes': $('#token-notes').value || '' };
+
+      try {
+        if (currentToken) await api(TABLES.token, { method: 'PATCH', body: { records: [{ id: currentToken.id, fields }] } });
+        else await api(TABLES.token, { method: 'POST', body: { records: [{ fields }] } });
+        showToast('Saved!', 'success');
+        await loadTokenForDate(dateStr);
+      } catch { showToast('Failed', 'error'); }
     }
 
     // ===== REPORTS =====
     async function loadReportForDate(dateStr) {
-      if (!isConnected) {
-        showToast('Please configure Airtable first', 'error');
-        return;
-      }
-
+      if (!isConnected) return showToast('Configure first', 'error');
       $('#report-loading').style.display = 'flex';
 
       try {
-        // Load entries
-        const entryFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const data = await airtableFetch(CONFIG.entriesTable, {
-          queryString: `?filterByFormula=${entryFilter}`
+        const filter = encodeURIComponent(`{Date} = '${dateStr}'`);
+        const prevDate = getPreviousDate(dateStr);
+        const prevFilter = encodeURIComponent(`{Date} = '${prevDate}'`);
+
+        // Today's data
+        const [cData, lData, tData] = await Promise.all([
+          api(TABLES.customers, { qs: `?filterByFormula=${filter}` }),
+          api(TABLES.loans, { qs: `?filterByFormula=${filter}` }),
+          api(TABLES.token, { qs: `?filterByFormula=${filter}` })
+        ]);
+
+        // Previous day's data for opening balance
+        const [prevCData, prevLData] = await Promise.all([
+          api(TABLES.customers, { qs: `?filterByFormula=${prevFilter}` }),
+          api(TABLES.loans, { qs: `?filterByFormula=${prevFilter}` })
+        ]);
+
+        // Calculate previous day closing (= today's opening)
+        let prevToPay = 0, prevPaid = 0, prevLoanGiven = 0, prevLoanGivenPaid = 0, prevLoanReceived = 0, prevLoanReceivedPaid = 0;
+        prevCData.records.forEach(r => { prevToPay += (r.fields['Amount to Pay'] || 0); prevPaid += (r.fields['Amount Paid'] || 0); });
+        prevLData.records.forEach(r => {
+          const t = r.fields['Type'] || 'Given';
+          const amt = r.fields['Amount'] || 0;
+          const pd = r.fields['Paid'] || 0;
+          if (t === 'Given') { prevLoanGiven += amt; prevLoanGivenPaid += pd; }
+          else { prevLoanReceived += amt; prevLoanReceivedPaid += pd; }
+        });
+        const prevCustomerBalance = prevToPay - prevPaid;
+        const prevLoanGivenBalance = prevLoanGiven - prevLoanGivenPaid;
+        const prevLoanReceivedBalance = prevLoanReceived - prevLoanReceivedPaid;
+        const openingBalance = prevCustomerBalance + prevLoanGivenBalance - prevLoanReceivedBalance;
+
+        // Today's calculations
+        let totalToPay = 0, totalPaid = 0, loanGiven = 0, loanGivenPaid = 0, loanReceived = 0, loanReceivedPaid = 0;
+        cData.records.forEach(r => { totalToPay += (r.fields['Amount to Pay'] || 0); totalPaid += (r.fields['Amount Paid'] || 0); });
+        lData.records.forEach(r => {
+          const t = r.fields['Type'] || 'Given';
+          const amt = r.fields['Amount'] || 0;
+          const pd = r.fields['Paid'] || 0;
+          if (t === 'Given') { loanGiven += amt; loanGivenPaid += pd; }
+          else { loanReceived += amt; loanReceivedPaid += pd; }
         });
 
-        // Load customers count
-        const customerFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const customerData = await airtableFetch(CONFIG.customersTable, {
-          queryString: `?filterByFormula=${customerFilter}`
-        });
+        const tokenAmt = tData.records[0]?.fields['Amount'] || 0;
+        const customerBalance = totalToPay - totalPaid;
+        const loanGivenBalance = loanGiven - loanGivenPaid;
+        const loanReceivedBalance = loanReceived - loanReceivedPaid;
+        const closingBalance = customerBalance + loanGivenBalance - loanReceivedBalance;
 
-        const records = data.records;
-        const customerCount = customerData.records.length;
-
-        let totalToBePaid = 0;
-        let totalPaid = 0;
-        let normalBalance = 0;
-        let loanWeGave = 0;
-        let loanWeTook = 0;
-
-        records.forEach(r => {
-          const f = r.fields;
-          const amtToPay = f['Amount to be paid'] || 0;
-          const amtPaid = f['Amount paid'] || 0;
-          const type = f['Type'] || 'Normal';
-          const direction = f['Loan Direction'];
-          const isCleared = f['Is Cleared'];
-
-          if (type === 'Normal') {
-            totalToBePaid += amtToPay;
-            totalPaid += amtPaid;
-            normalBalance += (amtToPay - amtPaid);
-          } else if (type === 'Loan' && !isCleared) {
-            const balance = amtToPay - amtPaid;
-            if (direction === 'We Gave Loan') {
-              loanWeGave += balance;
-            } else if (direction === 'We Took Loan') {
-              loanWeTook += balance;
-            }
-          }
-        });
-
-        const loanNet = loanWeTook - loanWeGave;
-        const totalBalanceToday = normalBalance + loanNet;
-
-        const div = $('#report-results');
-        div.innerHTML = `
+        $('#report-results').innerHTML = `
           <div class="report-grid">
+            <div class="report-card highlight">
+              <div class="report-card-label">📅 Opening Balance</div>
+              <div class="report-card-value">${formatCurrency(openingBalance)}</div>
+              <div style="font-size:0.7rem;margin-top:4px;opacity:0.8;">From ${formatDate(prevDate)}</div>
+            </div>
             <div class="report-card">
               <div class="report-card-label">📅 Date</div>
-              <div class="report-card-value" style="font-size: 1.25rem;">${formatDateForDisplay(dateStr)}</div>
+              <div class="report-card-value" style="font-size:1.1rem;">${formatDate(dateStr)}</div>
             </div>
             <div class="report-card">
               <div class="report-card-label">👥 Customers</div>
-              <div class="report-card-value">${customerCount}</div>
+              <div class="report-card-value">${cData.records.length}</div>
             </div>
-            <div class="report-card">
-              <div class="report-card-label">📝 Entries</div>
-              <div class="report-card-value">${records.length}</div>
-            </div>
-            
+
             <div class="report-divider"></div>
-            
+
             <div class="report-card">
-              <div class="report-card-label">Total to be Paid (Normal)</div>
-              <div class="report-card-value">${formatCurrency(totalToBePaid)}</div>
+              <div class="report-card-label">Total to Pay</div>
+              <div class="report-card-value">${formatCurrency(totalToPay)}</div>
             </div>
             <div class="report-card">
               <div class="report-card-label">Total Paid</div>
               <div class="report-card-value">${formatCurrency(totalPaid)}</div>
             </div>
             <div class="report-card">
-              <div class="report-card-label">Outstanding Normal Balance</div>
-              <div class="report-card-value ${normalBalance > 0 ? 'positive' : ''}">${formatCurrency(normalBalance)}</div>
+              <div class="report-card-label">Customer Balance</div>
+              <div class="report-card-value ${customerBalance > 0 ? 'positive' : ''}">${formatCurrency(customerBalance)}</div>
             </div>
-            
+
             <div class="report-divider"></div>
-            
+
             <div class="report-card">
-              <div class="report-card-label">Loans We Gave (They Owe Us)</div>
-              <div class="report-card-value ${loanWeGave > 0 ? 'negative' : ''}">${formatCurrency(loanWeGave)}</div>
+              <div class="report-card-label">💸 Loan Given (They owe)</div>
+              <div class="report-card-value">${formatCurrency(loanGiven)}</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);">Paid back: ${formatCurrency(loanGivenPaid)}</div>
             </div>
             <div class="report-card">
-              <div class="report-card-label">Loans We Took (We Owe Them)</div>
-              <div class="report-card-value ${loanWeTook > 0 ? 'positive' : ''}">${formatCurrency(loanWeTook)}</div>
+              <div class="report-card-label">📥 Loan Received (We owe)</div>
+              <div class="report-card-value">${formatCurrency(loanReceived)}</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);">Paid: ${formatCurrency(loanReceivedPaid)}</div>
             </div>
             <div class="report-card">
-              <div class="report-card-label">Net Loan Position</div>
-              <div class="report-card-value ${loanNet > 0 ? 'positive' : loanNet < 0 ? 'negative' : ''}">${formatCurrency(loanNet)}</div>
-              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">
-                ${loanNet > 0 ? 'You owe overall' : loanNet < 0 ? 'They owe you overall' : 'Balanced'}
-              </div>
+              <div class="report-card-label">💰 Token</div>
+              <div class="report-card-value">${formatCurrency(tokenAmt)}</div>
             </div>
-            
+
             <div class="report-divider"></div>
-            
-            <div class="report-card highlight">
-              <div class="report-card-label">Total Balance (Carry Forward)</div>
-              <div class="report-card-value">${formatCurrency(totalBalanceToday)}</div>
+
+            <div class="report-card">
+              <div class="report-card-label">Loan Given Balance</div>
+              <div class="report-card-value ${loanGivenBalance > 0 ? 'negative' : ''}">${formatCurrency(loanGivenBalance)}</div>
+              <div style="font-size:0.7rem;color:var(--text-secondary);">They still owe us</div>
             </div>
-            <div class="report-card highlight">
-              <div class="report-card-label">Opening Balance for Next Day</div>
-              <div class="report-card-value">${formatCurrency(totalBalanceToday)}</div>
+            <div class="report-card">
+              <div class="report-card-label">Loan Received Balance</div>
+              <div class="report-card-value ${loanReceivedBalance > 0 ? 'positive' : ''}">${formatCurrency(loanReceivedBalance)}</div>
+              <div style="font-size:0.7rem;color:var(--text-secondary);">We still owe them</div>
+            </div>
+
+            <div class="report-divider"></div>
+
+            <div class="report-card success">
+              <div class="report-card-label">📊 Closing Balance</div>
+              <div class="report-card-value">${formatCurrency(closingBalance)}</div>
+              <div style="font-size:0.7rem;margin-top:4px;opacity:0.8;">Tomorrow's Opening</div>
             </div>
           </div>
         `;
-      } catch (e) {
-        showToast('Failed to generate report', 'error');
-      } finally {
-        $('#report-loading').style.display = 'none';
-      }
+      } catch (e) { console.error(e); showToast('Failed', 'error'); }
+      finally { $('#report-loading').style.display = 'none'; }
     }
 
-    // ===== TOKE =====
-    async function loadTokenForDate(dateStr) {
-      if (!isConnected) {
-        showToast('Please configure Airtable first', 'error');
-        return;
-      }
-
-      currentTokenDate = dateStr;
-      $('#token-date-label').textContent = formatDateForDisplay(dateStr);
-
-      try {
-        // Load token record
-        const tokenFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const tokenData = await airtableFetch(CONFIG.tokenTable, {
-          queryString: `?filterByFormula=${tokenFilter}`
-        });
-
-        if (tokenData.records.length > 0) {
-          currentToken = tokenData.records[0];
-          $('#token-amount').value = currentToken.fields['Amount'] || 0;
-          $('#token-notes').value = currentToken.fields['Notes'] || '';
-        } else {
-          currentToken = null;
-          $('#token-amount').value = '';
-          $('#token-notes').value = '';
-        }
-
-        // Load entries for comparison
-        const entryFilter = encodeURIComponent(`{Date} = '${dateStr}'`);
-        const entryData = await airtableFetch(CONFIG.entriesTable, {
-          queryString: `?filterByFormula=${entryFilter}`
-        });
-
-        // Calculate totals from entries
-        let totalPaidFromEntries = 0;
-        entryData.records.forEach(r => {
-          const f = r.fields;
-          if (f['Type'] !== 'Loan') {
-            totalPaidFromEntries += (f['Amount paid'] || 0);
-          }
-        });
-
-        const tokenAmount = currentToken ? (currentToken.fields['Amount'] || 0) : 0;
-        const difference = tokenAmount - totalPaidFromEntries;
-
-        // Update comparison display
-        const compDiv = $('#token-comparison');
-        compDiv.innerHTML = `
-          <div class="report-grid">
-            <div class="report-card">
-              <div class="report-card-label">💰 Token Amount</div>
-              <div class="report-card-value">${formatCurrency(tokenAmount)}</div>
-            </div>
-            <div class="report-card">
-              <div class="report-card-label">📝 Total Paid (from Entries)</div>
-              <div class="report-card-value">${formatCurrency(totalPaidFromEntries)}</div>
-            </div>
-            <div class="report-card ${difference === 0 ? '' : (difference > 0 ? 'highlight' : '')}">
-              <div class="report-card-label">📊 Difference</div>
-              <div class="report-card-value ${difference > 0 ? '' : difference < 0 ? 'positive' : ''}">${formatCurrency(difference)}</div>
-              <div style="font-size: 0.75rem; margin-top: 4px; ${difference === 0 ? 'color: var(--success)' : 'color: var(--text-secondary)'}">
-                ${difference === 0 ? '✅ Matched!' : difference > 0 ? 'Extra cash received' : 'Less cash than entries'}
-              </div>
-            </div>
-          </div>
-        `;
-
-      } catch (e) {
-        console.error(e);
-        showToast('Failed to load token', 'error');
-      }
-    }
-
-    async function saveToken() {
-      const dateStr = currentTokenDate || $('#token-date').value;
-      if (!dateStr) {
-        showToast('Please select a date', 'error');
-        return;
-      }
-
-      const amount = parseFloat($('#token-amount').value) || 0;
-      const notes = $('#token-notes').value || '';
-
-      const fields = {
-        'Date': dateStr,
-        'Amount': amount,
-        'Notes': notes
-      };
-
-      try {
-        if (currentToken) {
-          // Update existing
-          await airtableFetch(CONFIG.tokenTable, {
-            method: 'PATCH',
-            body: { records: [{ id: currentToken.id, fields }] }
-          });
-        } else {
-          // Create new
-          await airtableFetch(CONFIG.tokenTable, {
-            method: 'POST',
-            body: { records: [{ fields }] }
-          });
-        }
-
-        showToast('Token saved successfully!', 'success');
-        await loadTokenForDate(dateStr);
-      } catch (e) {
-        showToast('Failed to save token', 'error');
-      }
-    }
-
-    // ===== NAVIGATION =====
-    function initNavigation() {
-      $$('nav button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const page = btn.dataset.page;
-
-          $$('nav button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          $$('.page').forEach(p => p.classList.remove('active'));
-          $(`#${page}`).classList.add('active');
-        });
-      });
+    // ===== NAV =====
+    function initNav() {
+      $$('nav button').forEach(btn => btn.addEventListener('click', () => {
+        const page = btn.dataset.page;
+        $$('nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        $$('.page').forEach(p => p.classList.remove('active'));
+        $(`#${page}`).classList.add('active');
+      }));
     }
 
     // ===== CONFIG MODAL =====
     function initConfigModal() {
-      $('#config-btn').addEventListener('click', () => {
-        $('#api-key').value = CONFIG.apiKey;
-        $('#base-id').value = CONFIG.baseId;
-        $('#customers-table').value = CONFIG.customersTable;
-        $('#entries-table').value = CONFIG.entriesTable;
-        $('#token-table').value = CONFIG.tokenTable;
-        $('#config-modal').classList.add('active');
-      });
-
-      $('#close-modal').addEventListener('click', () => {
-        $('#config-modal').classList.remove('active');
-      });
-
-      $('#cancel-config').addEventListener('click', () => {
-        $('#config-modal').classList.remove('active');
-      });
-
-      $('#save-config').addEventListener('click', async () => {
+      $('#config-btn').onclick = () => { $('#api-key').value = CONFIG.apiKey; $('#base-id').value = CONFIG.baseId; $('#config-modal').classList.add('active'); };
+      $('#close-modal').onclick = () => $('#config-modal').classList.remove('active');
+      $('#cancel-config').onclick = () => $('#config-modal').classList.remove('active');
+      $('#save-config').onclick = async () => {
         CONFIG.apiKey = $('#api-key').value.trim();
         CONFIG.baseId = $('#base-id').value.trim();
-        CONFIG.customersTable = $('#customers-table').value.trim() || 'Customers';
-        CONFIG.entriesTable = $('#entries-table').value.trim() || 'Entries';
-        CONFIG.tokenTable = $('#token-table').value.trim() || 'Token';
-
         localStorage.setItem('airtable_api_key', CONFIG.apiKey);
         localStorage.setItem('airtable_base_id', CONFIG.baseId);
-        localStorage.setItem('airtable_customers_table', CONFIG.customersTable);
-        localStorage.setItem('airtable_entries_table', CONFIG.entriesTable);
-        localStorage.setItem('airtable_token_table', CONFIG.tokenTable);
-
         $('#config-modal').classList.remove('active');
-
-        showToast('Testing connection...', 'info');
-        const connected = await testConnection();
-
-        if (connected) {
-          showToast('Connected successfully!', 'success');
-          await loadCustomersForDate(getTodayDate());
-        } else {
-          showToast('Connection failed. Please check your credentials.', 'error');
-        }
-      });
-
-      $('#config-modal').addEventListener('click', (e) => {
-        if (e.target === $('#config-modal')) {
-          $('#config-modal').classList.remove('active');
-        }
-      });
+        showToast('Connecting...', 'info');
+        if (await testConnection()) { showToast('Connected!', 'success'); await loadEntriesForDate(getTodayDate()); }
+        else showToast('Failed', 'error');
+      };
+      $('#config-modal').onclick = e => { if (e.target === $('#config-modal')) $('#config-modal').classList.remove('active'); };
     }
 
-    // ===== INITIALIZE BANKS DROPDOWN =====
-    function initBanksDropdown() {
-      const select = $('#bank');
-      BANKS.forEach(bank => {
-        const opt = document.createElement('option');
-        opt.value = bank;
-        opt.textContent = bank;
-        select.appendChild(opt);
-      });
+    // ===== INIT =====
+    function initBanks() {
+      const s = $('#bank');
+      BANKS.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; s.appendChild(o); });
     }
 
-    // ===== EVENT LISTENERS =====
-    function initEventListeners() {
-      // Customer form
-      $('#customer-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!isConnected) {
-          showToast('Please configure Airtable first', 'error');
-          return;
-        }
-        if (!currentCustomerDate) {
-          showToast('Please select a date first', 'error');
-          return;
-        }
-        const formData = new FormData(e.target);
-        await addCustomer(formData);
-        e.target.reset();
-      });
+    function initEvents() {
+      $('#customer-form').onsubmit = async e => { e.preventDefault(); if (!currentEntryDate) currentEntryDate = $('#entry-date').value || getTodayDate(); await addCustomer(new FormData(e.target)); e.target.reset(); };
+      $('#loan-form').onsubmit = async e => { e.preventDefault(); if (!currentLoanDate) currentLoanDate = $('#loan-date').value || getTodayDate(); await addLoan(new FormData(e.target)); e.target.reset(); };
 
-      // Load customers
-      $('#load-customers').addEventListener('click', () => {
-        const dateStr = $('#customer-date').value;
-        if (dateStr) {
-          loadCustomersForDate(dateStr);
-        } else {
-          showToast('Please select a date', 'error');
-        }
-      });
+      $('#load-entries').onclick = () => { const d = $('#entry-date').value; if (d) loadEntriesForDate(d); else showToast('Select date', 'error'); };
+      $('#load-loans').onclick = () => { const d = $('#loan-date').value; if (d) loadLoansForDate(d); else showToast('Select date', 'error'); };
+      $('#load-token').onclick = () => { const d = $('#token-date').value; if (d) loadTokenForDate(d); else showToast('Select date', 'error'); };
+      $('#load-report').onclick = () => { const d = $('#report-date').value; if (d) loadReportForDate(d); else showToast('Select date', 'error'); };
 
-      // Load entries
-      $('#load-entries').addEventListener('click', () => {
-        const dateStr = $('#entry-date').value;
-        if (dateStr) {
-          loadEntriesForDate(dateStr);
-        } else {
-          showToast('Please select a date', 'error');
-        }
-      });
+      $('#save-entries').onclick = () => saveCustomerEntries(false);
+      $('#save-loans').onclick = saveLoans;
+      $('#save-token').onclick = saveToken;
 
-      // Add entry
-      $('#add-entry').addEventListener('click', addNewEntry);
-
-      // Save entries
-      $('#save-entries').addEventListener('click', async () => {
-        const statusEl = $('#auto-save-status');
-        if (statusEl) statusEl.innerHTML = '<span class="spinner" style="width:16px;height:16px;margin-right:0;"></span> Saving...';
-        await saveEntries(false);
-        if (statusEl) {
-          statusEl.innerHTML = '✅ Saved';
-          setTimeout(() => {
-            if (statusEl) statusEl.innerHTML = '';
-          }, 2000);
-        }
-      });
-
-      // Load report
-      $('#load-report').addEventListener('click', () => {
-        const dateStr = $('#report-date').value;
-        if (dateStr) {
-          loadReportForDate(dateStr);
-        } else {
-          showToast('Please select a date', 'error');
-        }
-      });
-
-      // Load token
-      $('#load-token').addEventListener('click', () => {
-        const dateStr = $('#token-date').value;
-        if (dateStr) {
-          loadTokenForDate(dateStr);
-        } else {
-          showToast('Please select a date', 'error');
-        }
-      });
-
-      // Save token
-      $('#save-token').addEventListener('click', saveToken);
-
-      // Set default dates to today
       const today = getTodayDate();
-      $('#customer-date').value = today;
       $('#entry-date').value = today;
-      $('#report-date').value = today;
+      $('#loan-date').value = today;
       $('#token-date').value = today;
+      $('#report-date').value = today;
     }
 
-    // ===== MAIN INIT =====
     async function init() {
-      initNavigation();
+      initNav();
       initConfigModal();
-      initBanksDropdown();
-      initEventListeners();
-
-      if (CONFIG.apiKey && CONFIG.baseId) {
-        const connected = await testConnection();
-        if (connected) {
-          await loadEntriesForDate(getTodayDate());
-        }
-      } else {
-        updateConnectionStatus();
-      }
+      initBanks();
+      initEvents();
+      if (CONFIG.apiKey && CONFIG.baseId) { if (await testConnection()) await loadEntriesForDate(getTodayDate()); }
+      else updateConnectionStatus();
     }
 
     document.addEventListener('DOMContentLoaded', init);
