@@ -1085,47 +1085,86 @@ li {
         font-size: 0.85rem;
     }
 
-    /* Mobile Menu Active State */
+    /* Mobile Menu Active State - Matching Home Page */
     .nav {
         position: fixed;
         top: 0;
         right: -100%;
         width: 100%;
+        max-width: 320px;
         height: 100vh;
-        background: var(--color-surface);
+        background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
         flex-direction: column;
-        justify-content: center;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 0;
         transition: 0.3s ease;
         z-index: 1000;
-        padding: 2rem;
+        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
     }
 
     .nav.active {
         right: 0;
     }
 
+    /* Top spacing for menu content */
+    .nav::before {
+        content: '';
+        display: block;
+        height: 70px;
+        /* Adjust based on header height */
+        background: rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+    }
+
     .nav-links {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-        text-align: center;
+        gap: 8px;
+        padding: 24px 20px;
+        width: 100%;
+        margin-bottom: 0;
+        text-align: left;
     }
 
     .nav-link {
-        color: var(--color-text);
-        font-size: 1.25rem;
-        padding: 0;
+        padding: 14px 20px;
+        font-size: 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: 0.3s ease;
+        width: 100%;
+        display: block;
+        font-weight: 500;
+        text-decoration: none;
     }
 
     .nav-link:hover,
     .nav-link.active {
-        background: transparent;
-        color: var(--color-primary);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        transform: translateX(5px);
     }
 
     .nav-cta {
         display: flex;
+        flex-direction: column;
+        padding: 0 20px 32px;
+        margin-top: auto;
+        gap: 0;
+    }
+
+    .nav-cta .login-btn {
+        width: 100%;
+        text-align: center;
+        background: white;
+        color: var(--color-primary);
+        padding: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .menu-toggle.active span {
@@ -1135,13 +1174,13 @@ li {
     .menu-toggle.active span::before {
         transform: rotate(45deg);
         top: 0;
-        background: var(--color-text);
+        background: white;
     }
 
     .menu-toggle.active span::after {
         transform: rotate(-45deg);
         top: 0;
-        background: var(--color-text);
+        background: white;
     }
 
     .container {
