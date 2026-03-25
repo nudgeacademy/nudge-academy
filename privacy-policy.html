@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Nudge Academy</title>
+  <meta name="description"
+    content="Privacy Policy for Nudge Academy. Learn how we collect, use, and protect your personal data across all our platforms.">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/nudge-style.css">
+
+  <style>
+    /* ==================== PRIVACY POLICY PAGE ==================== */
+    .privacy-hero {
+      background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #ef4444 100%);
+      padding: 160px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .privacy-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .privacy-hero-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      backdrop-filter: blur(10px);
+    }
+
+    .privacy-hero-icon i {
+      font-size: 2rem;
+      color: var(--white);
+    }
+
+    .privacy-hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .privacy-hero .hero-date {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 16px;
+    }
+
+    .privacy-hero .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Privacy Sections */
+    .privacy-content {
+      padding: 80px 0 100px;
+      background: var(--gray-50);
+    }
+
+    .privacy-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .policy-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+
+    .policy-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--gray-300);
+      transform: translateY(-2px);
+    }
+
+    .policy-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .policy-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-bg);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .policy-card-icon i {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .policy-card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: block;
+    }
+
+    .policy-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 2px 0 0;
+    }
+
+    .policy-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    .policy-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      background: var(--primary-lighter);
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+
+    .policy-item strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .privacy-hero {
+        padding: 140px 0 60px;
+      }
+
+      .privacy-hero h1 {
+        font-size: 2rem;
+      }
+
+      .privacy-hero .hero-subtitle {
+        font-size: 0.95rem;
+        padding: 0 16px;
+      }
+
+      .privacy-content {
+        padding: 48px 0 60px;
+      }
+
+      .policy-card {
+        padding: 24px 20px;
+      }
+
+      .policy-card-title {
+        font-size: 1.1rem;
+      }
+
+      .policy-item {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy">
+        </a>
+
+        <nav class="nav">
+          <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="index.html#tools" class="nav-link">Tools</a>
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="index.html#about" class="nav-link">About</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+          </div>
+          <div class="nav-cta">
+            <a href="https://web.classplusapp.com/login?orgCode=wjfzco" class="btn btn-primary">
+              Login
+            </a>
+          </div>
+        </nav>
+
+        <div class="menu-toggle">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== PRIVACY HERO ==================== -->
+  <section class="privacy-hero">
+    <div class="container">
+      <div class="privacy-hero-icon">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+      <h1>Privacy Policy</h1>
+      <p class="hero-date">Last updated: March 2026</p>
+      <p class="hero-subtitle">
+        Your privacy matters to us. This policy explains how Nudge Academy collects, uses, and protects your personal
+        data.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== PRIVACY CONTENT ==================== -->
+  <section class="privacy-content">
+    <div class="container">
+      <div class="privacy-grid">
+
+        <!-- Section 1 -->
+        <div class="policy-card" id="information-we-collect">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-file-lines"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 1</span>
+              <h2 class="policy-card-title">Information We Collect</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item"><strong>Account Information:</strong> When you register, we collect your name, email
+              address, phone number, and profile details necessary to create and maintain your account.</p>
+            <p class="policy-item"><strong>Payment Data:</strong> If you purchase a course or subscription, we process
+              payment details through secure, PCI-compliant third-party processors. We do not store your full credit
+              card or UPI details on our servers.</p>
+            <p class="policy-item"><strong>Usage Analytics:</strong> We collect anonymized data about how you interact
+              with our platform — pages visited, courses viewed, time spent, device type, and session duration — to
+              improve our services.</p>
+            <p class="policy-item"><strong>Device Information:</strong> We may collect your device model, operating
+              system version, unique device identifiers, and IP address for security, analytics, and customer support
+              purposes.</p>
+            <p class="policy-item"><strong>Communication Data:</strong> When you contact our support team or participate
+              in surveys, we retain that correspondence to improve our services.</p>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="policy-card" id="how-we-use">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-gears"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 2</span>
+              <h2 class="policy-card-title">How We Use Your Information</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item">To create, maintain, and secure your user account across all Nudge Academy platforms
+              (Web, iOS, Android).</p>
+            <p class="policy-item">To process transactions, deliver purchased courses, and send order confirmations and
+              invoices.</p>
+            <p class="policy-item">To personalize your learning experience by recommending courses, tracking progress,
+              and adapting content delivery.</p>
+            <p class="policy-item">To communicate important service updates, policy changes, promotional offers (with
+              your consent), and account-related notifications.</p>
+            <p class="policy-item">To detect, prevent, and investigate unauthorized access, fraud, or misuse of our
+              platform.</p>
+            <p class="policy-item">To comply with applicable legal obligations, enforce our Terms of Service, and
+              resolve disputes.</p>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="policy-card" id="information-sharing">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-user-group"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 3</span>
+              <h2 class="policy-card-title">Information Sharing</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item"><strong>We do not sell your data.</strong> Your personal information is never sold to
+              third-party advertisers or data brokers.</p>
+            <p class="policy-item">We may share limited data with trusted service providers who assist us in operating
+              our platform (e.g., payment processors, cloud hosting, email delivery, analytics). These partners are
+              contractually obligated to protect your information.</p>
+            <p class="policy-item">We may disclose your information if required by law, court order, or government
+              authority, or to protect the rights, safety, and property of Nudge Academy and its users.</p>
+            <p class="policy-item">In the event of a merger, acquisition, or asset sale, user data may be transferred to
+              the successor entity with prior notice to affected users.</p>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="policy-card" id="data-security">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 4</span>
+              <h2 class="policy-card-title">Data Security</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item">All data transmitted between your device and our servers is encrypted using
+              industry-standard TLS/SSL protocols.</p>
+            <p class="policy-item">We implement access controls, firewalls, and regular security audits to protect
+              stored data from unauthorized access.</p>
+            <p class="policy-item">Passwords are hashed and salted — we never store plain-text passwords.</p>
+            <p class="policy-item">Video content is delivered via secure, DRM-protected streaming to prevent
+              unauthorized copying or distribution.</p>
+            <p class="policy-item">While we employ robust security measures, no system is completely immune to threats.
+              We encourage users to use strong, unique passwords.</p>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="policy-card" id="your-rights">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-hand"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 5</span>
+              <h2 class="policy-card-title">Your Rights</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item"><strong>Access:</strong> You may request a copy of the personal data we hold about
+              you at any time.</p>
+            <p class="policy-item"><strong>Correction:</strong> You can update or correct inaccurate personal
+              information through your profile settings or by contacting us.</p>
+            <p class="policy-item"><strong>Deletion:</strong> You may request the deletion of your account and
+              associated data, subject to legal retention requirements.</p>
+            <p class="policy-item"><strong>Opt-Out:</strong> You can unsubscribe from promotional communications at any
+              time via email preferences or the unsubscribe link in our emails.</p>
+            <p class="policy-item"><strong>Data Portability:</strong> Where applicable, you may request your data in a
+              structured, machine-readable format.</p>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="policy-card" id="cookies-tracking">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 6</span>
+              <h2 class="policy-card-title">Cookies & Tracking</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item">Our web platform uses essential cookies to maintain your session and remember
+              preferences.</p>
+            <p class="policy-item">Analytics cookies (e.g., Google Analytics) help us understand usage patterns and
+              improve our services. You can control cookie preferences through your browser settings.</p>
+            <p class="policy-item">Our mobile apps use similar tracking technologies for analytics and crash reporting.
+            </p>
+            <p class="policy-item">We do not use cookies for third-party advertising or tracking across other websites.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="policy-card" id="contact-us">
+          <div class="policy-card-header">
+            <div class="policy-card-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <span class="policy-card-label">Section 7</span>
+              <h2 class="policy-card-title">Contact Us</h2>
+            </div>
+          </div>
+          <div class="policy-card-items">
+            <p class="policy-item">For privacy-related inquiries, data requests, or concerns, please contact our Data
+              Protection team:</p>
+            <p class="policy-item"><strong>Email:</strong> <a href="mailto:info@nudge.academy"
+                style="color: var(--primary); text-decoration: underline;">info@nudge.academy</a></p>
+            <p class="policy-item"><strong>Phone:</strong> +91 9625986622 (Mon–Fri, 9 AM – 6 PM IST)</p>
+            <p class="policy-item">We aim to respond to all privacy requests within 30 business days.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>© 2025 Nudge Academy. All rights reserved. Built with ❤️ for CUET aspirants.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/nudge.academy/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/nudge-academy/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://chat.whatsapp.com/LFa9uNOkXsT4VavhHxNWHa" target="_blank"><i
+              class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Close menu when clicking a nav link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
