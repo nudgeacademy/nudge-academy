@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FormSubmit Activation</title>
+  <style>
+    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f4f8; margin: 0; }
+    .card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
+    button { background: #2563eb; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+    button:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Activate Your Email</h2>
+    <p>Because we set up the application form to send emails invisibly in the background, FormSubmit couldn't show you the mandatory setup screen.</p>
+    <p>Click the button below to send a standard test form. It will redirect you to FormSubmit's activation page!</p>
+    
+    <form action="https://formsubmit.co/info@nudge.academy" method="POST">
+      <!-- We include a dummy email so it knows what to do -->
+      <input type="hidden" name="name" value="Activation Test">
+      <input type="hidden" name="message" value="This is an activation test to whitelist info@nudge.academy">
+      <button type="submit">Activate info@nudge.academy</button>
+    </form>
+  </div>
+</body>
+</html>

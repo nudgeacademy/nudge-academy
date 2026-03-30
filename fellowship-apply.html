@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Form — Nudge Fellowship 2026 | Nudge Academy</title>
+  <meta name="description"
+    content="Apply for the fully-funded Nudge Fellowship 2026. Tell us your story and start your journey.">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/nudge-style.css">
+  <link rel="stylesheet" href="assets/css/fellowship.css">
+</head>
+
+<body class="apply-body">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header scrolled" id="header" style="padding: 12px 0; box-shadow: 0 4px 20px rgba(220,38,38,0.3);">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy">
+        </a>
+        <nav class="nav" id="mainNav">
+          <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="fellowship.html" class="nav-link">Fellowship Details</a>
+          </div>
+          <div class="nav-cta">
+            <a href="index.html#contact" class="btn" style="background: rgba(255,255,255,0.2); color: #fff;">Help</a>
+          </div>
+        </nav>
+        <div class="menu-toggle" id="menuToggle"
+          onclick="document.getElementById('mainNav').classList.toggle('active')">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ==================== CONTEXT BANNER ==================== -->
+  <section class="apply-banner">
+    <div class="container">
+      <div class="apply-banner-inner anim">
+        <h1>Nudge Fellowship 2026</h1>
+        <p>Complete your application. The essay is your chance to stand out.</p>
+
+        <div class="apply-banner-perks">
+          <span class="apply-perk"><i class="fas fa-train"></i> Train Travel Covered</span>
+          <span class="apply-perk"><i class="fas fa-bed"></i> Stay Included</span>
+          <span class="apply-perk"><i class="fas fa-calendar-check"></i> Deadline: May 5</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== APPLICATION FORM ==================== -->
+  <section class="apply-form-section">
+    <div class="container">
+      <div class="apply-form-card anim anim-d1">
+
+        <form id="applicationForm" onsubmit="submitFellowshipForm(event)">
+
+          <!-- Personal Info -->
+          <div class="form-label-pill"><i class="fas fa-user"></i> Personal Information</div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">First Name</label>
+              <input type="text" name="name" class="f-input" placeholder="Enter first name" required>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Last Name</label>
+              <input type="text" name="lastName" class="f-input" placeholder="Enter last name" required>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Date of Birth</label>
+              <input type="date" name="dob" class="f-input" required>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Gender</label>
+              <select name="gender" class="f-input" required>
+                <option value="" disabled selected>Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Mobile Number</label>
+              <input type="tel" name="phone" class="f-input" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Email Address</label>
+              <input type="email" name="email" class="f-input" placeholder="you@email.com" required>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">District (Kerala)</label>
+              <select name="district" class="f-input" required>
+                <option value="" disabled selected>Select district</option>
+                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                <option value="Kollam">Kollam</option>
+                <option value="Pathanamthitta">Pathanamthitta</option>
+                <option value="Alappuzha">Alappuzha</option>
+                <option value="Kottayam">Kottayam</option>
+                <option value="Idukki">Idukki</option>
+                <option value="Ernakulam">Ernakulam</option>
+                <option value="Thrissur">Thrissur</option>
+                <option value="Palakkad">Palakkad</option>
+                <option value="Malappuram">Malappuram</option>
+                <option value="Kozhikode">Kozhikode</option>
+                <option value="Wayanad">Wayanad</option>
+                <option value="Kannur">Kannur</option>
+                <option value="Kasaragod">Kasaragod</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label class="f-label">City / Town</label>
+              <input type="text" name="city" class="f-input" placeholder="Your city" required>
+            </div>
+          </div>
+
+          <!-- Academic Info -->
+          <div class="form-label-pill" style="margin-top: 36px;">
+            <i class="fas fa-graduation-cap"></i> Academic Details
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Class 11 Stream</label>
+              <select name="stream" class="f-input" required>
+                <option value="" disabled selected>Select stream</option>
+                <option value="Science">Science</option>
+                <option value="Commerce">Commerce</option>
+                <option value="Arts/Humanities">Arts / Humanities</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label class="f-label">School Name</label>
+              <input type="text" name="school" class="f-input" placeholder="Full name of your school" required>
+            </div>
+          </div>
+
+          <!-- Guardian Info -->
+          <div class="form-label-pill" style="margin-top: 36px;">
+            <i class="fas fa-users"></i> Parent / Guardian
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Parent Name</label>
+              <input type="text" name="parentName" class="f-input" placeholder="Full name" required>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Parent Mobile</label>
+              <input type="tel" name="parentPhone" class="f-input" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+          </div>
+
+          <!-- Essays -->
+          <div class="form-label-pill" style="margin-top: 36px;">
+            <i class="fas fa-pen-nib"></i> The Heart of Your Application
+          </div>
+
+          <div class="f-row-full" style="margin-top: 10px;">
+            <p class="essay-q">Why the Nudge Fellowship? What will you take back with you?</p>
+            <p class="essay-hint">200–300 words. Be genuine. Be specific. (Malayalam/English)</p>
+            <textarea name="essay1" class="f-input" placeholder="Write your answer here..." required></textarea>
+          </div>
+
+          <!-- Declaration -->
+          <div class="f-check">
+            <input type="checkbox" id="declaration" required>
+            <label for="declaration">
+              I confirm I am a Kerala student who has completed Class 11. I understand selection is merit-based, travel
+              is by train, and all details provided are accurate.
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" id="submitBtn" class="f-submit">
+            Submit Application <i class="fas fa-paper-plane"></i>
+          </button>
+
+          <p class="form-note">
+            Having trouble? <a href="mailto:info@nudge.academy">Email us</a> or call +91 9625986622
+          </p>
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="success">
+          <i class="fas fa-check-circle success-icon"></i>
+          <h2>Application Received!</h2>
+          <p>Your application is safely recorded.<br>Thank you for stepping forward.</p>
+          <div class="ref-box">
+            REF: <span id="refNumber">XXXXXXXXXXXX</span>
+          </div>
+          <p>We will review your essays and contact shortlisted candidates by mid-May.</p>
+          <a href="fellowship.html" class="return-link"><i class="fas fa-arrow-left"></i> Return to Program Details</a>
+        </div>
+
+        <div class="form-back" id="backLinkContainer">
+          <a href="fellowship.html"><i class="fas fa-arrow-left"></i> Back to Fellowship Details</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SIMPLE FOOTER ==================== -->
+  <footer style="background:#0f172a; padding:40px 0; color:rgba(255,255,255,0.5); text-align: center;">
+    <div class="container">
+      <p style="font-size:0.88rem; margin: 0;">
+        © 2026 Nudge Academy. All rights reserved. Built with ❤️ for CUET aspirants. <br>
+        <a href="privacy-policy.html" style="color:rgba(255,255,255,0.7); text-decoration:underline;">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // Reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnSEUKCzaWuh350K2UG3BpWvUblZ_vrTs",
+      authDomain: "nudge-fellowship.firebaseapp.com",
+      projectId: "nudge-fellowship",
+      storageBucket: "nudge-fellowship.firebasestorage.app",
+      messagingSenderId: "522945610876",
+      appId: "1:522945610876:web:d65d745c3798a7d288f5f9",
+      measurementId: "G-62XLV5VTM0"
+    };
+
+    let db = null;
+    try {
+      if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+      }
+    } catch (err) {
+      console.warn("Firebase initialization skipped.");
+    }
+
+    window.submitFellowshipForm = async function (e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+      const fd = new FormData(e.target);
+      const data = {
+        name: fd.get('name') + ' ' + fd.get('lastName'),
+        dob: fd.get('dob'),
+        gender: fd.get('gender'),
+        phone: fd.get('phone'),
+        email: fd.get('email'),
+        district: fd.get('district'),
+        city: fd.get('city'),
+        stream: fd.get('stream'),
+        school: fd.get('school'),
+        parentName: fd.get('parentName'),
+        parentPhone: fd.get('parentPhone'),
+        essay1: fd.get('essay1'),
+        travelMode: "train",
+        status: "applied",
+        submittedAt: (db ? serverTimestamp() : new Date())
+      };
+
+      try {
+        if (!db) {
+          // Mock submission for frontend demonstration
+          await new Promise(r => setTimeout(r, 1500));
+          const mockId = Math.random().toString(36).substring(2, 12).toUpperCase();
+          document.getElementById('applicationForm').style.display = 'none';
+          document.getElementById('backLinkContainer').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
+          document.getElementById('refNumber').innerText = mockId;
+          window.scrollTo(0, 0);
+          return;
+        }
+
+        const docRef = await addDoc(collection(db, "fellowshipApplications"), data);
+
+        // Invisible background task: Send free email acknowledgment directly to the applicant via your active FormSubmit account
+        try {
+          await fetch("https://formsubmit.co/ajax/info@nudge.academy", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: "New Application Received! - " + data.name,
+              name: data.name,
+              email: data.email, // FormSubmit uses this exact field to shoot the autoresponse back to the student
+              phone: data.phone,
+              stream: data.stream,
+              message: "A new fellowship application was safely saved to your Firebase backend. Check your Firestore Database for their essays and full profile!",
+              _autoresponse: "Hi " + data.name.split(' ')[0] + ",\n\nThank you for taking the first step towards your journey! This email confirms we have safely received your Nudge Fellowship 2026 application and essays.\n\nOur mentors will be reviewing submissions closely, and shortlisted candidates will be contacted by mid-May.\n\nBest of luck,\nThe Nudge Academy Team"
+            })
+          });
+        } catch (mailError) {
+          console.error("Auto-response mail handler skipped:", mailError); // Fails gracefully without stopping the UI
+        }
+
+        document.getElementById('applicationForm').style.display = 'none';
+        document.getElementById('backLinkContainer').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('refNumber').innerText = docRef.id.toUpperCase().slice(0, 10);
+        window.scrollTo(0, 0);
+
+      } catch (error) {
+        console.error("Error:", error);
+        alert("There was an error submitting your application. Please try again later or email us.");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Application <i class="fas fa-paper-plane"></i>';
+      }
+    };
+  </script>
+</body>
+
+</html>

@@ -55,6 +55,8 @@ Modern, Dynamic, Educational
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 body {
@@ -63,6 +65,8 @@ body {
   color: var(--gray-600);
   line-height: 1.7;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 a {
@@ -2990,6 +2994,7 @@ textarea.form-input {
     font-size: 0.9rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -3125,6 +3130,7 @@ textarea.form-input {
     font-size: 0.95rem;
     display: -webkit-box;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
