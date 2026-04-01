@@ -60,7 +60,8 @@
   <!-- ==================== HERO — THREE.JS FELLOWSHIP EXPERIENCE ==================== -->
   <section class="nf-hero" id="top">
     <div class="nf-three-container" id="nfThreeContainer"></div>
-    <div class="nf-grad-top"></div>    <div class="nf-hero-top nf-anim" style="animation-delay:.15s">
+    <div class="nf-grad-top"></div>
+    <div class="nf-hero-top nf-anim" style="animation-delay:.15s">
       <div class="nf-tag">
         <span class="nf-tag-pulse"></span>
         Applications Open · Cohort 2026
@@ -71,13 +72,14 @@
       <div class="nf-text-block">
         <h1 class="nf-h1 nf-anim" style="animation-delay:.3s">
           <span class="nf-h1-accent">Nudge Fellowship</span>
-          <span class="nf-h1-main">Shape Tomorrow.</span>
+          <span class="nf-h1-main">See Tomorrow <br> Before You Step Into It.</span>
         </h1>
 
         <div class="nf-divider nf-anim" style="animation-delay:.5s"></div>
 
         <p class="nf-punch nf-anim" style="animation-delay:.7s">
-          One fully-funded week in New Delhi. Join India's sharpest young minds and turn ambition into action.
+          One fully-funded week in New Delhi. <br> Explore the halls of your dream
+          universities.
         </p>
 
         <div class="nf-meta nf-anim" style="animation-delay:.9s">
@@ -200,8 +202,17 @@
       }
 
       @keyframes nfPulse {
-        0%, 100% { opacity: 1; transform: scale(1) }
-        50% { opacity: .4; transform: scale(.65) }
+
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1)
+        }
+
+        50% {
+          opacity: .4;
+          transform: scale(.65)
+        }
       }
 
       .nf-h1 {
@@ -225,7 +236,7 @@
         display: block;
         color: rgba(255, 255, 255, 0.95);
         font-weight: 800;
-        font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
       }
 
       .nf-divider {
@@ -306,7 +317,10 @@
       }
 
       @keyframes nfReveal {
-        to { opacity: 1; transform: translate3d(0, 0, 0) }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0)
+        }
       }
 
       @media(max-width:768px) {
@@ -321,13 +335,17 @@
 
         .nf-three-container {
           position: absolute;
-          top: 0; left: 0; right: 0; height: 60%;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 60%;
           bottom: auto;
         }
 
         .nf-hero::before {
           height: 65%;
-          top: 0; bottom: auto;
+          top: 0;
+          bottom: auto;
           background: radial-gradient(ellipse at center, transparent 20%, rgba(6, 11, 24, .8) 100%);
         }
 
@@ -350,14 +368,36 @@
           margin: 0 auto;
         }
 
-        .nf-h1-main { font-size: 2rem; letter-spacing:-0.5px; line-height:1.2; }
-        .nf-h1-accent { font-size: 0.9rem; letter-spacing: 2px; }
-        
-        .nf-divider { margin: 16px auto; width: 40px; }
-        
-        .nf-punch { font-size: 1rem; color: rgba(255,255,255,0.7); }
-        .nf-tag { font-size: .65rem; padding: 6px 12px 6px 10px; }
-        .nf-meta { justify-content: center; font-size: .65rem; }
+        .nf-h1-main {
+          font-size: 1.5rem;
+          letter-spacing: -0.5px;
+          line-height: 1.2;
+        }
+
+        .nf-h1-accent {
+          font-size: 0.9rem;
+          letter-spacing: 2px;
+        }
+
+        .nf-divider {
+          margin: 16px auto;
+          width: 40px;
+        }
+
+        .nf-punch {
+          font-size: 1rem;
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nf-tag {
+          font-size: .65rem;
+          padding: 6px 12px 6px 10px;
+        }
+
+        .nf-meta {
+          justify-content: center;
+          font-size: .65rem;
+        }
 
         .nf-action-block {
           width: 100%;
@@ -440,8 +480,8 @@
 
         // 1. BASE PLINTH (Stepped and solid-like)
         // A strictly opaque dark core mathematically offset so the star points always draw crisply on top
-        var solidCoreMat = new THREE.MeshBasicMaterial({ 
-          color: 0x060b18, 
+        var solidCoreMat = new THREE.MeshBasicMaterial({
+          color: 0x060b18,
           transparent: false, // Opaque items render first, solving depth-flip flickering
           polygonOffset: true,
           polygonOffsetFactor: 4, // Increased to push the solid core more firmly behind the point meshes
@@ -1083,7 +1123,7 @@
           { pos: new THREE.Vector3(0, 85, 70), look: new THREE.Vector3(0, 0, 0), duration: 8 },       // Majestic God-view hover
           { pos: new THREE.Vector3(0, 2, 55), look: new THREE.Vector3(0, 28, 0), duration: 6 }        // Looking straight up from ground level
         ];
-        
+
         var currentShotIndex = 0;
         var shotTimer = 0;
         var currentCamPos = camera.position.clone();
@@ -1097,22 +1137,22 @@
 
           // --- Smooth Cinematic Drone Tracking ---
           var activeShot = cinematicShots[isMobile ? 0 : currentShotIndex];
-          
+
           if (!isMobile) {
             shotTimer += deltaTime;
             if (shotTimer >= activeShot.duration) {
-               shotTimer = 0;
-               currentShotIndex = (currentShotIndex + 1) % cinematicShots.length;
-               activeShot = cinematicShots[currentShotIndex];
+              shotTimer = 0;
+              currentShotIndex = (currentShotIndex + 1) % cinematicShots.length;
+              activeShot = cinematicShots[currentShotIndex];
             }
 
             // Gentle continuous orbit injected into the shot's target position so it flies dynamically
             var hoverOffsetX = Math.sin(t * 0.25) * 6;
             var hoverOffsetY = Math.cos(t * 0.18) * 4;
             var hoverOffsetZ = Math.sin(t * 0.15) * 5;
-            
+
             var finalTargetPos = activeShot.pos.clone().add(new THREE.Vector3(hoverOffsetX, hoverOffsetY, hoverOffsetZ));
-            
+
             // Lerp camera position robustly for buttery smooth speed easing
             currentCamPos.lerp(finalTargetPos, deltaTime * 0.45);
             camera.position.copy(currentCamPos);
