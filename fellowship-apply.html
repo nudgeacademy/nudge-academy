@@ -78,7 +78,7 @@
   <!-- ==================== CONTEXT BANNER ==================== -->
   <section class="apply-banner">
     <div class="container">
-      <div class="apply-banner-inner anim">
+      <div class="apply-banner-inner">
         <h1>Nudge Fellowship 2026</h1>
         <p>Complete your application. The essay is your chance to stand out.</p>
 
@@ -95,7 +95,7 @@
   <!-- ==================== APPLICATION FORM ==================== -->
   <section class="apply-form-section">
     <div class="container">
-      <div class="apply-form-card anim anim-d1">
+      <div class="apply-form-card">
 
         <form id="applicationForm" onsubmit="submitFellowshipForm(event)">
 
@@ -305,17 +305,6 @@
 
   <!-- ==================== SCRIPTS ==================== -->
   <script>
-    // Reveal animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.anim').forEach(el => observer.observe(el));
-
     // Academic status gate
     function handleAcademicStatus() {
       const sel = document.getElementById('academicStatus');
