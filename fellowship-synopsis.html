@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nudge Fellowship 2026 — Program Synopsis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: #060b18;
+      color: #e2e8f0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ===== FIXED A4 PAGE ===== */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      page-break-inside: avoid;
+      background: #060b18;
+    }
+
+    .page:last-child { page-break-after: avoid; }
+
+    @media screen {
+      .page {
+        margin: 20px auto;
+        box-shadow: 0 0 60px rgba(0,0,0,0.6);
+      }
+    }
+
+    /* ========================================== */
+    /*              PAGE 1 — COVER               */
+    /* ========================================== */
+    .cover {
+      background: linear-gradient(160deg, #060b18 0%, #0f172a 40%, #1a0a0a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 56px;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(220,38,38,0.14) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(220,38,38,0.9);
+      padding: 8px 20px;
+      background: rgba(220,38,38,0.07);
+      border: 1px solid rgba(220,38,38,0.18);
+      border-radius: 50px;
+      margin-bottom: 52px;
+      position: relative; z-index: 1;
+    }
+
+    .cover-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #dc2626;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(220,38,38,0.6);
+    }
+
+    .cover-logo { width: 90px; margin-bottom: 28px; position: relative; z-index: 1; }
+    .cover-logo img { width: 100%; height: auto; }
+
+    .cover h1 {
+      font-size: 48px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      position: relative; z-index: 1;
+    }
+
+    .cover h1 span {
+      background: linear-gradient(135deg, #dc2626, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-year {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 52px;
+      position: relative; z-index: 1;
+    }
+
+    .cover-divider {
+      width: 72px; height: 3px;
+      background: linear-gradient(90deg, #dc2626, #f59e0b);
+      border-radius: 3px;
+      margin-bottom: 40px;
+      position: relative; z-index: 1;
+    }
+
+    .cover-tagline {
+      font-size: 19px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 64px;
+      position: relative; z-index: 1;
+    }
+
+    .cover-stats {
+      display: flex;
+      gap: 52px;
+      position: relative; z-index: 1;
+    }
+
+    .cover-stat-num {
+      font-size: 40px;
+      font-weight: 800;
+      color: #fff;
+      display: block;
+      line-height: 1;
+    }
+
+    .cover-stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-top: 6px;
+      display: block;
+    }
+
+    .cover-footer {
+      position: absolute; bottom: 40px; left: 0; right: 0;
+      text-align: center; z-index: 1;
+    }
+
+    .cover-footer p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.5px;
+    }
+
+    .cover-footer a {
+      color: rgba(220,38,38,0.6);
+      text-decoration: none;
+    }
+
+    /* ========================================== */
+    /*            CONTENT PAGE BASE              */
+    /* ========================================== */
+    .content-page {
+      background: #060b18;
+      padding: 44px 52px 52px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 32px;
+      flex-shrink: 0;
+    }
+
+    .page-header-logo {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .page-header-page {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(220,38,38,0.5);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .section { margin-bottom: 28px; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: rgba(220,38,38,0.8);
+      margin-bottom: 10px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 16px; height: 2px;
+      background: linear-gradient(90deg, #dc2626, #f59e0b);
+      border-radius: 2px;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .mini-divider {
+      width: 44px; height: 2px;
+      background: linear-gradient(90deg, rgba(220,38,38,0.4), rgba(245,158,11,0.2));
+      border-radius: 2px;
+      margin: 24px 0;
+      flex-shrink: 0;
+    }
+
+    /* Highlight grid */
+    .highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .hl-box {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 22px 22px;
+    }
+
+    .hl-box .hl-emoji { font-size: 22px; margin-bottom: 10px; display: block; }
+    .hl-box h4 { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+    .hl-box p { font-size: 11.5px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+    /* Eligibility */
+    .elig-list { display: flex; flex-direction: column; gap: 20px; margin-top: 12px; }
+
+    .elig-item { display: flex; align-items: flex-start; gap: 16px; }
+
+    .elig-dot {
+      width: 10px; height: 10px; min-width: 10px;
+      background: linear-gradient(135deg, #dc2626, #f59e0b);
+      border-radius: 50%;
+      margin-top: 4px;
+    }
+
+    .elig-item h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .elig-item p { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+    /* Covered grid */
+    .covered-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .covered-item {
+      text-align: center;
+      padding: 24px 14px;
+      background: rgba(220,38,38,0.04);
+      border: 1px solid rgba(220,38,38,0.1);
+      border-radius: 14px;
+    }
+
+    .covered-item .cov-emoji { font-size: 26px; margin-bottom: 10px; display: block; }
+    .covered-item h4 { font-size: 12.5px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .covered-item p { font-size: 10.5px; color: rgba(255,255,255,0.4); line-height: 1.45; }
+
+    /* Experience grid */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .exp-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 26px 20px;
+      text-align: center;
+    }
+
+    .exp-card .exp-emoji { font-size: 28px; margin-bottom: 12px; display: block; }
+    .exp-card h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+    .exp-card p { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+    /* Values / Selection grid */
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .value-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 24px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .value-card:nth-child(1)::before { background: linear-gradient(90deg, #dc2626, transparent); }
+    .value-card:nth-child(2)::before { background: linear-gradient(90deg, #f59e0b, transparent); }
+    .value-card:nth-child(3)::before { background: linear-gradient(90deg, #3b82f6, transparent); }
+    .value-card:nth-child(4)::before { background: linear-gradient(90deg, #10b981, transparent); }
+
+    .value-card h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .value-card p { font-size: 12px; color: rgba(255,255,255,0.48); line-height: 1.6; }
+
+    /* Campus chips */
+    .campus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .campus-chip {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    .campus-chip h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .campus-chip p { font-size: 10.5px; color: rgba(255,255,255,0.38); }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-left: 28px;
+      margin-top: 16px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px; top: 10px; bottom: 10px;
+      width: 2px;
+      background: linear-gradient(180deg, #dc2626, #f59e0b, rgba(255,255,255,0.08));
+      border-radius: 2px;
+    }
+
+    .tl-item { position: relative; padding: 16px 0; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -28px; top: 22px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #060b18;
+      border: 2.5px solid rgba(220,38,38,0.5);
+    }
+
+    .tl-item.active::before {
+      background: #dc2626;
+      border-color: #dc2626;
+      box-shadow: 0 0 10px rgba(220,38,38,0.4);
+    }
+
+    .tl-date {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: rgba(220,38,38,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 3px;
+    }
+
+    .tl-item h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .tl-item p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+    /* Summary table */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .summary-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .summary-table tr:last-child { border-bottom: none; }
+
+    .summary-table td {
+      padding: 14px 16px;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .summary-table td:first-child {
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 10.5px;
+      width: 160px;
+      padding-top: 16px;
+    }
+
+    .summary-table td:last-child {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Apply CTA */
+    .apply-box {
+      background: linear-gradient(135deg, rgba(220,38,38,0.1), rgba(245,158,11,0.06));
+      border: 1px solid rgba(220,38,38,0.18);
+      border-radius: 18px;
+      padding: 40px 44px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .apply-box h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .apply-box p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      max-width: 400px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    .apply-url-box {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 700;
+      color: #dc2626;
+      letter-spacing: 0.3px;
+      padding: 12px 32px;
+      border: 2px solid rgba(220,38,38,0.35);
+      border-radius: 10px;
+    }
+
+    .apply-deadline {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    /* Contact */
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .contact-item { text-align: center; }
+    .contact-item h4 {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .contact-item p { font-size: 12.5px; font-weight: 600; color: #fff; }
+    .contact-item a { color: rgba(220,38,38,0.75); text-decoration: none; }
+
+    /* Page number */
+    .page-num {
+      position: absolute;
+      bottom: 28px; right: 52px;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 1px;
+    }
+
+    .page-num-left {
+      position: absolute;
+      bottom: 28px; left: 52px;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 1px;
+    }
+
+    /* Print button */
+    .print-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(220,38,38,0.3);
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+
+    .print-btn:hover { transform: translateY(-2px); }
+
+    @media print {
+      .print-btn { display: none !important; }
+      html, body { background: #060b18 !important; }
+      .page { margin: 0; box-shadow: none; background: #060b18 !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="print-btn" onclick="window.print()">📄 Save as PDF</button>
+
+
+  <!-- ======================== PAGE 1 — COVER ======================== -->
+  <div class="page cover">
+    <div class="cover-badge">Program Synopsis · 2026</div>
+
+    <div class="cover-logo">
+      <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy">
+    </div>
+
+    <h1>Nudge <span>Fellowship</span></h1>
+    <div class="cover-year">Cohort 2026</div>
+
+    <div class="cover-divider"></div>
+
+    <p class="cover-tagline">
+      A fully-funded, transformative week in New Delhi for Kerala's brightest Class 12 students.
+      Explore premier campuses. Learn from experts. Return inspired.
+    </p>
+
+    <div class="cover-stats">
+      <div class="cover-stat">
+        <span class="cover-stat-num">6</span>
+        <span class="cover-stat-label">Fellows</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cover-stat-num">3</span>
+        <span class="cover-stat-label">Streams</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cover-stat-num">5+</span>
+        <span class="cover-stat-label">Campuses</span>
+      </div>
+      <div class="cover-stat">
+        <span class="cover-stat-num">₹0</span>
+        <span class="cover-stat-label">Cost</span>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <p>nudge.academy/fellowship · © 2026 Nudge Academy</p>
+    </div>
+  </div>
+
+
+  <!-- ======================== PAGE 2 — OVERVIEW ======================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <span class="page-header-logo">Nudge Academy</span>
+      <span class="page-header-page">Fellowship Synopsis</span>
+    </div>
+
+    <div class="page-content">
+      <div class="section">
+        <div class="section-tag">Program Overview</div>
+        <h2>What is the Nudge Fellowship?</h2>
+        <p class="section-desc">
+          The Nudge Fellowship is a fully-funded, immersive program that takes 6 exceptional Class 12 students
+          from Kerala on a transformative week-long journey to New Delhi. Fellows explore premier university campuses,
+          attend expert-led sessions, experience India's rich heritage, and build a lifelong peer network — all at
+          zero cost to the student.
+        </p>
+
+        <div class="highlights">
+          <div class="hl-box">
+            <span class="hl-emoji">🎯</span>
+            <h4>Our Mission</h4>
+            <p>Help students see their future firsthand — walk through the campuses, meet the people, and experience the life they're working toward.</p>
+          </div>
+          <div class="hl-box">
+            <span class="hl-emoji">⚖️</span>
+            <h4>Equal Representation</h4>
+            <p>2 fellows from Science, 2 from Commerce, and 2 from Humanities — ensuring every stream has a seat at the table.</p>
+          </div>
+          <div class="hl-box">
+            <span class="hl-emoji">💰</span>
+            <h4>100% Funded</h4>
+            <p>Train travel, accommodation, meals, campus transport, and all activities are fully covered by Nudge Academy.</p>
+          </div>
+          <div class="hl-box">
+            <span class="hl-emoji">📍</span>
+            <h4>New Delhi</h4>
+            <p>India's capital — home to the country's most prestigious universities, iconic monuments, and vibrant culture.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-divider"></div>
+
+      <div class="section">
+        <div class="section-tag">What's Covered</div>
+        <h2>Zero Cost to the Fellow</h2>
+        <p class="section-desc" style="margin-bottom: 4px;">
+          Every aspect of the fellowship trip is fully funded. Here's what's included:
+        </p>
+        <div class="covered-grid">
+          <div class="covered-item">
+            <span class="cov-emoji">🚂</span>
+            <h4>Train Travel</h4>
+            <p>Round-trip tickets fully covered</p>
+          </div>
+          <div class="covered-item">
+            <span class="cov-emoji">🏨</span>
+            <h4>Accommodation</h4>
+            <p>Safe, comfortable stay in Delhi</p>
+          </div>
+          <div class="covered-item">
+            <span class="cov-emoji">🍽️</span>
+            <h4>All Meals</h4>
+            <p>Breakfast, lunch & dinner included</p>
+          </div>
+          <div class="covered-item">
+            <span class="cov-emoji">🚌</span>
+            <h4>Local Transport</h4>
+            <p>All campus & city travel arranged</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="page-num">02</span>
+    <span class="page-num-left">Nudge Fellowship 2026</span>
+  </div>
+
+
+  <!-- ======================== PAGE 3 — ELIGIBILITY + SELECTION ======================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <span class="page-header-logo">Nudge Academy</span>
+      <span class="page-header-page">Fellowship Synopsis</span>
+    </div>
+
+    <div class="page-content">
+      <div class="section">
+        <div class="section-tag">Eligibility</div>
+        <h2>Who Can Apply?</h2>
+        <p class="section-desc" style="margin-bottom: 4px;">
+          The fellowship is open to ambitious students who meet the following criteria:
+        </p>
+        <div class="elig-list">
+          <div class="elig-item">
+            <div class="elig-dot"></div>
+            <div>
+              <h4>Kerala Students Only</h4>
+              <p>Must be a current resident studying in a recognized Kerala school.</p>
+            </div>
+          </div>
+          <div class="elig-item">
+            <div class="elig-dot"></div>
+            <div>
+              <h4>Completed Class 11</h4>
+              <p>Must have completed Class 11 in Science, Commerce, or Humanities stream.</p>
+            </div>
+          </div>
+          <div class="elig-item">
+            <div class="elig-dot"></div>
+            <div>
+              <h4>Open to All Streams</h4>
+              <p>Students from any stream can apply. Equal representation will be given to all streams — 2 fellows per stream.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-divider"></div>
+
+      <div class="section">
+        <div class="section-tag">Selection Criteria</div>
+        <h2>What We're Looking For</h2>
+        <p class="section-desc" style="margin-bottom: 4px;">
+          We don't just seek achievers — we seek thinkers and doers ready to shape the future.
+        </p>
+        <div class="values-grid">
+          <div class="value-card">
+            <h4>💡 Intellectual Curiosity</h4>
+            <p>You question, explore, and connect dots across disciplines beyond textbooks.</p>
+          </div>
+          <div class="value-card">
+            <h4>🌏 Engagement with the World</h4>
+            <p>A deep awareness of social issues and a drive to understand the world around you.</p>
+          </div>
+          <div class="value-card">
+            <h4>🧭 Drive & Self-Awareness</h4>
+            <p>You know your strengths, take initiative, and create your own opportunities.</p>
+          </div>
+          <div class="value-card">
+            <h4>👥 Leadership Potential</h4>
+            <p>You lead through empathy and influence, inspiring others toward a common goal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="page-num">03</span>
+    <span class="page-num-left">Nudge Fellowship 2026</span>
+  </div>
+
+
+  <!-- ======================== PAGE 4 — EXPERIENCE ======================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <span class="page-header-logo">Nudge Academy</span>
+      <span class="page-header-page">Fellowship Synopsis</span>
+    </div>
+
+    <div class="page-content">
+      <div class="section">
+        <div class="section-tag">The Experience</div>
+        <h2>What Fellows Will Experience</h2>
+        <p class="section-desc" style="margin-bottom: 4px;">
+          A week that redefines how students see education, careers, and the world around them.
+        </p>
+        <div class="exp-grid">
+          <div class="exp-card">
+            <span class="exp-emoji">🏛️</span>
+            <h4>Campus Visits</h4>
+            <p>Experience premier campus life at IIT Delhi, JNU, AMU, JMI, and DU.</p>
+          </div>
+          <div class="exp-card">
+            <span class="exp-emoji">👨‍🏫</span>
+            <h4>Expert Sessions</h4>
+            <p>Learn from professors and industry leaders who challenge your thinking.</p>
+          </div>
+          <div class="exp-card">
+            <span class="exp-emoji">🕌</span>
+            <h4>Heritage & Culture</h4>
+            <p>Explore Delhi's rich history, iconic monuments, and vibrant culture.</p>
+          </div>
+          <div class="exp-card">
+            <span class="exp-emoji">🤝</span>
+            <h4>Peer Network</h4>
+            <p>Bond with 5 exceptional peers from across Kerala. Build a lifelong network.</p>
+          </div>
+          <div class="exp-card">
+            <span class="exp-emoji">🧠</span>
+            <h4>Self-Discovery</h4>
+            <p>Uncover your unique strengths through workshops and guided reflections.</p>
+          </div>
+          <div class="exp-card">
+            <span class="exp-emoji">📜</span>
+            <h4>Certificate & Report</h4>
+            <p>Receive a Fellowship certificate and a personal outcomes report.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-divider"></div>
+
+      <div class="section">
+        <div class="section-tag">Campus Destinations</div>
+        <h2>Where We'll Go</h2>
+        <p class="section-desc" style="margin-bottom: 4px;">
+          Fellows will visit some of India's most prestigious institutions and cultural landmarks.
+        </p>
+        <div class="campus-grid">
+          <div class="campus-chip">
+            <h4>IIT Delhi</h4>
+            <p>Indian Institute of Technology</p>
+          </div>
+          <div class="campus-chip">
+            <h4>JNU</h4>
+            <p>Jawaharlal Nehru University</p>
+          </div>
+          <div class="campus-chip">
+            <h4>AMU</h4>
+            <p>Aligarh Muslim University</p>
+          </div>
+          <div class="campus-chip">
+            <h4>JMI</h4>
+            <p>Jamia Millia Islamia</p>
+          </div>
+          <div class="campus-chip">
+            <h4>Delhi University</h4>
+            <p>University of Delhi</p>
+          </div>
+          <div class="campus-chip">
+            <h4>& More</h4>
+            <p>Additional surprise visits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="page-num">04</span>
+    <span class="page-num-left">Nudge Fellowship 2026</span>
+  </div>
+
+
+  <!-- ======================== PAGE 5 — TIMELINE + SUMMARY ======================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <span class="page-header-logo">Nudge Academy</span>
+      <span class="page-header-page">Fellowship Synopsis</span>
+    </div>
+
+    <div class="page-content">
+      <div class="section">
+        <div class="section-tag">Timeline</div>
+        <h2>How It Works</h2>
+        <div class="timeline">
+          <div class="tl-item active">
+            <div class="tl-date">Till April 25, 2026</div>
+            <h4>Applications Open</h4>
+            <p>Fill out the online application form at nudge.academy/fellowship — takes approximately 10 minutes.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Early May 2026</div>
+            <h4>Results Announced</h4>
+            <p>6 fellows selected — 2 from each stream (Science, Commerce, Humanities) — and notified via email & phone.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Mid May 2026</div>
+            <h4>Board the Train to Delhi</h4>
+            <p>Your fully-funded fellowship week begins. Travel from Kerala to New Delhi with your cohort.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">Late May 2026</div>
+            <h4>Return Transformed</h4>
+            <p>Return home with new skills, perspectives, a strong peer network, and a Fellowship certificate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-divider"></div>
+
+      <div class="section">
+        <div class="section-tag">At a Glance</div>
+        <h2>Fellowship Summary</h2>
+        <table class="summary-table">
+          <tr>
+            <td>Program</td>
+            <td>Nudge Fellowship 2026</td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td>1 Week (approximately 7 days)</td>
+          </tr>
+          <tr>
+            <td>Location</td>
+            <td>New Delhi, India</td>
+          </tr>
+          <tr>
+            <td>Fellows</td>
+            <td>6 students — 2 from each stream</td>
+          </tr>
+          <tr>
+            <td>Streams</td>
+            <td>Science, Commerce, Humanities</td>
+          </tr>
+          <tr>
+            <td>Deadline</td>
+            <td>April 25, 2026</td>
+          </tr>
+          <tr>
+            <td>Cost</td>
+            <td>₹0 — 100% Fully Funded</td>
+          </tr>
+          <tr>
+            <td>Target Group</td>
+            <td>Class 12 students from Kerala</td>
+          </tr>
+          <tr>
+            <td>Organized By</td>
+            <td>Nudge Academy</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <span class="page-num">05</span>
+    <span class="page-num-left">Nudge Fellowship 2026</span>
+  </div>
+
+
+  <!-- ======================== PAGE 6 — APPLY + CONTACT ======================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <span class="page-header-logo">Nudge Academy</span>
+      <span class="page-header-page">Fellowship Synopsis</span>
+    </div>
+
+    <div class="page-content" style="justify-content: center; align-items: center; text-align: center;">
+      
+      <div style="margin-bottom: 48px;">
+        <div class="section-tag" style="justify-content: center;">Apply Now</div>
+        <h2 style="font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 16px;">
+          Ready to See Your Future?
+        </h2>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 420px; margin: 0 auto;">
+          6 seats. 3 streams. 100% funded.<br>
+          Apply now and take the first step toward a transformative experience that will change the way you see your future.
+        </p>
+      </div>
+
+      <div class="apply-box" style="max-width: 480px; margin: 0 auto 48px;">
+        <h3>How to Apply</h3>
+        <p>Visit our website, fill out the application form, and tell us why you deserve a seat in the 2026 cohort.</p>
+        <span class="apply-url-box">nudge.academy/fellowship</span>
+        <span class="apply-deadline">Application Deadline: April 25, 2026</span>
+      </div>
+
+      <div style="margin-bottom: 40px;">
+        <div class="section-tag" style="justify-content: center;">Get In Touch</div>
+        <div class="contact-row" style="margin-top: 20px;">
+          <div class="contact-item">
+            <h4>Website</h4>
+            <p><a href="https://nudge.academy">nudge.academy</a></p>
+          </div>
+          <div class="contact-item">
+            <h4>Instagram</h4>
+            <p><a href="https://instagram.com/nudge.academy">@nudge.academy</a></p>
+          </div>
+          <div class="contact-item">
+            <h4>LinkedIn</h4>
+            <p><a href="https://linkedin.com/company/nudge-academy">Nudge Academy</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05);">
+        <p style="font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.5px;">
+          © 2026 Nudge Academy. All rights reserved.<br>
+          Built with ❤️ for the dreamers of Kerala.
+        </p>
+      </div>
+
+    </div>
+
+    <span class="page-num">06</span>
+    <span class="page-num-left">Nudge Fellowship 2026</span>
+  </div>
+
+</body>
+
+</html>
