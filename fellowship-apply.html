@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Core SEO Meta Tags -->
   <title>Application Form | Nudge Fellowship 2026 Fully-Funded Delhi Experience</title>
-  <meta name="description" content="Apply now for the fully-funded Nudge Fellowship 2026. A 3-day immersive journey to Delhi's top universities for Kerala students. Submit your application today.">
-  <meta name="keywords" content="apply Nudge Fellowship, CUET preparation Kerala, fully funded fellowship application, Delhi university tour apply, submit fellowship application, Nudge Academy">
+  <meta name="description"
+    content="Apply now for the fully-funded Nudge Fellowship 2026. A 3-day immersive journey to Delhi's top universities for Kerala students. Submit your application today.">
+  <meta name="keywords"
+    content="apply Nudge Fellowship, CUET preparation Kerala, fully funded fellowship application, Delhi university tour apply, submit fellowship application, Nudge Academy">
   <meta name="author" content="Nudge Academy">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://nudge.academy/fellowship-apply.html">
@@ -16,7 +18,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nudge.academy/fellowship-apply.html">
   <meta property="og:title" content="Apply Now | Nudge Fellowship 2026">
-  <meta property="og:description" content="Submit your application for a 3-day fully-funded immersive experience at top universities in New Delhi.">
+  <meta property="og:description"
+    content="Submit your application for a 3-day fully-funded immersive experience at top universities in New Delhi.">
   <meta property="og:image" content="https://nudge.academy/assets/images/india-gate.jpg">
   <meta property="og:site_name" content="Nudge Academy">
 
@@ -24,7 +27,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nudge.academy/fellowship-apply.html">
   <meta name="twitter:title" content="Apply Now | Nudge Fellowship 2026">
-  <meta name="twitter:description" content="Submit your application for a 3-day fully-funded immersive experience at top universities in New Delhi.">
+  <meta name="twitter:description"
+    content="Submit your application for a 3-day fully-funded immersive experience at top universities in New Delhi.">
   <meta name="twitter:image" content="https://nudge.academy/assets/images/india-gate.jpg">
 
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
@@ -170,6 +174,26 @@
 
           <div class="f-row">
             <div class="f-group">
+              <label class="f-label">Current Academic Status</label>
+              <select name="academicStatus" class="f-input" required id="academicStatus"
+                onchange="handleAcademicStatus()">
+                <option value="" disabled selected>Select your current status</option>
+                <option value="Class 12 (Currently studying)">Completed Class 11</option>
+                <option value="Completed Class 12 / CUET 2026">Completed Class 12</option>
+                <option value="Completed Class 12 / CUET 2026">Undergraduate</option>
+                <option value="Completed Class 12 / CUET 2026">Postgraduate</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="f-group" id="otherStatusGroup" style="display: none;">
+              <label class="f-label">Please specify your status</label>
+              <input type="text" name="otherStatus" id="otherStatusInput" class="f-input"
+                placeholder="e.g. Graduated, College student, etc.">
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="f-group">
               <label class="f-label">Class 11 Stream</label>
               <select name="stream" class="f-input" required>
                 <option value="" disabled selected>Select stream</option>
@@ -181,6 +205,25 @@
             <div class="f-group">
               <label class="f-label">School Name</label>
               <input type="text" name="school" class="f-input" placeholder="Full name of your school" required>
+            </div>
+          </div>
+
+          <div class="f-row-full" style="margin-top: 4px;">
+            <label class="f-label">Which UG entrance exams are you planning to appear for?</label>
+            <p class="essay-hint" style="margin-bottom: 10px;">Select all that apply.</p>
+            <div class="checkbox-grid" id="entranceExams">
+              <label class="chip-check"><input type="checkbox" name="entrance" value="CUET UG"><span>CUET
+                  UG</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="JEE Main"><span>JEE
+                  Main</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="NEET UG"><span>NEET
+                  UG</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="KEAM"><span>KEAM</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="CLAT"><span>CLAT</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="NID / NIFT"><span>NID /
+                  NIFT</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="IPMAT"><span>IPMAT</span></label>
+              <label class="chip-check"><input type="checkbox" name="entrance" value="Other"><span>Other</span></label>
             </div>
           </div>
 
@@ -272,6 +315,21 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+    // Academic status gate
+    function handleAcademicStatus() {
+      const sel = document.getElementById('academicStatus');
+      const otherGroup = document.getElementById('otherStatusGroup');
+      const otherInput = document.getElementById('otherStatusInput');
+      if (sel.value === 'Other') {
+        otherGroup.style.display = 'block';
+        otherInput.required = true;
+      } else {
+        otherGroup.style.display = 'none';
+        otherInput.required = false;
+        otherInput.value = '';
+      }
+    }
   </script>
 
   <!-- Firebase Integration -->
@@ -308,6 +366,14 @@
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
       const fd = new FormData(e.target);
+      // Collect selected entrance exams
+      const entranceExams = [];
+      document.querySelectorAll('input[name="entrance"]:checked').forEach(cb => entranceExams.push(cb.value));
+
+      const academicStatus = fd.get('academicStatus') === 'Other'
+        ? 'Other: ' + (fd.get('otherStatus') || '')
+        : fd.get('academicStatus');
+
       const data = {
         name: fd.get('name') + ' ' + fd.get('lastName'),
         dob: fd.get('dob'),
@@ -316,8 +382,10 @@
         email: fd.get('email'),
         district: fd.get('district'),
         city: fd.get('city'),
+        academicStatus: academicStatus,
         stream: fd.get('stream'),
         school: fd.get('school'),
+        entranceExams: entranceExams,
         parentName: fd.get('parentName'),
         parentPhone: fd.get('parentPhone'),
         essay1: fd.get('essay1'),
