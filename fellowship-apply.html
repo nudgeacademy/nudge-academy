@@ -178,10 +178,10 @@
               <select name="academicStatus" class="f-input" required id="academicStatus"
                 onchange="handleAcademicStatus()">
                 <option value="" disabled selected>Select your current status</option>
-                <option value="Class 12 (Currently studying)">Completed Class 11</option>
-                <option value="Completed Class 12 / CUET 2026">Completed Class 12</option>
-                <option value="Completed Class 12 / CUET 2026">Undergraduate</option>
-                <option value="Completed Class 12 / CUET 2026">Postgraduate</option>
+                <option value="Class 12 (Currently studying)">Completed Class 11 (Currently in Class 12)</option>
+                <option value="Completed Class 12">Completed Class 12 (Dropper / Pass out)</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
                 <option value="Other">Other</option>
               </select>
             </div>
@@ -194,6 +194,17 @@
 
           <div class="f-row">
             <div class="f-group">
+              <label class="f-label">Class 10 Passing Year</label>
+              <select name="class10Year" class="f-input" required>
+                <option value="" disabled selected>Select passing year</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="Before 2022">Before 2022</option>
+              </select>
+            </div>
+            <div class="f-group">
               <label class="f-label">Class 11 Stream</label>
               <select name="stream" class="f-input" required>
                 <option value="" disabled selected>Select stream</option>
@@ -202,10 +213,11 @@
                 <option value="Arts/Humanities">Arts / Humanities</option>
               </select>
             </div>
-            <div class="f-group">
-              <label class="f-label">School Name</label>
-              <input type="text" name="school" class="f-input" placeholder="Full name of your school" required>
-            </div>
+          </div>
+
+          <div class="f-row-full">
+            <label class="f-label">School Name</label>
+            <input type="text" name="school" class="f-input" placeholder="Full name of your school" required>
           </div>
 
           <div class="f-row-full" style="margin-top: 4px;">
@@ -310,6 +322,33 @@
       const sel = document.getElementById('academicStatus');
       const otherGroup = document.getElementById('otherStatusGroup');
       const otherInput = document.getElementById('otherStatusInput');
+      const submitBtn = document.getElementById('submitBtn');
+
+      let errorMsg = document.getElementById('academicStatusError');
+      if (!errorMsg) {
+        errorMsg = document.createElement('div');
+        errorMsg.id = 'academicStatusError';
+        errorMsg.style.color = '#dc2626';
+        errorMsg.style.fontSize = '0.85rem';
+        errorMsg.style.marginTop = '8px';
+        errorMsg.style.fontWeight = '600';
+        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Currently the Nudge Fellowship is exclusively for students who are currently studying in Class 12.';
+        errorMsg.style.display = 'none';
+        sel.parentNode.appendChild(errorMsg);
+      }
+
+      if (sel.value && sel.value !== 'Class 12 (Currently studying)') {
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.innerHTML = 'Not Eligible';
+      } else {
+        errorMsg.style.display = 'none';
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.innerHTML = 'Submit Application <i class="fas fa-paper-plane"></i>';
+      }
+
       if (sel.value === 'Other') {
         otherGroup.style.display = 'block';
         otherInput.required = true;
@@ -350,18 +389,30 @@
     window.submitFellowshipForm = async function (e) {
       e.preventDefault();
 
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
       const fd = new FormData(e.target);
+      const rawAcademicStatus = fd.get('academicStatus');
+
+      if (rawAcademicStatus !== 'Class 12 (Currently studying)') {
+        alert("We appreciate your interest, but currently the Nudge Fellowship is exclusively for students who are currently studying in Class 12.");
+        return;
+      }
+
       // Collect selected entrance exams
       const entranceExams = [];
       document.querySelectorAll('input[name="entrance"]:checked').forEach(cb => entranceExams.push(cb.value));
 
-      const academicStatus = fd.get('academicStatus') === 'Other'
+      if (entranceExams.length === 0) {
+        alert("Please select at least one entrance exam you are planning to appear for.");
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+      const academicStatus = rawAcademicStatus === 'Other'
         ? 'Other: ' + (fd.get('otherStatus') || '')
-        : fd.get('academicStatus');
+        : rawAcademicStatus;
 
       const data = {
         name: fd.get('name') + ' ' + fd.get('lastName'),
@@ -372,6 +423,7 @@
         district: fd.get('district'),
         city: fd.get('city'),
         academicStatus: academicStatus,
+        class10Year: fd.get('class10Year'),
         stream: fd.get('stream'),
         school: fd.get('school'),
         entranceExams: entranceExams,
