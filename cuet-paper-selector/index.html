@@ -345,16 +345,25 @@
         <section class="hero-section" aria-labelledby="main-heading">
             <div class="hero-content">
                 <div class="header-badge">
-                    <span class="badge-icon" aria-hidden="true">📚</span>
+                    <span class="badge-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg></span>
                     <span class="badge-text">CUET UG</span>
                 </div>
                 <h1 class="title" id="main-heading" itemprop="name">
                     <span class="title-accent">Paper</span> Selector
                 </h1>
                 <p class="subtitle" itemprop="description">
-                    Find exactly which CUET papers you need for your dream university.
-                    <span class="highlight">49 Universities • 982 Programs</span>
+                    Find exactly which <strong>CUET papers</strong> you need<br>
+                    for your dream university.
                 </p>
+                <div class="hero-stats">
+                    <span class="hero-stat">49 Universities</span>
+                    <span class="hero-stat-divider">•</span>
+                    <span class="hero-stat">982+ Programs</span>
+                </div>
             </div>
         </section>
 
@@ -377,7 +386,13 @@
                 <form class="filter-grid" role="search" aria-label="CUET paper search filters">
                     <div class="filter-group">
                         <label for="university-select" class="filter-label">
-                            <span class="label-icon" aria-hidden="true">🏛️</span>
+                            <span class="label-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="M2 17l10 5 10-5" />
+                                    <path d="M2 12l10 5 10-5" />
+                                </svg></span>
                             University
                         </label>
                         <div class="select-wrapper">
@@ -397,7 +412,12 @@
 
                     <div class="filter-group">
                         <label for="course-select" class="filter-label">
-                            <span class="label-icon" aria-hidden="true">📖</span>
+                            <span class="label-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                </svg></span>
                             Course / Program
                         </label>
                         <div class="select-wrapper">
@@ -417,7 +437,12 @@
 
                     <div class="filter-group">
                         <label for="category-select" class="filter-label">
-                            <span class="label-icon" aria-hidden="true">📂</span>
+                            <span class="label-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" />
+                                </svg></span>
                             Course Category
                         </label>
                         <div class="select-wrapper">
@@ -437,7 +462,12 @@
 
                     <div class="filter-group">
                         <label for="stream-select" class="filter-label">
-                            <span class="label-icon" aria-hidden="true">🎓</span>
+                            <span class="label-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+                                </svg></span>
                             12th Stream
                         </label>
                         <div class="select-wrapper">
@@ -532,9 +562,20 @@
                 </table>
             </div>
 
+            <!-- Mobile Cards View (shown on mobile instead of table) -->
+            <div id="mobile-cards" class="mobile-cards" aria-label="Results as cards"></div>
+
+            <!-- Card Results View (primary view for all screen sizes) -->
+            <div id="result-cards" class="result-cards" aria-label="Search results"></div>
+
             <!-- Empty State -->
             <div id="empty-state" class="empty-state" role="status">
-                <div class="empty-icon" aria-hidden="true">🎯</div>
+                <div class="empty-icon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <circle cx="12" cy="12" r="6" />
+                        <circle cx="12" cy="12" r="2" />
+                    </svg></div>
                 <h3 class="empty-title">Ready to Find Your CUET Papers</h3>
                 <p class="empty-text">Use the filters above to search for universities and courses. We'll show you
                     exactly which CUET papers you need to appear for.</p>
@@ -542,7 +583,13 @@
 
             <!-- No Results State -->
             <div id="no-results" class="no-results" style="display: none;" role="alert">
-                <div class="empty-icon" aria-hidden="true">🔍</div>
+                <div class="empty-icon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="var(--color-text-muted)" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                        <path d="m8 11 6 0" />
+                    </svg></div>
                 <h3 class="empty-title">No Matching Results</h3>
                 <p class="empty-text">Try adjusting your filters. Perhaps broaden your search by selecting "All
                     Universities" or "All Courses".</p>
@@ -560,22 +607,44 @@
             <h2 class="visually-hidden" id="stats-heading">CUET Database Statistics</h2>
             <div class="stats-grid">
                 <div class="stat-card" itemscope itemtype="https://schema.org/StatisticalPopulation">
-                    <div class="stat-icon" aria-hidden="true">🏛️</div>
+                    <div class="stat-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"
+                            fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg></div>
                     <div class="stat-value" id="stat-universities" itemprop="numConstraints">49</div>
                     <div class="stat-label" itemprop="name">Central Universities</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" aria-hidden="true">📚</div>
+                    <div class="stat-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"
+                            fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg></div>
                     <div class="stat-value" id="stat-courses">982</div>
                     <div class="stat-label">Programs</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" aria-hidden="true">🗺️</div>
+                    <div class="stat-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"
+                            fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
+                            <line x1="9" y1="3" x2="9" y2="18" />
+                            <line x1="15" y1="6" x2="15" y2="21" />
+                        </svg></div>
                     <div class="stat-value" id="stat-states">25+</div>
                     <div class="stat-label">States Covered</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" aria-hidden="true">📂</div>
+                    <div class="stat-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"
+                            fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg></div>
                     <div class="stat-value" id="stat-categories">9</div>
                     <div class="stat-label">Categories</div>
                 </div>
@@ -625,7 +694,13 @@
         <footer class="footer" role="contentinfo">
             <div class="footer-content">
                 <div class="footer-disclaimer">
-                    <strong>⚠️ Important:</strong> This tool is for guidance only. Always verify admission requirements
+                    <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="vertical-align: -2px; margin-right: 4px;">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg> Important:</strong> This tool is for guidance only. Always verify admission requirements
                     from official university websites and the NTA CUET portal before applying.
                 </div>
                 <div class="footer-meta">

@@ -26,6 +26,8 @@ const elements = {
     statUniversities: document.getElementById('stat-universities'),
     statCourses: document.getElementById('stat-courses'),
     statCategories: document.getElementById('stat-categories'),
+    mobileCards: document.getElementById('mobile-cards'),
+    resultCards: document.getElementById('result-cards'),
 };
 
 // ===== Initialize Application =====
@@ -171,7 +173,7 @@ function setupEventListeners() {
     // Table search
     elements.tableSearch.addEventListener('input', debounce(filterTableResults, 300));
     
-    // Sort buttons
+    // Sort buttons (still functional for table - kept for print)
     document.querySelectorAll('.sort-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const field = btn.dataset.sort;
@@ -265,8 +267,10 @@ function performSearch() {
 
 // ===== Render Results =====
 function renderResults(results) {
-    // Clear previous results
+    // Clear all result containers
     elements.resultsBody.innerHTML = '';
+    elements.mobileCards.innerHTML = '';
+    elements.resultCards.innerHTML = '';
     elements.tableSearch.value = '';
     
     // Update count
@@ -280,7 +284,7 @@ function renderResults(results) {
         return;
     }
     
-    // Show table
+    // Show results
     elements.tableContainer.classList.add('visible');
     elements.emptyState.style.display = 'none';
     elements.noResults.style.display = 'none';
@@ -288,25 +292,35 @@ function renderResults(results) {
     // Limit display for performance
     const displayResults = results.slice(0, 200);
     
-    // Create rows
+    // Create cards (primary view) and table rows (for print)
     displayResults.forEach((course, index) => {
+        // Table row (kept for print)
         const row = createResultRow(course, index);
         elements.resultsBody.appendChild(row);
+        
+        // Result card (primary view)
+        const card = createResultCard(course, index);
+        elements.resultCards.appendChild(card);
     });
     
     // Show warning if truncated
     if (results.length > 200) {
         const warningRow = document.createElement('tr');
         warningRow.innerHTML = `
-            <td colspan="7" style="text-align: center; padding: 20px; background: #fef3c7; color: #92400e;">
+            <td colspan="7" style="text-align: center; padding: 20px; background: var(--color-warning-bg); color: var(--color-warning-dark);">
                 <strong>Showing first 200 results.</strong> Use filters to narrow down your search.
             </td>
         `;
         elements.resultsBody.appendChild(warningRow);
+        
+        const warningCard = document.createElement('div');
+        warningCard.className = 'result-cards-warning';
+        warningCard.innerHTML = '<strong>Showing first 200 results.</strong> Use filters to narrow down your search.';
+        elements.resultCards.appendChild(warningCard);
     }
 }
 
-// ===== Create Result Row =====
+// ===== Create Result Row (kept for print/accessibility) =====
 function createResultRow(course, index) {
     const row = document.createElement('tr');
     row.style.animationDelay = `${index * 0.02}s`;
@@ -333,6 +347,75 @@ function createResultRow(course, index) {
     `;
     
     return row;
+}
+
+// ===== SVG Icon Set =====
+const ICONS = {
+    language: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>',
+    books: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+    clipboard: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>',
+    graduation: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>',
+    notes: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>',
+    check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    x: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+};
+
+// ===== Create Result Card (primary view for all screens) =====
+function createResultCard(course, index) {
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.style.animationDelay = `${Math.min(index * 0.04, 2)}s`;
+    
+    const gatClass = course.cuet_general_test_req?.toLowerCase() === 'yes' ? 'yes' : 'no';
+    const gatText = course.cuet_general_test_req || 'Not specified';
+    const gatIcon = gatClass === 'yes' ? ICONS.check : ICONS.x;
+    const notes = course.comments || '';
+    
+    let notesHtml = '';
+    if (notes && notes !== '-' && notes.trim()) {
+        notesHtml = `
+            <div class="card-notes">
+                <div class="card-field-label"><span class="field-icon">${ICONS.notes}</span> Eligibility Notes</div>
+                <div class="card-field-value">${escapeHtml(notes)}</div>
+            </div>
+        `;
+    }
+    
+    card.innerHTML = `
+        <div class="card-header">
+            <div class="card-university">${escapeHtml(course.university_name)}</div>
+            <div class="card-university-meta">
+                ${ICONS.pin}
+                ${escapeHtml(course.university_short)} • ${escapeHtml(course.location)}
+            </div>
+            <div class="card-course">${escapeHtml(course.course_name)}</div>
+            <span class="card-category-badge">${escapeHtml(course.course_category)}</span>
+        </div>
+        <div class="card-body">
+            <div class="card-field">
+                <div class="card-field-label"><span class="field-icon">${ICONS.language}</span> Language Paper</div>
+                <div class="card-field-value">${escapeHtml(course.cuet_language_req || 'Not specified')}</div>
+            </div>
+            <div class="card-field">
+                <div class="card-field-label"><span class="field-icon">${ICONS.books}</span> Domain Subjects</div>
+                <div class="card-field-value">${escapeHtml(course.cuet_domain_subjects_req || 'Not specified')}</div>
+            </div>
+            <div class="card-inline-fields">
+                <div class="card-inline-field">
+                    <div class="card-field-label"><span class="field-icon">${ICONS.clipboard}</span> General Test</div>
+                    <div class="card-field-value"><span class="gat-badge ${gatClass}">${gatIcon} ${escapeHtml(gatText)}</span></div>
+                </div>
+                <div class="card-inline-field">
+                    <div class="card-field-label"><span class="field-icon">${ICONS.graduation}</span> 12th Stream</div>
+                    <div class="card-field-value">${escapeHtml(course.stream_12th || 'Any')}</div>
+                </div>
+            </div>
+        </div>
+        ${notesHtml}
+    `;
+    
+    return card;
 }
 
 // ===== Filter Table Results (In-table Search) =====
@@ -413,6 +496,8 @@ function resetFilters() {
     // Reset display
     filteredResults = [];
     elements.tableContainer.classList.remove('visible');
+    elements.mobileCards.innerHTML = '';
+    elements.resultCards.innerHTML = '';
     elements.noResults.style.display = 'none';
     elements.emptyState.style.display = 'block';
     updateResultsCount(0, true);
