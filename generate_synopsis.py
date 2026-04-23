@@ -456,7 +456,7 @@ add_heading_styled('How It Works', level=1)
 add_spacer(4)
 
 timeline_data = [
-    ('Till April 25, 2026', 'Applications Open', 'Fill out the online application form at nudge.academy/fellowship — takes approximately 10 minutes.'),
+    ('Till May 5, 2026', 'Applications Open', 'Fill out the online application form at nudge.academy/fellowship — takes approximately 10 minutes.'),
     ('Early May 2026', 'Results Announced', '6 fellows selected — 2 from each stream (Science, Commerce, Humanities) — and notified via email & phone.'),
     ('Mid May 2026', 'Board the Train to Delhi', 'Your fully-funded fellowship week begins. Travel from Kerala to New Delhi with your cohort.'),
     ('Late May 2026', 'Return Transformed', 'Return home with new skills, perspectives, a strong peer network, and a Fellowship certificate.'),
@@ -503,7 +503,7 @@ summary_data = [
     ('Location', 'New Delhi, India'),
     ('Fellows', '6 students — 2 from each stream'),
     ('Streams', 'Science, Commerce, Humanities'),
-    ('Deadline', 'April 25, 2026'),
+    ('Deadline', 'May 5, 2026'),
     ('Cost', '₹0 — 100% Fully Funded'),
     ('Target Group', 'Class 12 students from Kerala'),
     ('Organized By', 'Nudge Academy'),
@@ -577,7 +577,7 @@ add_spacer(8)
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-run = p.add_run('APPLICATION DEADLINE: APRIL 25, 2026')
+run = p.add_run('APPLICATION DEADLINE: MAY 5, 2026')
 run.font.size = Pt(10)
 run.font.bold = True
 run.font.color.rgb = RGBColor(140, 140, 140)
