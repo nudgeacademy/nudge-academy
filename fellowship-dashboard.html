@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fellowship Applications Dashboard</title>
   
-  <!-- Fonts: Plus Jakarta Sans (Main brand font) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,18 +16,21 @@
   <style>
     /* ==================== GLOBAL STYLES ==================== */
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --bg: #f1f5f9;
-      --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-glass: rgba(30, 41, 59, 0.7);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --radius: 12px;
       --error: #ef4444;
       --success: #10b981;
+      --warning: #f59e0b;
+      --info: #3b82f6;
     }
 
     * {
@@ -37,7 +40,7 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.5;
@@ -50,6 +53,21 @@
       display: none !important;
     }
 
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
     /* ==================== LOGIN SCREEN ==================== */
     #login-screen {
       flex: 1;
@@ -57,35 +75,44 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
+                  radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1), transparent 40%);
     }
 
     .login-card {
-      background: var(--surface);
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       width: 100%;
       max-width: 440px;
       border-radius: var(--radius);
-      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       padding: 40px;
       text-align: center;
     }
 
     .login-logo {
-      width: 60px;
-      height: 60px;
-      background: var(--primary);
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary), var(--info));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 24px;
+      font-size: 28px;
       margin: 0 auto 24px;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
     }
 
     .login-card h1 {
       font-size: 1.75rem;
       font-weight: 700;
       margin-bottom: 8px;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .login-card p {
@@ -104,13 +131,15 @@
       font-size: 0.875rem;
       font-weight: 600;
       margin-bottom: 8px;
-      color: var(--text-main);
+      color: var(--text-muted);
     }
 
     .form-control {
       width: 100%;
       padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.6);
       border: 1px solid var(--border);
+      color: var(--text-main);
       border-radius: 8px;
       font-family: inherit;
       font-size: 1rem;
@@ -120,11 +149,14 @@
 
     .form-control:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
       padding: 12px 24px;
       background: var(--primary);
@@ -135,11 +167,12 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
 
     .btn:hover {
       background: var(--primary-hover);
+      transform: translateY(-1px);
     }
 
     .error-msg {
@@ -154,15 +187,22 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .topbar {
-      background: var(--surface);
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 16px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .topbar-brand {
@@ -171,16 +211,49 @@
       gap: 12px;
       font-weight: 700;
       font-size: 1.25rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .topbar-brand i {
       color: var(--primary);
+      -webkit-text-fill-color: var(--primary);
     }
 
     .topbar-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
+    }
+
+    .search-bar {
+      position: relative;
+      width: 300px;
+    }
+    .search-bar i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 8px 12px 8px 36px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-bar input:focus {
+      border-color: var(--primary);
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
 
     .btn-outline {
@@ -192,14 +265,28 @@
     }
 
     .btn-outline:hover {
-      background: var(--bg);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
     }
 
+    .main-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar removed for a cleaner top-down approach, keeping it simple as requested but premium */
+    
     .dashboard-content {
+      flex: 1;
       padding: 32px;
-      max-width: 1200px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.05), transparent 50%);
+    }
+    
+    .dashboard-inner {
+      max-width: 1400px;
       margin: 0 auto;
-      width: 100%;
     }
 
     .page-header {
@@ -210,14 +297,67 @@
     }
 
     .page-title h2 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .page-title p {
       color: var(--text-muted);
       margin-top: 4px;
     }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    
+    .stat-card {
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .stat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-total { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+    .icon-pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+    .icon-approved { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+    .icon-rejected { background: rgba(239, 68, 68, 0.1); color: var(--error); }
 
     .filters {
       display: flex;
@@ -230,19 +370,26 @@
       border-radius: 8px;
       font-family: inherit;
       background: var(--surface);
+      color: var(--text-main);
       cursor: pointer;
+      outline: none;
+    }
+    .filter-select:focus {
+      border-color: var(--primary);
     }
 
     .table-container {
       background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: var(--radius);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
       overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      white-space: nowrap;
     }
 
     th {
@@ -251,15 +398,16 @@
       border-bottom: 1px solid var(--border);
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      background: rgba(15, 23, 42, 0.3);
     }
 
     td {
       padding: 16px 24px;
       border-bottom: 1px solid var(--border);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     tr:last-child td {
@@ -267,45 +415,100 @@
     }
 
     tr:hover td {
-      background: var(--bg);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
-      padding: 4px 12px;
+      gap: 6px;
+      padding: 4px 10px;
       border-radius: 999px;
       font-size: 0.75rem;
       font-weight: 600;
+      border: 1px solid transparent;
     }
 
     .status-pending {
-      background: #fef3c7;
-      color: #92400e;
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.2);
     }
 
     .status-approved {
-      background: #d1fae5;
-      color: #065f46;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border-color: rgba(16, 185, 129, 0.2);
     }
 
     .status-rejected {
-      background: #fee2e2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border-color: rgba(239, 68, 68, 0.2);
     }
 
     .action-btn {
       background: none;
       border: none;
-      color: var(--primary);
+      color: var(--text-muted);
       cursor: pointer;
       font-size: 1rem;
-      padding: 4px;
-      transition: color 0.2s;
+      padding: 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+    
+    .action-btn.view:hover { color: var(--info); background: rgba(59, 130, 246, 0.1); }
+    .action-btn.approve:hover { color: var(--success); background: rgba(16, 185, 129, 0.1); }
+    .action-btn.reject:hover { color: var(--error); background: rgba(239, 68, 68, 0.1); }
+    .action-btn.delete:hover { color: var(--error); background: rgba(239, 68, 68, 0.1); }
+
+    .wa-toggle {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .wa-toggle input {
+      display: none;
+    }
+    .wa-slider {
+      width: 36px;
+      height: 20px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      position: relative;
+      transition: .4s;
+    }
+    .wa-slider:before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      left: 2px;
+      bottom: 2px;
+      background-color: #fff;
+      transition: .4s;
+    }
+    .wa-toggle input:checked + .wa-slider {
+      background-color: #25D366;
+    }
+    .wa-toggle input:checked + .wa-slider:before {
+      transform: translateX(16px);
     }
 
-    .action-btn:hover {
-      color: var(--primary-hover);
+    .remarks-preview {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-muted);
+      font-style: italic;
     }
 
     .empty-state {
@@ -333,7 +536,9 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -349,49 +554,110 @@
     }
     .modal-content {
       background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
       max-height: 90vh;
       border-radius: var(--radius);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .modal-overlay.active .modal-content {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
+    
     .modal-header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .modal-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .modal-title {
       font-size: 1.25rem;
       font-weight: 700;
     }
     .close-btn {
-      background: none;
+      background: rgba(255,255,255,0.05);
       border: none;
-      font-size: 1.25rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
       color: var(--text-muted);
       cursor: pointer;
+      transition: all 0.2s;
     }
-    .close-btn:hover { color: var(--text-main); }
+    .close-btn:hover { 
+      background: rgba(255,255,255,0.1);
+      color: var(--text-main); 
+    }
+    
+    .modal-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      background: rgba(255,255,255,0.01);
+    }
+    .tab-btn {
+      padding: 16px 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active { color: var(--primary); }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px 2px 0 0;
+    }
+    
     .modal-body {
       padding: 24px;
       overflow-y: auto;
       flex: 1;
     }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .modal-footer {
       padding: 16px 24px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: flex-end;
       gap: 12px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 0 0 var(--radius) var(--radius);
     }
     .detail-grid {
       display: grid;
@@ -399,27 +665,76 @@
       gap: 20px;
       margin-bottom: 24px;
     }
+    .detail-item {
+      background: rgba(255,255,255,0.02);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
     .detail-item label {
       display: block;
       font-size: 0.75rem;
       text-transform: uppercase;
       font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       letter-spacing: 0.05em;
     }
     .detail-item div {
       font-size: 0.95rem;
       color: var(--text-main);
+      font-weight: 500;
     }
     .essay-box {
-      background: var(--bg);
-      padding: 16px;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 20px;
       border-radius: 8px;
       font-size: 0.95rem;
-      line-height: 1.6;
+      line-height: 1.7;
       border: 1px solid var(--border);
+      color: #e2e8f0;
     }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Small Modal for Delete Confirmation */
+    #delete-modal .modal-content {
+      max-width: 400px;
+      text-align: center;
+      padding: 32px 24px;
+    }
+    #delete-modal .icon-circle {
+      width: 64px;
+      height: 64px;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 20px;
+    }
+    #delete-modal h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+    #delete-modal p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+    #delete-modal .actions {
+      display: flex;
+      gap: 12px;
+    }
+    #delete-modal .actions button {
+      flex: 1;
+    }
+
   </style>
 </head>
 <body>
@@ -428,18 +743,18 @@
   <div id="login-screen">
     <div class="login-card">
       <div class="login-logo">
-        <i class="fas fa-user-shield"></i>
+        <i class="fas fa-shield-alt"></i>
       </div>
       <h1>Admin Portal</h1>
       <p>Sign in to review Fellowship applications</p>
 
       <form id="login-form">
         <div class="form-group">
-          <label for="admin-pass">Admin Password</label>
-          <input type="password" id="admin-pass" class="form-control" placeholder="Enter password to access" required>
-          <div id="login-error" class="error-msg">Incorrect password. Please try again.</div>
+          <label for="admin-pass">Administrator Password</label>
+          <input type="password" id="admin-pass" class="form-control" placeholder="Enter secure password" required>
+          <div id="login-error" class="error-msg"><i class="fas fa-exclamation-circle"></i> Incorrect password.</div>
         </div>
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn">Login to Dashboard <i class="fas fa-arrow-right"></i></button>
       </form>
     </div>
   </div>
@@ -449,135 +764,195 @@
   <div id="dashboard-screen" class="hidden">
     <header class="topbar">
       <div class="topbar-brand">
-        <i class="fas fa-layer-group"></i> Nudge Academy
+        <i class="fas fa-layer-group"></i> Nudge Academy Admin
       </div>
+      
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-input" placeholder="Search applicant, phone, email...">
+      </div>
+
       <div class="topbar-actions">
-        <span style="font-size: 0.9rem; font-weight: 600;">Admin</span>
-        <button id="logout-btn" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem;">Logout</button>
+        <span style="font-size: 0.9rem; font-weight: 600; display:flex; align-items:center; gap:8px;">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" alt="Admin" style="width:32px; height:32px; border-radius:50%;">
+          Admin
+        </span>
+        <button id="logout-btn" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem; border-radius:6px;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
       </div>
     </header>
 
-    <main class="dashboard-content">
-      <div class="page-header">
-        <div class="page-title">
-          <h2>Fellowship Applications</h2>
-          <p>Review and manage candidates for the 2026 cohort. <span id="total-count-badge" style="background:#e2e8f0; color:#0f172a; padding:2px 8px; border-radius:12px; font-size:0.85rem; font-weight:600; margin-left:8px;">Total: 0</span></p>
+    <div class="main-layout">
+      <main class="dashboard-content">
+        <div class="dashboard-inner">
+          <div class="page-header">
+            <div class="page-title">
+              <h2>Fellowship Applications</h2>
+              <p>Review and manage candidates for the 2026 cohort.</p>
+            </div>
+            <div class="filters">
+              <select id="sort-filter" class="filter-select">
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+              </select>
+              <select id="status-filter" class="filter-select">
+                <option value="all">All Statuses</option>
+                <option value="applied">Applied / Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+                <option value="deleted">Trash</option>
+              </select>
+              <button id="refresh-btn" class="btn btn-outline" title="Refresh Applications">
+                <i class="fas fa-sync-alt"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Total Applications</span>
+                <div class="stat-icon icon-total"><i class="fas fa-users"></i></div>
+              </div>
+              <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Pending Review</span>
+                <div class="stat-icon icon-pending"><i class="fas fa-clock"></i></div>
+              </div>
+              <div class="stat-value" id="stat-pending">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Approved</span>
+                <div class="stat-icon icon-approved"><i class="fas fa-check-circle"></i></div>
+              </div>
+              <div class="stat-value" id="stat-approved">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Rejected</span>
+                <div class="stat-icon icon-rejected"><i class="fas fa-times-circle"></i></div>
+              </div>
+              <div class="stat-value" id="stat-rejected">0</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 60px;">S.No.</th>
+                  <th>Applicant Info</th>
+                  <th>Location & Stream</th>
+                  <th>Status</th>
+                  <th>WhatsApp</th>
+                  <th>Remarks</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="applications-table-body">
+                <!-- Data will be injected here -->
+              </tbody>
+            </table>
+            
+            <div id="empty-state" class="empty-state hidden">
+              <i class="fas fa-folder-open"></i>
+              <h3>No applications found</h3>
+              <p>Adjust your filters or search query.</p>
+            </div>
+          </div>
         </div>
-        <div class="filters">
-          <select id="sort-filter" class="filter-select">
-            <option value="date-desc">Newest First</option>
-            <option value="date-asc">Oldest First</option>
-            <option value="name-asc">Name (A-Z)</option>
-            <option value="name-desc">Name (Z-A)</option>
-            <option value="academic-asc">Academic Status (A-Z)</option>
-            <option value="academic-desc">Academic Status (Z-A)</option>
-          </select>
-          <select id="status-filter" class="filter-select">
-            <option value="all">All Statuses</option>
-            <option value="applied">Applied / Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-          <button id="refresh-btn" class="btn btn-outline" title="Refresh Applications">
-            <i class="fas fa-sync-alt"></i>
-          </button>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== FULL VIEW MODAL ==================== -->
+  <div id="full-view-modal" class="modal-overlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-area">
+          <div id="modal-status-badge"></div>
+          <div class="modal-title" id="modal-applicant-name">Applicant Name</div>
+        </div>
+        <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="tab-btn active" onclick="switchTab('tab-personal')">Personal & Academics</button>
+        <button class="tab-btn" onclick="switchTab('tab-essay')">Essays</button>
+        <button class="tab-btn" onclick="switchTab('tab-reviewer')"><i class="fas fa-clipboard-check"></i> Reviewer</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Personal Tab -->
+        <div id="tab-personal" class="tab-content active">
+          <h4 style="margin-bottom:12px; font-weight:600; color:var(--text-muted);">Personal Information</h4>
+          <div class="detail-grid" id="modal-personal-info"></div>
+          
+          <h4 style="margin-bottom:12px; font-weight:600; color:var(--text-muted); margin-top:20px;">Academic Profile</h4>
+          <div class="detail-grid" id="modal-academic-info"></div>
+
+          <h4 style="margin-bottom:12px; font-weight:600; color:var(--text-muted); margin-top:20px;">Parent / Guardian</h4>
+          <div class="detail-grid" id="modal-parent-info"></div>
+        </div>
+
+        <!-- Essay Tab -->
+        <div id="tab-essay" class="tab-content">
+          <h4 style="margin-bottom:12px; font-weight:600; color:var(--text-muted);">Why the Nudge Fellowship?</h4>
+          <div class="essay-box" id="modal-essay-content"></div>
+        </div>
+
+        <!-- Reviewer Tab -->
+        <div id="tab-reviewer" class="tab-content">
+          <div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:8px; border:1px solid var(--border); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h4 style="font-weight:600;">Communication</h4>
+              <label class="wa-toggle">
+                <input type="checkbox" id="modal-wa-toggle" onchange="toggleWhatsAppFromModal()">
+                <div class="wa-slider"></div>
+                <span style="margin-left:8px; font-size:0.9rem;">Added to WhatsApp Group</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Reviewer Remarks (Internal only)</label>
+            <textarea id="modal-remarks-input" class="form-control" placeholder="Add notes about this candidate's essay, profile, or follow-up actions..."></textarea>
+            <button class="btn" style="margin-top:12px; width:auto;" onclick="saveRemarks()"><i class="fas fa-save"></i> Save Remarks</button>
+            <span id="remarks-save-status" style="margin-left:12px; font-size:0.85rem; color:var(--success); opacity:0; transition:opacity 0.3s;">Saved!</span>
+          </div>
         </div>
       </div>
 
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Applicant Name</th>
-              <th>Stream</th>
-              <th>Date Applied</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="applications-table-body">
-            <!-- Simulated Data -->
-            <tr>
-              <td>
-                <div style="font-weight: 600;">Ananya Sharma</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Ernakulam, Kerala</div>
-              </td>
-              <td>Science</td>
-              <td>April 07, 2026</td>
-              <td><span class="status-badge status-pending">Pending</span></td>
-              <td>
-                <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight: 600;">Rahul P.</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Trivandrum, Kerala</div>
-              </td>
-              <td>Humanities</td>
-              <td>April 06, 2026</td>
-              <td><span class="status-badge status-approved">Approved</span></td>
-              <td>
-                <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight: 600;">Sneha Thomas</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Kottayam, Kerala</div>
-              </td>
-              <td>Commerce</td>
-              <td>April 05, 2026</td>
-              <td><span class="status-badge status-rejected">Rejected</span></td>
-              <td>
-                <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div style="font-weight: 600;">Kiran Kumar</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Kozhikode, Kerala</div>
-              </td>
-              <td>Science</td>
-              <td>April 05, 2026</td>
-              <td><span class="status-badge status-pending">Pending</span></td>
-              <td>
-                <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <!-- Empty State Container (Hidden by default) -->
-        <div id="empty-state" class="empty-state hidden">
-          <i class="fas fa-inbox"></i>
-          <h3>No applications found</h3>
-          <p>Try adjusting your filters or wait for new applications.</p>
-        </div>
+      <div class="modal-footer" id="modal-action-footer">
+         <!-- Action buttons injected by JS -->
       </div>
+    </div>
+  </div>
 
-      <!-- Modal Overlay -->
-      <div id="full-view-modal" class="modal-overlay" onclick="if(event.target===this) closeModal()">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-title" id="modal-applicant-name">Applicant Details</div>
-            <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="modal-body" id="modal-body-content">
-            <!-- Details populated by JS -->
-          </div>
-          <div class="modal-footer" id="modal-action-footer">
-             <!-- Action buttons populated by JS -->
-          </div>
-        </div>
+  <!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
+  <div id="delete-modal" class="modal-overlay" onclick="if(event.target===this) closeDeleteModal()">
+    <div class="modal-content">
+      <div class="icon-circle" style="color:var(--warning); background:rgba(245, 158, 11, 0.1);"><i class="fas fa-trash-restore"></i></div>
+      <h3>Move to Trash?</h3>
+      <p>This application will be moved to the Trash. You can restore it later if needed.</p>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn" style="background:var(--warning);" id="confirm-delete-btn">Move to Trash</button>
       </div>
-    </main>
+    </div>
   </div>
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
     // Firebase configuration
     const firebaseConfig = {
@@ -600,22 +975,25 @@
     }
 
     let allApplications = [];
+    let currentDeleteId = null;
+    let currentViewId = null;
     
     // UI Elements
     const loginScreen = document.getElementById('login-screen');
     const dashboardScreen = document.getElementById('dashboard-screen');
     const loginForm = document.getElementById('login-form');
-    const loginError = document.getElementById('login-error');
-    const logoutBtn = document.getElementById('logout-btn');
     const adminPassInput = document.getElementById('admin-pass');
+    
     const tableBody = document.getElementById('applications-table-body');
     const emptyState = document.getElementById('empty-state');
     const tableEl = document.querySelector('table');
+    
     const statusFilter = document.getElementById('status-filter');
     const sortFilter = document.getElementById('sort-filter');
+    const searchInput = document.getElementById('search-input');
     const refreshBtn = document.getElementById('refresh-btn');
 
-    // Simple auth logic
+    // Auth logic
     const checkAuth = () => sessionStorage.getItem('adminAuth') === 'true';
 
     const renderView = () => {
@@ -629,46 +1007,41 @@
       }
     };
 
-    // Handle Login
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (adminPassInput.value === 'shuttu') {
         sessionStorage.setItem('adminAuth', 'true');
-        loginError.style.display = 'none';
+        document.getElementById('login-error').style.display = 'none';
         adminPassInput.value = '';
         renderView();
       } else {
-        loginError.style.display = 'block';
+        document.getElementById('login-error').style.display = 'block';
       }
     });
 
-    // Handle Logout
-    logoutBtn.addEventListener('click', () => {
+    document.getElementById('logout-btn').addEventListener('click', () => {
       sessionStorage.removeItem('adminAuth');
       renderView();
     });
 
-    // Formatting date
+    // Formatting Helpers
     function formatDate(dateObj) {
       if (!dateObj) return "N/A";
       const d = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute:'2-digit' });
     }
 
     function formatStatusBadge(status) {
       const st = (status || 'applied').toLowerCase();
-      if (st === 'approved') return '<span class="status-badge status-approved">Approved</span>';
-      if (st === 'rejected') return '<span class="status-badge status-rejected">Rejected</span>';
-      return '<span class="status-badge status-pending">Pending</span>'; // default for applied/pending
+      if (st === 'approved') return '<span class="status-badge status-approved"><i class="fas fa-check"></i> Approved</span>';
+      if (st === 'rejected') return '<span class="status-badge status-rejected"><i class="fas fa-times"></i> Rejected</span>';
+      if (st === 'deleted') return '<span class="status-badge" style="background:rgba(255,255,255,0.1); color:var(--text-muted); border-color:rgba(255,255,255,0.2);"><i class="fas fa-trash"></i> Trashed</span>';
+      return '<span class="status-badge status-pending"><i class="fas fa-clock"></i> Pending</span>';
     }
 
-    // Fetch from Firebase
+    // Fetch Data
     async function fetchApplications() {
-      if (!db) {
-        console.error("Firebase DB not initialized");
-        return;
-      }
-      
+      if (!db) return;
       refreshBtn.querySelector('i').classList.add('fa-spin');
       try {
         const querySnapshot = await getDocs(collection(db, "fellowshipApplications"));
@@ -677,70 +1050,91 @@
           allApplications.push({ id: doc.id, ...doc.data() });
         });
         
-        // Update total count
-        const totalCountBadge = document.getElementById('total-count-badge');
-        if (totalCountBadge) {
-          totalCountBadge.textContent = 'Total: ' + allApplications.length;
-        }
+        // Sort chronologically once to assign S.No
+        allApplications.sort((a, b) => {
+          const dateA = a.submittedAt?.toDate ? a.submittedAt.toDate() : new Date(0);
+          const dateB = b.submittedAt?.toDate ? b.submittedAt.toDate() : new Date(0);
+          return dateA - dateB;
+        });
+        
+        // Assign S.No based on chronological order (oldest is 1)
+        allApplications.forEach((app, index) => {
+          app.serialNo = index + 1;
+        });
 
+        updateStats();
         renderTable();
       } catch (error) {
-        console.error("Error fetching applications: ", error);
-        alert("Failed to load applications. Check console for details.");
+        console.error("Error fetching: ", error);
+        alert("Failed to load applications.");
       } finally {
         refreshBtn.querySelector('i').classList.remove('fa-spin');
       }
     }
 
-    window.updateStatus = async function(id, newStatus) {
-      if (!db) return;
-      try {
-        const docRef = doc(db, "fellowshipApplications", id);
-        await updateDoc(docRef, { status: newStatus });
-        
-        // Update local object blindly for fast UI
-        const idx = allApplications.findIndex(a => a.id === id);
-        if (idx !== -1) allApplications[idx].status = newStatus;
-        renderTable();
-      } catch(err) {
-        console.error("Error updating status: ", err);
-        alert("Failed to update status.");
-      }
+    function updateStats() {
+      const activeApps = allApplications.filter(a => a.status?.toLowerCase() !== 'deleted');
+      const total = activeApps.length;
+      const pending = activeApps.filter(a => !a.status || a.status.toLowerCase() === 'applied' || a.status.toLowerCase() === 'pending').length;
+      const approved = activeApps.filter(a => a.status?.toLowerCase() === 'approved').length;
+      const rejected = activeApps.filter(a => a.status?.toLowerCase() === 'rejected').length;
+
+      document.getElementById('stat-total').innerText = total;
+      document.getElementById('stat-pending').innerText = pending;
+      document.getElementById('stat-approved').innerText = approved;
+      document.getElementById('stat-rejected').innerText = rejected;
     }
 
+    // Render Table
     function renderTable() {
       const statusVal = statusFilter.value.toLowerCase();
       const sortVal = sortFilter.value;
+      const searchVal = searchInput.value.toLowerCase();
       
       let filtered = allApplications.filter(app => {
+        // Status filter
         const st = (app.status || 'applied').toLowerCase();
-        if (statusVal === 'all') return true;
-        if (statusVal === 'pending' || statusVal === 'applied') return ['applied', 'pending'].includes(st);
-        return st === statusVal;
+        
+        // Handle Trash filter explicitly
+        if (statusVal === 'deleted') {
+          if (st !== 'deleted') return false;
+        } else {
+          // Normal filters shouldn't show deleted items
+          if (st === 'deleted') return false;
+        }
+
+        let statusMatch = true;
+        if (statusVal !== 'all' && statusVal !== 'deleted') {
+          if (statusVal === 'pending' || statusVal === 'applied') {
+            statusMatch = ['applied', 'pending'].includes(st);
+          } else {
+            statusMatch = st === statusVal;
+          }
+        }
+        
+        // Search filter
+        let searchMatch = true;
+        if (searchVal) {
+          const searchStr = `${app.name} ${app.email} ${app.phone} ${app.school} ${app.city}`.toLowerCase();
+          searchMatch = searchStr.includes(searchVal);
+        }
+        
+        return statusMatch && searchMatch;
       });
 
-      // Sorting
+      // Sort
       filtered.sort((a, b) => {
         const dateA = a.submittedAt?.toDate ? a.submittedAt.toDate() : new Date(0);
         const dateB = b.submittedAt?.toDate ? b.submittedAt.toDate() : new Date(0);
         const nameA = (a.name || '').toLowerCase();
         const nameB = (b.name || '').toLowerCase();
-        const acadA = (a.academicStatus || '').toLowerCase();
-        const acadB = (b.academicStatus || '').toLowerCase();
         
-        if (sortVal === 'date-desc') return dateB - dateA;
-        if (sortVal === 'date-asc') return dateA - dateB;
+        if (sortVal === 'date-desc') return dateB - dateA; // Newest first
+        if (sortVal === 'date-asc') return dateA - dateB;  // Oldest first
         if (sortVal === 'name-asc') return nameA.localeCompare(nameB);
         if (sortVal === 'name-desc') return nameB.localeCompare(nameA);
-        if (sortVal === 'academic-asc') return acadA.localeCompare(acadB);
-        if (sortVal === 'academic-desc') return acadB.localeCompare(acadA);
         return 0;
       });
-
-      const totalCountBadge = document.getElementById('total-count-badge');
-      if (totalCountBadge) {
-        totalCountBadge.textContent = 'Total: ' + filtered.length;
-      }
 
       if (filtered.length === 0) {
         emptyState.classList.remove('hidden');
@@ -750,20 +1144,43 @@
         tableEl.classList.remove('hidden');
         
         tableBody.innerHTML = filtered.map(app => {
-          const location = [app.city, app.district].filter(Boolean).join(', ') || 'Kerala';
+          const location = [app.city, app.district].filter(Boolean).join(', ') || 'N/A';
+          const remarksPreview = app.reviewerRemarks ? app.reviewerRemarks : '—';
+          
           return `
             <tr>
+              <td style="font-weight:600; color:var(--text-muted);">${app.serialNo}</td>
               <td>
-                <div style="font-weight: 600;">${app.name || 'Unknown'}</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">${location}</div>
+                <div style="font-weight: 600; color: #fff;">${app.name || 'Unknown'}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top:2px;">
+                  <i class="fas fa-envelope"></i> ${app.email || 'N/A'} <br>
+                  <i class="fas fa-phone"></i> ${app.phone || 'N/A'}
+                </div>
               </td>
-              <td>${app.stream || 'N/A'}</td>
-              <td>${formatDate(app.submittedAt)}</td>
-              <td>${formatStatusBadge(app.status)}</td>
               <td>
-                <button class="action-btn" title="View & Manage" onclick="viewFullApplication('${app.id}')"><i class="fas fa-eye"></i></button>
-                <button class="action-btn" title="Approve" style="color:var(--success);" onclick="updateStatus('${app.id}', 'approved')"><i class="fas fa-check"></i></button>
-                <button class="action-btn" title="Reject" style="color:var(--error);" onclick="updateStatus('${app.id}', 'rejected')"><i class="fas fa-times"></i></button>
+                <div style="font-weight: 500;">${app.stream || 'N/A'}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top:2px;">
+                  <i class="fas fa-map-marker-alt"></i> ${location}
+                </div>
+              </td>
+              <td>${formatStatusBadge(app.status)}<div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">${formatDate(app.submittedAt).split(',')[0]}</div></td>
+              <td>
+                <label class="wa-toggle">
+                  <input type="checkbox" onchange="toggleWhatsApp('${app.id}', this.checked)" ${app.addedToWhatsApp ? 'checked' : ''}>
+                  <div class="wa-slider"></div>
+                </label>
+              </td>
+              <td><div class="remarks-preview" title="${remarksPreview}">${remarksPreview}</div></td>
+              <td style="text-align:right;">
+                ${app.status?.toLowerCase() === 'deleted' ? `
+                  <button class="action-btn view" title="View Details" onclick="viewFullApplication('${app.id}')"><i class="fas fa-eye"></i></button>
+                  <button class="action-btn" title="Restore" style="color:var(--success);" onclick="restoreApplication('${app.id}')"><i class="fas fa-undo"></i> Restore</button>
+                ` : `
+                  <button class="action-btn view" title="View Details" onclick="viewFullApplication('${app.id}')"><i class="fas fa-eye"></i></button>
+                  <button class="action-btn approve" title="Approve" onclick="updateStatus('${app.id}', 'approved')"><i class="fas fa-check"></i></button>
+                  <button class="action-btn reject" title="Reject" onclick="updateStatus('${app.id}', 'rejected')"><i class="fas fa-times"></i></button>
+                  <button class="action-btn delete" title="Move to Trash" onclick="confirmDelete('${app.id}')"><i class="fas fa-trash"></i></button>
+                `}
               </td>
             </tr>
           `;
@@ -771,66 +1188,185 @@
       }
     }
 
+    // Actions
+    window.updateStatus = async function(id, newStatus) {
+      if (!db) return;
+      try {
+        await updateDoc(doc(db, "fellowshipApplications", id), { status: newStatus });
+        const idx = allApplications.findIndex(a => a.id === id);
+        if (idx !== -1) allApplications[idx].status = newStatus;
+        updateStats();
+        renderTable();
+        
+        // If modal is open for this user, update its badge
+        if (currentViewId === id) {
+          document.getElementById('modal-status-badge').innerHTML = formatStatusBadge(newStatus);
+        }
+      } catch(err) {
+        console.error("Error updating status: ", err);
+      }
+    }
+
+    window.toggleWhatsApp = async function(id, isChecked) {
+      if (!db) return;
+      try {
+        await updateDoc(doc(db, "fellowshipApplications", id), { addedToWhatsApp: isChecked });
+        const idx = allApplications.findIndex(a => a.id === id);
+        if (idx !== -1) allApplications[idx].addedToWhatsApp = isChecked;
+      } catch(err) {
+        console.error("Error updating WA: ", err);
+        // Revert UI on failure
+        renderTable();
+      }
+    }
+
+    window.toggleWhatsAppFromModal = function() {
+      const isChecked = document.getElementById('modal-wa-toggle').checked;
+      toggleWhatsApp(currentViewId, isChecked);
+      renderTable(); // Update the background table
+    }
+
+    window.saveRemarks = async function() {
+      if (!db || !currentViewId) return;
+      const remarks = document.getElementById('modal-remarks-input').value;
+      try {
+        await updateDoc(doc(db, "fellowshipApplications", currentViewId), { reviewerRemarks: remarks });
+        const idx = allApplications.findIndex(a => a.id === currentViewId);
+        if (idx !== -1) allApplications[idx].reviewerRemarks = remarks;
+        
+        const statusEl = document.getElementById('remarks-save-status');
+        statusEl.style.opacity = '1';
+        setTimeout(() => statusEl.style.opacity = '0', 2000);
+        
+        renderTable(); // Update background table
+      } catch(err) {
+        console.error("Error saving remarks: ", err);
+      }
+    }
+
+    // Delete Flow
+    window.confirmDelete = function(id) {
+      currentDeleteId = id;
+      document.getElementById('delete-modal').classList.add('active');
+    }
+    
+    window.closeDeleteModal = function() {
+      document.getElementById('delete-modal').classList.remove('active');
+      currentDeleteId = null;
+    }
+
+    document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
+      if (!db || !currentDeleteId) return;
+      const btn = document.getElementById('confirm-delete-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      try {
+        await updateDoc(doc(db, "fellowshipApplications", currentDeleteId), { status: 'deleted' });
+        const idx = allApplications.findIndex(a => a.id === currentDeleteId);
+        if (idx !== -1) allApplications[idx].status = 'deleted';
+        
+        updateStats();
+        renderTable();
+        closeDeleteModal();
+      } catch(err) {
+        console.error("Error moving to trash: ", err);
+        alert("Failed to move application to trash.");
+      } finally {
+        btn.innerHTML = 'Move to Trash';
+      }
+    });
+
+    window.restoreApplication = async function(id) {
+      if (!db) return;
+      try {
+        await updateDoc(doc(db, "fellowshipApplications", id), { status: 'applied' });
+        const idx = allApplications.findIndex(a => a.id === id);
+        if (idx !== -1) allApplications[idx].status = 'applied';
+        updateStats();
+        renderTable();
+      } catch(err) {
+        console.error("Error restoring: ", err);
+      }
+    }
+
+    // View Modal
     window.viewFullApplication = function(id) {
+      currentViewId = id;
       const app = allApplications.find(a => a.id === id);
       if (!app) return;
       
-      document.getElementById('modal-applicant-name').innerText = app.name || 'Applicant Details';
+      document.getElementById('modal-applicant-name').innerText = app.name || 'Applicant';
+      document.getElementById('modal-status-badge').innerHTML = formatStatusBadge(app.status);
       
-      const entranceExamsStr = Array.isArray(app.entranceExams) ? app.entranceExams.join(', ') : (app.entranceExams || 'N/A');
-      
-      const html = `
-        <div class="detail-grid">
-          <div class="detail-item"><label>Email</label><div>${app.email || 'N/A'}</div></div>
-          <div class="detail-item"><label>Phone</label><div>${app.phone || 'N/A'}</div></div>
-          <div class="detail-item"><label>DOB</label><div>${app.dob || 'N/A'}</div></div>
-          <div class="detail-item"><label>Gender</label><div>${app.gender || 'N/A'}</div></div>
-          <div class="detail-item"><label>Location</label><div>${app.city || 'N/A'}, ${app.district || 'N/A'}</div></div>
-          <div class="detail-item"><label>Status</label><div>${formatStatusBadge(app.status)}</div></div>
-        </div>
-        
-        <h4 style="margin-bottom:12px; font-weight:700;">Academic Information</h4>
-        <div class="detail-grid">
-          <div class="detail-item"><label>School</label><div>${app.school || 'N/A'}</div></div>
-          <div class="detail-item"><label>Stream</label><div>${app.stream || 'N/A'}</div></div>
-          <div class="detail-item"><label>Academic Status</label><div>${app.academicStatus || 'N/A'}</div></div>
-          <div class="detail-item"><label>Entrance Exams</label><div>${entranceExamsStr}</div></div>
-        </div>
-        
-        <h4 style="margin-bottom:12px; font-weight:700;">Parent / Guardian</h4>
-        <div class="detail-grid">
-          <div class="detail-item"><label>Parent Name</label><div>${app.parentName || 'N/A'}</div></div>
-          <div class="detail-item"><label>Parent Phone</label><div>${app.parentPhone || 'N/A'}</div></div>
-        </div>
-
-        <h4 style="margin-bottom:12px; font-weight:700;">Essay Response</h4>
-        <div class="essay-box">
-          <label style="display:block; font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:8px;">Why the Nudge Fellowship?</label>
-          <div>${app.essay1 ? app.essay1.replace(/\\n/g, '<br>') : 'No essay provided.'}</div>
-        </div>
+      // Personal
+      document.getElementById('modal-personal-info').innerHTML = `
+        <div class="detail-item"><label>Email</label><div>${app.email || 'N/A'}</div></div>
+        <div class="detail-item"><label>Phone</label><div>${app.phone || 'N/A'}</div></div>
+        <div class="detail-item"><label>DOB</label><div>${app.dob || 'N/A'}</div></div>
+        <div class="detail-item"><label>Gender</label><div>${app.gender || 'N/A'}</div></div>
+        <div class="detail-item"><label>Location</label><div>${app.city || 'N/A'}, ${app.district || 'N/A'}</div></div>
+        <div class="detail-item"><label>Applied On</label><div>${formatDate(app.submittedAt)}</div></div>
       `;
       
-      document.getElementById('modal-body-content').innerHTML = html;
-      
-      const footerHtml = `
-        <button class="btn btn-outline" style="border-color:var(--error); color:var(--error);" onclick="updateStatus('${app.id}', 'rejected'); closeModal();">Reject</button>
-        <button class="btn btn-outline" style="border-color:var(--success); color:var(--success);" onclick="updateStatus('${app.id}', 'approved'); closeModal();">Approve</button>
+      // Academic
+      const exams = Array.isArray(app.entranceExams) ? app.entranceExams.join(', ') : (app.entranceExams || 'N/A');
+      document.getElementById('modal-academic-info').innerHTML = `
+        <div class="detail-item"><label>School</label><div>${app.school || 'N/A'}</div></div>
+        <div class="detail-item"><label>Stream</label><div>${app.stream || 'N/A'}</div></div>
+        <div class="detail-item"><label>Academic Status</label><div>${app.academicStatus || 'N/A'}</div></div>
+        <div class="detail-item"><label>Class 10 Year</label><div>${app.class10Year || 'N/A'}</div></div>
+        <div class="detail-item" style="grid-column: span 2;"><label>Target Entrance Exams</label><div>${exams}</div></div>
       `;
-      document.getElementById('modal-action-footer').innerHTML = footerHtml;
       
+      // Guardian
+      document.getElementById('modal-parent-info').innerHTML = `
+        <div class="detail-item"><label>Parent Name</label><div>${app.parentName || 'N/A'}</div></div>
+        <div class="detail-item"><label>Parent Phone</label><div>${app.parentPhone || 'N/A'}</div></div>
+      `;
+      
+      // Essay
+      document.getElementById('modal-essay-content').innerHTML = app.essay1 ? app.essay1.replace(/\\n/g, '<br>') : 'No essay provided.';
+      
+      // Reviewer
+      document.getElementById('modal-wa-toggle').checked = !!app.addedToWhatsApp;
+      document.getElementById('modal-remarks-input').value = app.reviewerRemarks || '';
+      
+      // Footer
+      if (app.status?.toLowerCase() === 'deleted') {
+        document.getElementById('modal-action-footer').innerHTML = `
+          <button class="btn btn-outline" style="border-color:var(--success); color:var(--success);" onclick="restoreApplication('${app.id}'); closeModal();">Restore Application</button>
+        `;
+      } else {
+        document.getElementById('modal-action-footer').innerHTML = `
+          <button class="btn btn-outline" style="border-color:var(--error); color:var(--error);" onclick="updateStatus('${app.id}', 'rejected')">Reject Application</button>
+          <button class="btn btn-outline" style="border-color:var(--success); color:var(--success);" onclick="updateStatus('${app.id}', 'approved')">Approve Application</button>
+        `;
+      }
+      
+      // Reset to first tab
+      switchTab('tab-personal');
       document.getElementById('full-view-modal').classList.add('active');
     };
 
     window.closeModal = function() {
       document.getElementById('full-view-modal').classList.remove('active');
+      currentViewId = null;
     };
 
-    // Event Listeners
+    window.switchTab = function(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    };
+
+    // Listeners
     statusFilter.addEventListener('change', renderTable);
     sortFilter.addEventListener('change', renderTable);
+    searchInput.addEventListener('input', renderTable);
     refreshBtn.addEventListener('click', fetchApplications);
 
-    // Initialize UI
+    // Init
     renderView();
   </script>
 </body>
