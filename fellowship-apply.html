@@ -90,215 +90,30 @@
   </section>
 
 
-  <!-- ==================== APPLICATION FORM ==================== -->
+  <!-- ==================== APPLICATIONS CLOSED MESSAGE ==================== -->
   <section class="apply-form-section">
     <div class="container">
-      <div class="apply-form-card">
-
-        <form id="applicationForm" onsubmit="submitFellowshipForm(event)">
-
-          <!-- Personal Info -->
-          <div class="form-label-pill"><i class="fas fa-user"></i> Personal Information</div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">First Name</label>
-              <input type="text" name="name" class="f-input" placeholder="Enter first name" required>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Last Name</label>
-              <input type="text" name="lastName" class="f-input" placeholder="Enter last name" required>
-            </div>
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">Date of Birth</label>
-              <input type="date" name="dob" class="f-input" required>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Gender</label>
-              <select name="gender" class="f-input" required>
-                <option value="" disabled selected>Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">Mobile Number</label>
-              <input type="tel" name="phone" class="f-input" placeholder="+91 XXXXX XXXXX" required>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Email Address</label>
-              <input type="email" name="email" class="f-input" placeholder="you@email.com" required>
-            </div>
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">District (Kerala)</label>
-              <select name="district" class="f-input" required>
-                <option value="" disabled selected>Select district</option>
-                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-                <option value="Kollam">Kollam</option>
-                <option value="Pathanamthitta">Pathanamthitta</option>
-                <option value="Alappuzha">Alappuzha</option>
-                <option value="Kottayam">Kottayam</option>
-                <option value="Idukki">Idukki</option>
-                <option value="Ernakulam">Ernakulam</option>
-                <option value="Thrissur">Thrissur</option>
-                <option value="Palakkad">Palakkad</option>
-                <option value="Malappuram">Malappuram</option>
-                <option value="Kozhikode">Kozhikode</option>
-                <option value="Wayanad">Wayanad</option>
-                <option value="Kannur">Kannur</option>
-                <option value="Kasaragod">Kasaragod</option>
-              </select>
-            </div>
-            <div class="f-group">
-              <label class="f-label">City / Town</label>
-              <input type="text" name="city" class="f-input" placeholder="Your city" required>
-            </div>
-          </div>
-
-          <!-- Academic Info -->
-          <div class="form-label-pill" style="margin-top: 36px;">
-            <i class="fas fa-graduation-cap"></i> Academic Details
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">Current Academic Status</label>
-              <select name="academicStatus" class="f-input" required id="academicStatus"
-                onchange="handleAcademicStatus()">
-                <option value="" disabled selected>Select your current status</option>
-                <option value="Class 12 (Currently studying)">Completed Class 11 (Currently in Class 12)</option>
-                <option value="Completed Class 12">Completed Class 12 (Dropper / Pass out)</option>
-                <option value="Undergraduate">Undergraduate</option>
-                <option value="Postgraduate">Postgraduate</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div class="f-group" id="otherStatusGroup" style="display: none;">
-              <label class="f-label">Please specify your status</label>
-              <input type="text" name="otherStatus" id="otherStatusInput" class="f-input"
-                placeholder="e.g. Graduated, College student, etc.">
-            </div>
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">Class 10 Passing Year</label>
-              <select name="class10Year" class="f-input" required>
-                <option value="" disabled selected>Select passing year</option>
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="Before 2022">Before 2022</option>
-              </select>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Class 11 Stream</label>
-              <select name="stream" class="f-input" required>
-                <option value="" disabled selected>Select stream</option>
-                <option value="Science">Science</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Arts/Humanities">Arts / Humanities</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="f-row-full">
-            <label class="f-label">School Name</label>
-            <input type="text" name="school" class="f-input" placeholder="Full name of your school" required>
-          </div>
-
-          <div class="f-row-full" style="margin-top: 4px;">
-            <label class="f-label">Which UG entrance exams are you planning to appear for?</label>
-            <p class="essay-hint" style="margin-bottom: 10px;">Select all that apply.</p>
-            <div class="checkbox-grid" id="entranceExams">
-              <label class="chip-check"><input type="checkbox" name="entrance" value="CUET UG"><span>CUET
-                  UG</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="JEE Main"><span>JEE
-                  Main</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="NEET UG"><span>NEET
-                  UG</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="KEAM"><span>KEAM</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="CLAT"><span>CLAT</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="NID / NIFT"><span>NID /
-                  NIFT</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="IPMAT"><span>IPMAT</span></label>
-              <label class="chip-check"><input type="checkbox" name="entrance" value="Other"><span>Other</span></label>
-            </div>
-          </div>
-
-          <!-- Guardian Info -->
-          <div class="form-label-pill" style="margin-top: 36px;">
-            <i class="fas fa-users"></i> Parent / Guardian
-          </div>
-
-          <div class="f-row">
-            <div class="f-group">
-              <label class="f-label">Parent Name</label>
-              <input type="text" name="parentName" class="f-input" placeholder="Full name" required>
-            </div>
-            <div class="f-group">
-              <label class="f-label">Parent Mobile</label>
-              <input type="tel" name="parentPhone" class="f-input" placeholder="+91 XXXXX XXXXX" required>
-            </div>
-          </div>
-
-          <!-- Essays -->
-          <div class="form-label-pill" style="margin-top: 36px;">
-            <i class="fas fa-pen-nib"></i> The Heart of Your Application
-          </div>
-
-          <div class="f-row-full" style="margin-top: 10px;">
-            <p class="essay-q">Why the Nudge Fellowship? What will you take back with you?</p>
-            <p class="essay-hint">200–300 words. Be genuine. Be specific. (Malayalam/English)</p>
-            <textarea name="essay1" class="f-input" placeholder="Write your answer here..." required></textarea>
-          </div>
-
-          <!-- Declaration -->
-          <div class="f-check">
-            <input type="checkbox" id="declaration" required>
-            <label for="declaration">
-              I confirm I am a Kerala student who has completed Class 11. I understand selection is merit-based, travel
-              is by train, and all details provided are accurate.
-            </label>
-          </div>
-
-          <!-- Submit -->
-          <button type="submit" id="submitBtn" class="f-submit">
-            Submit Application <i class="fas fa-paper-plane"></i>
-          </button>
-
-          <p class="form-note">
-            Having trouble? <a href="mailto:info@nudge.academy">Email us</a> or call +91 9625986622
+      <div class="apply-form-card" style="text-align: center; padding: 60px 40px;">
+        <div style="margin-bottom: 30px;">
+          <i class="fas fa-lock" style="font-size: 4rem; color: #64748b; margin-bottom: 20px;"></i>
+          <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #0f172a; margin-bottom: 16px;">Applications are now closed</h2>
+          <p style="font-size: 1.1rem; color: #475569; max-width: 500px; margin: 0 auto;">
+            Thank you for your overwhelming interest in the Nudge Fellowship 2026. The application window is now closed.
           </p>
-        </form>
-
-        <!-- Success Message -->
-        <div id="successMessage" class="success">
-          <i class="fas fa-check-circle success-icon"></i>
-          <h2>Application Received!</h2>
-          <p>Your application is safely recorded.<br>Thank you for stepping forward.</p>
-          <div class="ref-box">
-            REF: <span id="refNumber">XXXXXXXXXXXX</span>
-          </div>
-          <p>We will review your essays and contact shortlisted candidates by mid-May.</p>
-          <a href="fellowship.html" class="return-link"><i class="fas fa-arrow-left"></i> Return to Program Details</a>
+        </div>
+        
+        <div style="background: #f8fafc; border-radius: 16px; padding: 30px; margin-bottom: 40px;">
+          <h4 style="font-weight: 700; color: #0f172a; margin-bottom: 12px;">What's Next?</h4>
+          <p style="color: #64748b; font-size: 0.95rem;">
+            Our team is currently reviewing all submitted applications. Shortlisted candidates will be contacted via email and phone by mid-May 2026.
+          </p>
         </div>
 
-        <div class="form-back" id="backLinkContainer">
-          <a href="fellowship.html"><i class="fas fa-arrow-left"></i> Back to Fellowship Details</a>
+        <div class="form-back">
+          <a href="fellowship.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #dc2626; text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Return to Fellowship Details
+          </a>
         </div>
-
       </div>
     </div>
   </section>
