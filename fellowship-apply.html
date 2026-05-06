@@ -93,25 +93,43 @@
   <!-- ==================== APPLICATIONS CLOSED MESSAGE ==================== -->
   <section class="apply-form-section">
     <div class="container">
-      <div class="apply-form-card" style="text-align: center; padding: 60px 40px;">
-        <div style="margin-bottom: 30px;">
-          <i class="fas fa-lock" style="font-size: 4rem; color: #64748b; margin-bottom: 20px;"></i>
-          <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #0f172a; margin-bottom: 16px;">Applications are now closed</h2>
-          <p style="font-size: 1.1rem; color: #475569; max-width: 500px; margin: 0 auto;">
-            Thank you for your overwhelming interest in the Nudge Fellowship 2026. The application window is now closed.
+      <div class="apply-form-card" style="text-align: center; padding: 64px 40px; position: relative; overflow: hidden; max-width: 640px;">
+        <!-- Background accents -->
+        <div style="position: absolute; top: -50px; left: -50px; width: 250px; height: 250px; background: rgba(100, 116, 139, 0.08); border-radius: 50%; filter: blur(40px); pointer-events: none;"></div>
+        <div style="position: absolute; bottom: -50px; right: -50px; width: 200px; height: 200px; background: rgba(220, 38, 38, 0.05); border-radius: 50%; filter: blur(40px); pointer-events: none;"></div>
+
+        <div style="margin-bottom: 36px; position: relative; z-index: 2; animation: fade-up 0.8s ease both;">
+          <div style="width: 100px; height: 100px; margin: 0 auto 28px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.06), inset 0 2px 0 rgba(255,255,255,0.9); animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;">
+            <i class="fas fa-lock" style="font-size: 2.8rem; background: -webkit-linear-gradient(135deg, #475569, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+          </div>
+          
+          <div class="apply-badge" style="background: rgba(100, 116, 139, 0.08); border-color: rgba(100, 116, 139, 0.15); color: #475569; margin-bottom: 24px; animation: fade-up 0.8s ease 0.2s both;">
+            <i class="fas fa-calendar-times"></i> May 5 Deadline Passed
+          </div>
+
+          <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: #0f172a; margin-bottom: 18px; line-height: 1.2;">Applications Closed</h2>
+          <p style="font-size: 1.1rem; color: #64748b; max-width: 500px; margin: 0 auto; line-height: 1.7;">
+            The application window for the Nudge Fellowship 2026 has officially closed. We are overwhelmed by the incredible response from Kerala's brightest students.
           </p>
         </div>
         
-        <div style="background: #f8fafc; border-radius: 16px; padding: 30px; margin-bottom: 40px;">
-          <h4 style="font-weight: 700; color: #0f172a; margin-bottom: 12px;">What's Next?</h4>
-          <p style="color: #64748b; font-size: 0.95rem;">
-            Our team is currently reviewing all submitted applications. Shortlisted candidates will be contacted via email and phone by mid-May 2026.
-          </p>
+        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 24px; padding: 36px; margin-bottom: 40px; position: relative; z-index: 2; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.03); animation: fade-up 0.8s ease 0.4s both;">
+          <div style="display: flex; align-items: flex-start; gap: 20px;">
+            <div style="width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #dc2626; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; box-shadow: 0 8px 20px rgba(220, 38, 38, 0.15);">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <div>
+              <h4 style="font-weight: 700; color: #0f172a; font-size: 1.15rem; margin-bottom: 10px; font-family: 'Plus Jakarta Sans', sans-serif;">Evaluation in Progress</h4>
+              <p style="color: #64748b; font-size: 0.98rem; line-height: 1.65; margin: 0;">
+                Our academic team is currently reviewing all submissions. The 6 selected fellows (2 from each stream) will be contacted directly via email and phone by <strong>Mid-May 2026</strong>.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="form-back">
-          <a href="fellowship.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #dc2626; text-decoration: none;">
-            <i class="fas fa-arrow-left"></i> Return to Fellowship Details
+        <div class="form-back" style="animation: fade-up 0.8s ease 0.6s both; margin-top: 0; position: relative; z-index: 2;">
+          <a href="fellowship.html" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 18px 28px; background: #0f172a; color: #fff; font-size: 1.05rem; font-weight: 700; border-radius: 50px; text-decoration: none; transition: all 0.3s; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);">
+            <i class="fas fa-arrow-left" style="margin-right: 4px;"></i> Return to Program Details
           </a>
         </div>
       </div>
