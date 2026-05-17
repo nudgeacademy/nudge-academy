@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IIT Without JEE | NCET & ITEP Orientation | Nudge Academy</title>
+  <meta name="description" content="Register for the free Nudge orientation on NCET & ITEP — your guide to securing a seat at IIT without JEE. 21 May 2026 at 7:30 PM.">
+  <meta name="keywords" content="IIT without JEE, NCET, ITEP, IIT Kharagpur, Nudge Academy, NCET orientation, teaching at IIT">
+  <meta name="author" content="Nudge Academy">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/nudge-style.css">
+  <link rel="stylesheet" href="assets/css/fellowship.css">
+
+  <style>
+    .reg-body { padding-top: 72px; background: #f8fafc; min-height: 100vh; }
+
+    /* Hero Banner */
+    .reg-hero {
+      background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 30%, #dc2626 60%, #ef4444 100%);
+      padding: 48px 0 56px; text-align: center; position: relative; overflow: hidden;
+    }
+    .reg-hero::before {
+      content: ''; position: absolute; top: -50%; right: -20%; width: 80%; height: 150%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%); pointer-events: none;
+    }
+    .reg-hero-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .reg-hero .apply-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 50px;
+      margin-bottom: 16px; font-size: 0.8rem; font-weight: 600;
+      color: #fff; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .reg-hero h1 {
+      font-family: 'Playfair Display', serif; font-size: 2.4rem;
+      font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.2;
+    }
+    .reg-hero p { font-size: 1rem; color: rgba(255,255,255,0.85); max-width: 500px; margin: 0 auto 20px; }
+    .reg-meta-row {
+      display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .reg-meta-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+      color: rgba(255,255,255,0.95); font-size: 0.88rem; font-weight: 600;
+    }
+    .reg-meta-chip i { color: #fbbf24; }
+
+    /* Poster + Form layout */
+    .reg-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      max-width: 1100px; margin: 0 auto; padding: 24px 24px 80px;
+      position: relative; z-index: 3; align-items: start;
+    }
+    .reg-poster {
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+      align-self: start;
+    }
+    .reg-poster img { width: 100%; height: auto; display: block; }
+
+    /* Form Card */
+    .reg-form-card {
+      background: #fff; border-radius: 24px; padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.06), 0 0 0 1px #e2e8f0;
+      position: relative; overflow: hidden;
+      align-self: start;
+    }
+    .reg-form-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: linear-gradient(90deg, #dc2626, #ef4444, #fbbf24);
+    }
+    .reg-form-title {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem;
+      font-weight: 800; color: #0f172a; margin-bottom: 6px;
+    }
+    .reg-form-sub { font-size: 0.9rem; color: #64748b; margin-bottom: 28px; }
+
+    /* Success Message */
+    .reg-success {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+    .reg-success-icon {
+      width: 80px; height: 80px; margin: 0 auto 24px;
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; color: #059669;
+    }
+    .reg-success h2 { font-family: 'Playfair Display',serif; font-size: 1.8rem; color: #0f172a; margin-bottom: 12px; }
+    .reg-success p { color: #64748b; font-size: 0.95rem; line-height: 1.7; max-width: 400px; margin: 0 auto; }
+    .reg-success .meet-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px; padding: 14px 32px; background: #dc2626; color: #fff;
+      font-weight: 700; border-radius: 50px; text-decoration: none;
+      box-shadow: 0 10px 30px rgba(220,38,38,0.3); transition: all 0.3s;
+    }
+    .reg-success .meet-link:hover { background: #b91c1c; transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .reg-layout { grid-template-columns: 1fr; margin-top: 0; padding: 16px 16px 60px; }
+      .reg-poster { position: static; border-radius: 18px; }
+      .reg-form-card { padding: 28px 20px; border-radius: 18px; }
+      .reg-hero h1 { font-size: 1.8rem; }
+      .reg-meta-row { flex-direction: column; align-items: center; gap: 10px; }
+      .f-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body class="reg-body">
+
+  <!-- HEADER -->
+  <header class="header scrolled" id="header" style="padding: 12px 0; box-shadow: 0 4px 20px rgba(220,38,38,0.3);">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy">
+        </a>
+        <nav class="nav" id="mainNav">
+          <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="orientation.html" class="nav-link">NCET Guide</a>
+          </div>
+          <div class="nav-cta">
+            <a href="index.html#contact" class="btn" style="background: rgba(255,255,255,0.2); color: #fff;">Help</a>
+          </div>
+        </nav>
+        <div class="menu-toggle" id="menuToggle" onclick="document.getElementById('mainNav').classList.toggle('active')">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- POSTER + FORM -->
+  <section class="reg-layout">
+    <div class="reg-poster">
+      <img src="assets/images/IIT WITHOUT JEE.png" alt="IIT Without JEE - NCET & ITEP Orientation Poster">
+    </div>
+
+    <div class="reg-form-card">
+      <!-- Registration Form -->
+      <div id="regFormContainer">
+        <h2 class="reg-form-title">Register Now — It's Free!</h2>
+        <p class="reg-form-sub">Fill in your details to secure your spot for the live session.</p>
+
+        <form id="regForm" onsubmit="submitRegistration(event)">
+          <div class="f-row-full">
+            <label class="f-label" for="regName">Full Name *</label>
+            <input type="text" id="regName" name="name" class="f-input" placeholder="e.g. Gokul Vinayak" required>
+          </div>
+
+          <div class="f-row-full">
+            <label class="f-label" for="regPhone">Phone Number *</label>
+            <input type="tel" id="regPhone" name="phone" class="f-input" placeholder="+91 98765 43210" required>
+          </div>
+
+          <div class="f-row">
+            <div>
+              <label class="f-label" for="regClass">Class *</label>
+              <select id="regClass" name="currentClass" class="f-input" required>
+                <option value="" disabled selected>Select</option>
+                <option>Class 10</option>
+                <option>Class 11</option>
+                <option>Class 12</option>
+                <option>Passed 12th / Drop Year</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="f-label" for="regStream">Stream *</label>
+              <select id="regStream" name="stream" class="f-input" required>
+                <option value="" disabled selected>Select</option>
+                <option>Science (PCM)</option>
+                <option>Science (PCB)</option>
+                <option>Commerce</option>
+                <option>Humanities / Arts</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="f-row-full">
+            <label class="f-label" for="regSchool">School Name *</label>
+            <input type="text" id="regSchool" name="school" class="f-input" placeholder="e.g. Govt. Higher Secondary School" required>
+          </div>
+
+          <div class="f-row-full">
+            <label class="f-label" for="regSource">How did you hear about this session?</label>
+            <select id="regSource" name="source" class="f-input">
+              <option value="" disabled selected>Select one</option>
+              <option>Instagram</option>
+              <option>WhatsApp</option>
+              <option>Friend / Classmate</option>
+              <option>Nudge Website</option>
+              <option>YouTube</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <button type="submit" class="f-submit" id="regSubmitBtn">
+            Register for Free <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <p class="form-note" style="margin-top: 16px;">
+            <i class="fas fa-lock" style="margin-right: 4px;"></i>
+            Your information is safe. We'll only use it to send the session link.
+          </p>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div class="reg-success" id="regSuccess">
+        <div class="reg-success-icon"><i class="fas fa-check"></i></div>
+        <h2>You're Registered!</h2>
+        <p>We've saved your spot for the <strong>IIT Without JEE</strong> orientation on <strong>21 May 2026</strong> at <strong>7:30 PM</strong>. The Google Meet link will be shared before the session.</p>
+        <a href="https://meet.google.com/gua-fnpj-xrt" target="_blank" class="meet-link">
+          <i class="fab fa-google"></i> Join Meet: gua-fnpj-xrt
+        </a>
+        <div style="margin-top: 24px;">
+          <a href="index.html" style="color: #dc2626; font-weight: 600; font-size: 0.9rem;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0f172a; padding:40px 0; color:rgba(255,255,255,0.5); text-align: center;">
+    <div class="container">
+      <p style="font-size:0.88rem; margin: 0;">
+        © 2026 Nudge Academy. All rights reserved. Built with ❤️ for CUET aspirants. <br>
+        <a href="privacy-policy.html" style="color:rgba(255,255,255,0.7); text-decoration:underline;">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnSEUKCzaWuh350K2UG3BpWvUblZ_vrTs",
+      authDomain: "nudge-fellowship.firebaseapp.com",
+      projectId: "nudge-fellowship",
+      storageBucket: "nudge-fellowship.firebasestorage.app",
+      messagingSenderId: "522945610876",
+      appId: "1:522945610876:web:d65d745c3798a7d288f5f9",
+      measurementId: "G-62XLV5VTM0"
+    };
+
+    let db = null;
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+    } catch (err) {
+      console.warn("Firebase init skipped:", err);
+    }
+
+    window.submitRegistration = async function (e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const btn = document.getElementById('regSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+      const data = {
+        name: fd.get('name'),
+        phone: fd.get('phone'),
+        currentClass: fd.get('currentClass'),
+        stream: fd.get('stream'),
+        school: fd.get('school'),
+        source: fd.get('source') || '',
+        program: 'IIT Without JEE - NCET/ITEP Orientation',
+        eventDate: '2026-05-21',
+        status: 'registered',
+        submittedAt: db ? serverTimestamp() : new Date()
+      };
+
+      try {
+        if (db) {
+          await addDoc(collection(db, "programRegistrations"), data);
+        } else {
+          await new Promise(r => setTimeout(r, 1200));
+        }
+
+        document.getElementById('regFormContainer').style.display = 'none';
+        document.getElementById('regSuccess').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (error) {
+        console.error("Registration error:", error);
+        alert("There was an error. Please try again or contact us.");
+        btn.disabled = false;
+        btn.innerHTML = 'Register for Free <i class="fas fa-arrow-right"></i>';
+      }
+    };
+  </script>
+</body>
+</html>

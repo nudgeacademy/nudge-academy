@@ -807,6 +807,17 @@
                 <option value="rejected">Rejected</option>
                 <option value="deleted">Trash</option>
               </select>
+              <select id="exam-filter" class="filter-select">
+                <option value="all">All Exams</option>
+                <option value="CUET UG">CUET UG</option>
+                <option value="JEE Main">JEE Main</option>
+                <option value="NEET UG">NEET UG</option>
+                <option value="KEAM">KEAM</option>
+                <option value="CLAT">CLAT</option>
+                <option value="NID / NIFT">NID / NIFT</option>
+                <option value="IPMAT">IPMAT</option>
+                <option value="Other">Other</option>
+              </select>
               <button id="refresh-btn" class="btn btn-outline" title="Refresh Applications">
                 <i class="fas fa-sync-alt"></i>
               </button>
@@ -992,6 +1003,7 @@
     
     const statusFilter = document.getElementById('status-filter');
     const sortFilter = document.getElementById('sort-filter');
+    const examFilter = document.getElementById('exam-filter');
     const searchInput = document.getElementById('search-input');
     const refreshBtn = document.getElementById('refresh-btn');
 
@@ -1027,6 +1039,18 @@
     });
 
     // Formatting Helpers
+    function parseExams(examField) {
+      if (!examField) return [];
+      if (Array.isArray(examField)) return examField;
+      const matches = [];
+      const regex = /'stringValue':\s*'([^']+)'/g;
+      let match;
+      while ((match = regex.exec(String(examField))) !== null) {
+        matches.push(match[1]);
+      }
+      return matches;
+    }
+
     function formatDate(dateObj) {
       if (!dateObj) return "N/A";
       const d = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
@@ -1091,6 +1115,7 @@
     function renderTable() {
       const statusVal = statusFilter.value.toLowerCase();
       const sortVal = sortFilter.value;
+      const examVal = examFilter.value;
       const searchVal = searchInput.value.toLowerCase();
       
       let filtered = allApplications.filter(app => {
@@ -1113,6 +1138,13 @@
             statusMatch = st === statusVal;
           }
         }
+
+        // Entrance exam filter
+        let examMatch = true;
+        if (examVal !== 'all') {
+          const appExams = parseExams(app.entranceExams);
+          examMatch = appExams.includes(examVal);
+        }
         
         // Search filter
         let searchMatch = true;
@@ -1121,7 +1153,7 @@
           searchMatch = searchStr.includes(searchVal);
         }
         
-        return statusMatch && searchMatch;
+        return statusMatch && searchMatch && examMatch;
       });
 
       // Sort
@@ -1365,6 +1397,7 @@
     // Listeners
     statusFilter.addEventListener('change', renderTable);
     sortFilter.addEventListener('change', renderTable);
+    examFilter.addEventListener('change', renderTable);
     searchInput.addEventListener('input', renderTable);
     refreshBtn.addEventListener('click', fetchApplications);
 
