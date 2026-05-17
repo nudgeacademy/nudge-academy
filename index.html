@@ -1084,27 +1084,7 @@
         var stars = new THREE.Points(starsGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true, opacity: 0.55 }));
         tajGroup.add(stars);
 
-        // ====== ADVANCED EFFECTS STATE ======
-        var shootingStarGroup = new THREE.Group();
-        scene.add(shootingStarGroup);
-        var shootingStars = [];
         var scrollY = 0;
-
-        function createShootingStar() {
-          var starGeo = new THREE.BufferGeometry();
-          var pArray = new Float32Array(30 * 3); // 30 segments for tail
-          starGeo.setAttribute('position', new THREE.BufferAttribute(pArray, 3));
-          var starMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, linewidth: 2 });
-          var starLine = new THREE.Line(starGeo, starMat);
-
-          var side = Math.random() > 0.5 ? 1 : -1;
-          starLine.position.set(side * 150, Math.random() * 100 + 40, (Math.random() - 0.5) * 150);
-          var velocity = new THREE.Vector3(-side * (Math.random() * 1.5 + 2), (Math.random() - 0.5) * 0.8, (Math.random() - 0.5) * 0.8);
-
-          shootingStarGroup.add(starLine);
-          shootingStars.push({ mesh: starLine, vel: velocity, life: 1.0, history: [] });
-        }
-
         window.addEventListener('scroll', function () {
           scrollY = window.scrollY;
         }, { passive: true });
@@ -1135,36 +1115,10 @@
           var deltaTime = clock.getDelta();
           var t = clock.getElapsedTime();
 
-          // --- Smooth Cinematic Drone Tracking ---
-          var activeShot = cinematicShots[isMobile ? 0 : currentShotIndex];
-
-          if (!isMobile) {
-            shotTimer += deltaTime;
-            if (shotTimer >= activeShot.duration) {
-              shotTimer = 0;
-              currentShotIndex = (currentShotIndex + 1) % cinematicShots.length;
-              activeShot = cinematicShots[currentShotIndex];
-            }
-
-            // Gentle continuous orbit injected into the shot's target position so it flies dynamically
-            var hoverOffsetX = Math.sin(t * 0.25) * 6;
-            var hoverOffsetY = Math.cos(t * 0.18) * 4;
-            var hoverOffsetZ = Math.sin(t * 0.15) * 5;
-
-            var finalTargetPos = activeShot.pos.clone().add(new THREE.Vector3(hoverOffsetX, hoverOffsetY, hoverOffsetZ));
-
-            // Lerp camera position robustly for buttery smooth speed easing
-            currentCamPos.lerp(finalTargetPos, deltaTime * 0.45);
-            camera.position.copy(currentCamPos);
-
-            // Lerp the focal target slowly so panning feels deliberate
-            currentLookAt.lerp(activeShot.look, deltaTime * 0.55);
-            camera.lookAt(currentLookAt);
-          } else {
-            // For mobile: strictly fixed perspective with no multi-shot animation or hovering
-            camera.position.copy(activeShot.pos);
-            camera.lookAt(activeShot.look);
-          }
+          // Simple fixed camera
+          var activeShot = cinematicShots[isMobile ? 0 : 0];
+          camera.position.copy(activeShot.pos);
+          camera.lookAt(activeShot.look);
 
           // Gentle dome breathing
           if (window.mainDome) {
@@ -1174,52 +1128,12 @@
 
           // Stable position: float + scroll ascension
           var baseY = isMobile ? 0 : -3;
-          // Reduced scroll multipliers to prevent the model from moving too fast
           tajGroup.position.y = baseY + Math.sin(t * 0.3) * 0.15 + (scrollY * 0.012);
           tajGroup.position.x = 0;
           tajGroup.position.z = scrollY * -0.008;
-          // Slow idle sway only
           tajGroup.rotation.y = Math.sin(t * 0.1) * 0.015;
           tajGroup.rotation.x = 0;
           tajGroup.rotation.z = 0;
-
-          // Shooting stars update
-          if (Math.random() < 0.015) createShootingStar();
-          for (var i = shootingStars.length - 1; i >= 0; i--) {
-            var s = shootingStars[i];
-            s.mesh.position.add(s.vel);
-            s.life -= 0.008;
-            s.mesh.material.opacity = s.life;
-
-            // Trail update
-            var posAttr = s.mesh.geometry.attributes.position;
-            for (var j = posAttr.count - 1; j > 0; j--) {
-              posAttr.setXYZ(j, posAttr.getX(j - 1) - s.vel.x * 0.2, posAttr.getY(j - 1) - s.vel.y * 0.2, posAttr.getZ(j - 1) - s.vel.z * 0.2);
-            }
-            posAttr.needsUpdate = true;
-
-            if (s.life <= 0) {
-              shootingStarGroup.remove(s.mesh);
-              shootingStars.splice(i, 1);
-            }
-          }
-
-          var dPositions = particles.geometry.attributes.position.array;
-          for (var i = 0; i < particleCount; i++) {
-            dPositions[i * 3 + 1] += pVel[i * 3 + 1];
-            if (dPositions[i * 3 + 1] > 90) dPositions[i * 3 + 1] = 0;
-            dPositions[i * 3] += Math.sin(t * 0.2 + i) * 0.003;
-          }
-          particles.geometry.attributes.position.needsUpdate = true;
-
-          // Yamuna river flow animation
-          var rPositions = river.geometry.attributes.position.array;
-          for (var ri = 0; ri < riverCount; ri++) {
-            rPositions[ri * 3] += rVel[ri]; // drift along X
-            if (rPositions[ri * 3] > 80) rPositions[ri * 3] = -80;
-            rPositions[ri * 3 + 1] = -1 + Math.sin(t * 0.8 + ri * 0.5) * 0.15; // gentle wave
-          }
-          river.geometry.attributes.position.needsUpdate = true;
 
           renderer.render(scene, camera);
         }
