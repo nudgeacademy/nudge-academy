@@ -515,7 +515,7 @@
 
           try {
             if (db) {
-              await addDoc(collection(db, "programRegistrations"), data);
+              await addDoc(collection(db, "iitWithoutJeeRegistrations"), data);
             } else {
               await new Promise((r) => setTimeout(r, 1200));
             }
