@@ -79,11 +79,11 @@
   <section class="apply-banner">
     <div class="container">
       <div class="apply-banner-inner">
-        <h1>Nudge Fellowship 2026 — Round 2</h1>
-        <p>Complete your application for Round 2. The essay is your chance to stand out.</p>
+        <h1>Nudge Fellowship 2026</h1>
+        <p>Complete your application. The essay is your chance to stand out.</p>
 
         <div class="apply-banner-perks">
-          <span class="apply-perk"> Travel • Stay • Meals - All Free <br> Deadline - 5 July 2026</span>
+          <span class="apply-perk"> Travel • Stay • Meals - All Free <br> Deadline - 5 May 2026</span>
         </div>
       </div>
     </div>
@@ -291,7 +291,7 @@
           <div class="ref-box">
             REF: <span id="refNumber">XXXXXXXXXXXX</span>
           </div>
-          <p>We will review your essays and contact shortlisted candidates by mid-July.</p>
+          <p>We will review your essays and contact shortlisted candidates by mid-May.</p>
           <a href="fellowship.html" class="return-link"><i class="fas fa-arrow-left"></i> Return to Program Details</a>
         </div>
 
@@ -430,7 +430,6 @@
         essay1: fd.get('essay1'),
         travelMode: "train",
         status: "applied",
-        round: 2,
         submittedAt: (db ? serverTimestamp() : new Date())
       };
 
@@ -447,7 +446,7 @@
           return;
         }
 
-        const docRef = await addDoc(collection(db, "fellowshipApplicationsRound2"), data);
+        const docRef = await addDoc(collection(db, "fellowshipApplications"), data);
 
         // Invisible background task: Send free email acknowledgment directly to the applicant via your active FormSubmit account
         try {
@@ -455,13 +454,13 @@
             method: "POST",
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
-              _subject: "New Application Received! (Round 2) - " + data.name,
+              _subject: "New Application Received! - " + data.name,
               name: data.name,
               email: data.email, // FormSubmit uses this exact field to shoot the autoresponse back to the student
               phone: data.phone,
               stream: data.stream,
-              message: "A new fellowship Round 2 application was safely saved to your Firebase backend. Check your Firestore Database for their essays and full profile!",
-              _autoresponse: "Hi " + data.name.split(' ')[0] + ",\n\nThank you for taking the first step towards your journey! This email confirms we have safely received your Nudge Fellowship 2026 Round 2 application and essays.\n\nOur mentors will be reviewing submissions closely, and shortlisted candidates will be contacted by mid-July.\n\nBest of luck,\nThe Nudge Academy Team"
+              message: "A new fellowship application was safely saved to your Firebase backend. Check your Firestore Database for their essays and full profile!",
+              _autoresponse: "Hi " + data.name.split(' ')[0] + ",\n\nThank you for taking the first step towards your journey! This email confirms we have safely received your Nudge Fellowship 2026 application and essays.\n\nOur mentors will be reviewing submissions closely, and shortlisted candidates will be contacted by mid-May.\n\nBest of luck,\nThe Nudge Academy Team"
             })
           });
         } catch (mailError) {

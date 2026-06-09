@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nudge Academy Course Brochure - A4 Printable</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES (Nudge Academy Tech Design)
+       ========================================================================== */
+    :root {
+      --primary: #dc2626;
+      --primary-dark: #b91c1c;
+      --primary-light: #ef4444;
+      --primary-bg: #fef2f2;
+      --accent: #fbbf24;
+      --accent-dark: #d97706;
+      --dark: #0f172a;
+      --dark-800: #1e293b;
+      --dark-700: #334155;
+      --gray-600: #475569;
+      --gray-500: #64748b;
+      --gray-400: #94a3b8;
+      --gray-300: #cbd5e1;
+      --gray-200: #e2e8f0;
+      --gray-100: #f1f5f9;
+      --gray-50: #f8fafc;
+      --white: #ffffff;
+      
+      --gradient-red: linear-gradient(135deg, var(--primary) 0%, #f43f5e 50%, var(--primary-light) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--dark) 0%, var(--dark-800) 100%);
+      --gradient-gold: linear-gradient(135deg, var(--accent) 0%, #fcd34d 100%);
+      --gradient-subtle: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 10px 25px rgba(15, 23, 42, 0.1);
+      --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.15);
+      --shadow-red: 0 8px 30px rgba(220, 38, 38, 0.25);
+      
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 100px;
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--gray-200);
+      color: var(--dark-700);
+      line-height: 1.5;
+      padding: 40px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       SCREEN CONTROLS (Hidden in Print)
+       ========================================================================== */
+    .control-panel {
+      width: 210mm;
+      background: var(--dark);
+      color: var(--white);
+      padding: 16px 24px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .control-info h1 {
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-info h1 span {
+      background: var(--primary);
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .control-info p {
+      color: var(--gray-400);
+      font-size: 0.8rem;
+    }
+
+    .btn-print {
+      background: var(--gradient-red);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-red);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 35px rgba(220, 38, 38, 0.4);
+    }
+
+    .btn-print:active {
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       A4 PAGE CONTAINER FOR WEB PREVIEW
+       ========================================================================== */
+    .brochure-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* A4 Dimensions: 210mm x 297mm */
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18mm 14mm; /* Careful margin padding */
+      box-sizing: border-box;
+      /* Subtle dot grid pattern overlay - Faint */
+      background-image: radial-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Elegant Inset Page Border Frame */
+    .a4-page::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      border: 1px solid rgba(203, 213, 225, 0.5);
+      border-radius: var(--radius-lg);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+
+    .page-3 {
+      justify-content: flex-start !important;
+      gap: 16px !important;
+    }
+
+
+
+
+
+    /* ==========================================================================
+       PAGE TRANSITIONS & DECORATIVE GRAPHICS
+       ========================================================================== */
+    .bg-decorator {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Top Red Bar Gradient on all pages */
+    .page-header-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--gradient-red);
+      z-index: 10;
+    }
+
+    /* ==========================================================================
+       PAGE 1: COVER PAGE STYLING
+       ========================================================================== */
+    .cover-bg-red {
+      top: -30%;
+      right: -30%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cover-bg-dark {
+      bottom: -15%;
+      left: -15%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(15, 23, 42, 0.04) 0%, transparent 75%);
+      border-radius: 50%;
+    }
+
+    .cover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 15px;
+    }
+
+    .logo-container {
+      background: var(--primary);
+      padding: 6px 16px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo-container img {
+      height: 26px;
+      width: auto;
+    }
+
+    .cover-badge {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      color: var(--dark-700);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cover-badge i {
+      color: var(--primary);
+    }
+
+    .cover-hero {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .cover-eyebrow {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cover-eyebrow::after {
+      content: '';
+      flex-grow: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .cover-hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .cover-hero h2 span.text-alt {
+      background: var(--gradient-red);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--gray-600);
+      max-width: 90%;
+      margin-bottom: 35px;
+    }
+
+    /* Cover Features Grid */
+    .cover-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .cover-feat-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      padding: 16px 20px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .cover-feat-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+
+    .cover-feat-info h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .cover-feat-info p {
+      font-size: 0.78rem;
+      color: var(--gray-500);
+      line-height: 1.4;
+    }
+
+    /* Cover Statistics */
+    .cover-stats {
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-around;
+      position: relative;
+      z-index: 5;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+
+    .stat-item {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--gray-300);
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 3px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .stat-num span {
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cover-footer {
+      border-top: 1px solid var(--gray-200);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .cover-tagline {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cover-tagline i {
+      color: var(--primary);
+    }
+
+    .cover-url {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    /* ==========================================================================
+       PAGE 2: COMPLETE BUNDLE & DOMAIN SUBJECTS
+       ========================================================================== */
+    .section-title-block {
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--dark);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .section-title-left p {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    .section-badge {
+      background: var(--primary-bg);
+      color: var(--primary);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(220, 38, 38, 0.15);
+    }
+
+    .stream-bundles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stream-row {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 12px 18px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .stream-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .stream-row.science::before {
+      background: #2563eb;
+    }
+
+    .stream-row.humanities::before {
+      background: var(--accent);
+    }
+
+    .stream-col-main {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stream-col-main h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    .stream-col-main .badge-mini {
+      align-self: flex-start;
+      font-size: 0.55rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stream-col-main .science-badge {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid rgba(37,99,235,0.2);
+    }
+    
+    .stream-col-main .commerce-badge {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border: 1px solid rgba(220,38,38,0.15);
+    }
+    
+    .stream-col-main .humanities-badge {
+      background: #fffbeb;
+      color: var(--accent-dark);
+      border: 1px solid rgba(217,119,6,0.2);
+    }
+
+    .stream-col-details {
+      flex: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .stream-detail-item {
+      font-size: 0.72rem;
+      color: var(--dark-700);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stream-detail-item i {
+      color: #10b981;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .stream-col-footer {
+      flex: 0.8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .stream-col-footer .bundle-price-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-bg);
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .stream-row.science .bundle-price-tag {
+      color: #1d4ed8;
+      background: #eff6ff;
+    }
+
+    .stream-row.humanities .bundle-price-tag {
+      color: var(--accent-dark);
+      background: #fffbeb;
+    }
+
+    .stream-col-footer .bundle-emi-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Domain Grid */
+    .domain-section-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .domain-section-title::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .domain-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .domain-card-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--white);
+      margin-bottom: 6px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .domain-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .domain-card h4 {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    .domain-card span {
+      font-size: 0.6rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    /* Methodology Card */
+    .method-card {
+      background: var(--gradient-dark);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    .method-card::before {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .method-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-title i {
+      color: var(--primary-light);
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .method-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .method-col h4 {
+      color: var(--primary-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .method-col p {
+      color: var(--gray-300);
+      font-size: 0.68rem;
+      line-height: 1.3;
+    }
+
+    /* Footer styling common for pages 2 & 3 */
+    .page-footer {
+      border-top: 1px solid var(--gray-200);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--gray-500);
+    }
+
+    .page-footer-num {
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    /* ==========================================================================
+       PAGE 3: THE NUDGE FELLOWSHIP & MENTORSHIP
+       ========================================================================== */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      flex-grow: 1;
+      margin-bottom: 18px;
+    }
+
+    .split-left {
+      border-right: 1px solid var(--gray-200);
+      padding-right: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .fellowship-intro {
+      margin-bottom: 12px;
+    }
+
+    .fellowship-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fffbeb;
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      color: var(--accent-dark);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .fellowship-badge i {
+      color: var(--accent-dark);
+    }
+
+    .fellowship-intro h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .fellowship-intro p {
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    .fellowship-stats-mini {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .f-stat-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+    }
+
+    .f-stat-num {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .f-stat-label {
+      display: block;
+      font-size: 0.55rem;
+      color: var(--gray-500);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    .fellowship-perks {
+      margin-bottom: 10px;
+    }
+
+    .fellowship-perks h4 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .perk-item {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .perk-icon-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary-bg);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .perk-info h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--dark-800);
+    }
+
+    .perk-info p {
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      line-height: 1.3;
+    }
+
+    .fellowship-quote {
+      background: var(--gray-50);
+      border-left: 3px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
+      font-size: 0.7rem;
+      color: var(--gray-600);
+      line-height: 1.35;
+    }
+
+    /* Right Column Styling */
+    .split-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tools-block {
+      margin-bottom: 12px;
+    }
+
+    .tools-block h4 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tools-block h4 i {
+      color: var(--primary);
+    }
+
+    .tool-mini-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tool-mini-card h5 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tool-mini-card h5 span {
+      font-size: 0.55rem;
+      background: var(--gray-100);
+      color: var(--gray-500);
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    .tool-mini-card p {
+      font-size: 0.62rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .mentors-block h4 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mentors-block h4 i {
+      color: var(--primary);
+    }
+
+    .mentors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mentor-mini-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      padding: 6px 8px;
+      border-radius: var(--radius);
+    }
+
+    .mentor-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--white);
+      overflow: hidden;
+      border: 1px solid var(--gray-300);
+      flex-shrink: 0;
+    }
+
+    .mentor-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mentor-details h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .mentor-details span {
+      font-size: 0.6rem;
+      color: var(--gray-500);
+    }
+
+    .contact-card-symmetric {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+
+    .pricing-btn-wrapper {
+      border-top: 1px dashed var(--gray-200);
+      margin-top: 12px;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .pricing-btn {
+      text-decoration: none;
+      text-align: center;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: block;
+      transition: all 0.2s ease;
+    }
+    .pricing-btn-outline {
+      background: var(--white);
+      color: var(--dark-700);
+      border: 1px solid var(--gray-300);
+    }
+    .pricing-btn-outline:hover {
+      background: var(--gray-50);
+      border-color: var(--gray-400);
+    }
+    .pricing-btn-primary {
+      background: var(--primary);
+      color: var(--white);
+      border: 1px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .pricing-btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+
+    /* ==========================================================================
+       PRICING COMPARISON SECTION
+       ========================================================================== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pricing-card.popular {
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 0;
+      right: 15px;
+      background: var(--gradient-red);
+      color: var(--white);
+      font-size: 0.55rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 0 0 6px 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-header h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .pricing-header .price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      margin-bottom: 6px;
+    }
+
+    .pricing-header .price span {
+      font-size: 0.72rem;
+      color: var(--gray-500);
+      font-weight: 600;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pricing-feature-item {
+      font-size: 0.72rem;
+      color: var(--dark-700);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pricing-feature-item i {
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .pricing-feature-item i.fa-check {
+      color: #10b981;
+    }
+
+    .pricing-feature-item i.fa-xmark {
+      color: #ef4444;
+    }
+
+    .pricing-footer-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .pricing-footer-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .pricing-footer-card.secure {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .pricing-footer-card-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(220, 38, 38, 0.08);
+      border-radius: 50%;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pricing-footer-card.secure .pricing-footer-card-icon {
+      background: rgba(16, 185, 129, 0.08);
+      color: #10b981;
+    }
+
+    .pricing-footer-card-info h4 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+
+    .pricing-footer-card.secure .pricing-footer-card-info h4 {
+      color: #065f46;
+    }
+
+    .pricing-footer-card-info p {
+      font-size: 0.65rem;
+      color: var(--gray-600);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .pricing-footer-card.secure .pricing-footer-card-info p {
+      color: #166534;
+    }
+
+    /* ==========================================================================
+       PRINT-SPECIFIC CSS RULES (Overrides standard page preview)
+       ========================================================================== */
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-sizing: border-box !important;
+      }
+
+      html, body {
+        width: 210mm !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .brochure-container {
+        display: block !important;
+        width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+
+      .a4-page {
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 210mm !important;
+        /* Using 296.5mm instead of 297mm leaves a tiny safety margin to prevent extra blank pages due to browser sub-pixel rounding */
+        height: 296.5mm !important;
+        padding: 18mm 14mm !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        background: #ffffff !important;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px) !important;
+        background-size: 20px 20px !important;
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        transform: none !important;
+      }
+
+      /* Raise content above the absolute pseudo-element border so hyperlinks are clickable in printed PDFs */
+      .a4-page > *:not(.bg-decorator):not(.page-header-accent) {
+        position: relative !important;
+        z-index: 3 !important;
+      }
+
+      .a4-page::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 12px !important;
+        border: 1px solid rgba(203, 213, 225, 0.5) !important;
+        border-radius: var(--radius-lg) !important;
+        pointer-events: none !important;
+        z-index: 2 !important;
+      }
+
+      a {
+        pointer-events: auto !important;
+      }
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== CONTROL PANEL (Screen Only) ==================== -->
+  <div class="control-panel no-print">
+    <div class="control-info">
+      <h1>Nudge Academy Course Brochure <span>A4 Printable</span></h1>
+      <p>Click "Print Brochure" and set <strong>Margins: None</strong> and check <strong>Background Graphics</strong> in print settings.</p>
+    </div>
+    <button class="btn-print" onclick="window.print()">
+      <i class="fas fa-print"></i> Print Brochure
+    </button>
+  </div>
+
+  <!-- ==================== BROCHURE MULTI-PAGE CONTAINER ==================== -->
+  <div class="brochure-container">
+
+    <!-- ==================== PAGE 1: COVER PAGE ==================== -->
+    <div class="a4-page page-1">
+      <div class="page-header-accent"></div>
+
+      <!-- Header -->
+      <div class="cover-header">
+        <div class="logo-container">
+          <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy Logo">
+        </div>
+        <div class="cover-badge">
+          <i class="fas fa-graduation-cap"></i> 2026 - 2027
+        </div>
+      </div>
+
+      <!-- Hero Core -->
+      <div class="cover-hero">
+        <span class="cover-eyebrow">Discover Your Path</span>
+        <h2>Reach Your <br><span class="text-alt">Dream Central</span> <br>University</h2>
+        <p class="cover-desc">
+          High-yield preparation programs for <strong>CUET UG & NCET (ITEP)</strong>. Designed and delivered by toppers and graduates from India's premier central universities.
+        </p>
+
+        <!-- Dynamic Features -->
+        <div class="cover-features">
+          <div class="cover-feat-card">
+            <div class="cover-feat-icon"><i class="fas fa-chalkboard-user"></i></div>
+            <div class="cover-feat-info">
+              <h3>Expert Faculty</h3>
+              <p>Learn directly from Central University alumni who have cracked the exam.</p>
+            </div>
+          </div>
+          <div class="cover-feat-card">
+            <div class="cover-feat-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+            <div class="cover-feat-info">
+              <h3>AI-Powered Analytics</h3>
+              <p>Personalized learning tracks and custom doubt engines at your service.</p>
+            </div>
+          </div>
+          <div class="cover-feat-card">
+            <div class="cover-feat-icon"><i class="fas fa-file-signature"></i></div>
+            <div class="cover-feat-info">
+              <h3>Exam Mock Engine</h3>
+              <p>Practice in an exact replica of the NTA interface to eliminate exam anxiety.</p>
+            </div>
+          </div>
+          <div class="cover-feat-card">
+            <div class="cover-feat-icon"><i class="fas fa-paper-plane"></i></div>
+            <div class="cover-feat-info">
+              <h3>Personal Mentorship</h3>
+              <p>One-on-one session planning and custom career counseling options.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Banner -->
+      <div class="cover-stats">
+        <div class="stat-item">
+          <span class="stat-num">1000<span>+</span></span>
+          <span class="stat-label">Students Guided</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">49</span>
+          <span class="stat-label">Universities</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">982<span>+</span></span>
+          <span class="stat-label">Programs Info</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100<span>%</span></span>
+          <span class="stat-label">Live Interactive</span>
+        </div>
+      </div>
+
+      <!-- Footer Info -->
+      <div class="cover-footer" style="justify-content: center;">
+        <span class="cover-url">nudge.academy</span>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE 2: COMPLETE BUNDLE & SYLLABUS ==================== -->
+    <div class="a4-page page-2">
+      <div class="page-header-accent"></div>
+
+
+      <!-- Section Title -->
+      <div class="section-title-block">
+        <div class="section-title-left">
+          <h2>Stream-Specific Complete Bundles</h2>
+          <p>End-to-end guidance designed for the comprehensive exam mapping</p>
+        </div>
+        <span class="section-badge">CUET UG + NCET</span>
+      </div>
+
+      <!-- Stream Bundles Horizontal List -->
+      <div class="stream-bundles-list">
+        
+        <!-- Science Bundle Row -->
+        <div class="stream-row science">
+          <div class="stream-col-main">
+            <span class="badge-mini science-badge">Science</span>
+            <h3>Science Complete Bundle</h3>
+          </div>
+          <div class="stream-col-details">
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>Physics, Chemistry & Math (PCM) / Biology (PCB) domain syllabus</span></div>
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>Section I (English) & Section III (General Test) included</span></div>
+          </div>
+          <div class="stream-col-footer">
+            <span class="bundle-price-tag">CUET + NCET</span>
+            <span class="bundle-emi-tag"><i class="fas fa-wallet"></i> EMI Available</span>
+          </div>
+        </div>
+
+        <!-- Commerce Bundle Row -->
+        <div class="stream-row commerce">
+          <div class="stream-col-main">
+            <span class="badge-mini commerce-badge">Commerce</span>
+            <h3>Commerce Complete Bundle</h3>
+          </div>
+          <div class="stream-col-details">
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>Accountancy, Economics & Business Studies domain syllabus</span></div>
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>Section I (English) & Section III (General Test) included</span></div>
+          </div>
+          <div class="stream-col-footer">
+            <span class="bundle-price-tag">CUET + NCET</span>
+            <span class="bundle-emi-tag"><i class="fas fa-wallet"></i> EMI Available</span>
+          </div>
+        </div>
+
+        <!-- Humanities Bundle Row -->
+        <div class="stream-row humanities">
+          <div class="stream-col-main">
+            <span class="badge-mini humanities-badge">Humanities</span>
+            <h3>Humanities Complete Bundle</h3>
+          </div>
+          <div class="stream-col-details">
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>History, Political Science, Sociology, Psychology & Geography</span></div>
+            <div class="stream-detail-item"><i class="fas fa-check-circle"></i> <span>Section I (English) & Section III (General Test) included</span></div>
+          </div>
+          <div class="stream-col-footer">
+            <span class="bundle-price-tag">CUET + NCET</span>
+            <span class="bundle-emi-tag"><i class="fas fa-wallet"></i> EMI Available</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Domain Specific Grid -->
+      <div>
+        <div class="domain-section-title">
+          <i class="fas fa-shapes"></i> Individual Domain Subjects Taught
+        </div>
+        <div class="domain-grid">
+          
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#eff6ff; color:#2563eb;">
+              <i class="fas fa-atom" style="color:#2563eb;"></i>
+            </div>
+            <h4>Physics</h4>
+            <span>Science</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#eff6ff; color:#2563eb;">
+              <i class="fas fa-flask" style="color:#2563eb;"></i>
+            </div>
+            <h4>Chemistry</h4>
+            <span>Science</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#eff6ff; color:#2563eb;">
+              <i class="fas fa-calculator" style="color:#2563eb;"></i>
+            </div>
+            <h4>Mathematics</h4>
+            <span>Science</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#eff6ff; color:#2563eb;">
+              <i class="fas fa-dna" style="color:#2563eb;"></i>
+            </div>
+            <h4>Biology</h4>
+            <span>Science</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fef2f2; color:#dc2626;">
+              <i class="fas fa-file-invoice-dollar" style="color:#dc2626;"></i>
+            </div>
+            <h4>Accountancy</h4>
+            <span>Commerce</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fef2f2; color:#dc2626;">
+              <i class="fas fa-chart-line" style="color:#dc2626;"></i>
+            </div>
+            <h4>Economics</h4>
+            <span>Commerce / Hum</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fef2f2; color:#dc2626;">
+              <i class="fas fa-briefcase" style="color:#dc2626;"></i>
+            </div>
+            <h4>Business Studies</h4>
+            <span>Commerce</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fffbeb; color:#d97706;">
+              <i class="fas fa-landmark" style="color:#d97706;"></i>
+            </div>
+            <h4>Pol. Science</h4>
+            <span>Humanities</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fffbeb; color:#d97706;">
+              <i class="fas fa-scroll" style="color:#d97706;"></i>
+            </div>
+            <h4>History</h4>
+            <span>Humanities</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fffbeb; color:#d97706;">
+              <i class="fas fa-users" style="color:#d97706;"></i>
+            </div>
+            <h4>Sociology</h4>
+            <span>Humanities</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fffbeb; color:#d97706;">
+              <i class="fas fa-brain" style="color:#d97706;"></i>
+            </div>
+            <h4>Psychology</h4>
+            <span>Humanities</span>
+          </div>
+
+          <div class="domain-card">
+            <div class="domain-card-img" style="background:#fffbeb; color:#d97706;">
+              <i class="fas fa-globe" style="color:#d97706;"></i>
+            </div>
+            <h4>Geography</h4>
+            <span>Humanities</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Minimal Learning Methodology -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0 10px 0; border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); padding: 12px 0;">
+        
+        <!-- Recorded Classes -->
+        <div style="display: flex; gap: 8px; align-items: flex-start;">
+          <div style="color: #2563eb; font-size: 0.85rem; margin-top: 2px; flex-shrink: 0;">
+            <i class="fas fa-video"></i>
+          </div>
+          <div>
+            <h4 style="font-size: 0.76rem; font-weight: 800; color: var(--dark); margin-bottom: 2px;">Recorded Classes</h4>
+            <p style="font-size: 0.62rem; color: var(--gray-500); line-height: 1.3; margin: 0;">Access high-definition recordings of every session anytime.</p>
+          </div>
+        </div>
+
+        <!-- Doubt Desk -->
+        <div style="display: flex; gap: 8px; align-items: flex-start; border-left: 1px solid var(--gray-200); padding-left: 15px;">
+          <div style="color: var(--primary); font-size: 0.85rem; margin-top: 2px; flex-shrink: 0;">
+            <i class="fas fa-headset"></i>
+          </div>
+          <div>
+            <h4 style="font-size: 0.76rem; font-weight: 800; color: var(--dark); margin-bottom: 2px;">Dedicated Doubt Desk</h4>
+            <p style="font-size: 0.62rem; color: var(--gray-500); line-height: 1.3; margin: 0;">Instant domain doubt resolution via 24/7 online channels.</p>
+          </div>
+        </div>
+
+        <!-- Analytics -->
+        <div style="display: flex; gap: 8px; align-items: flex-start; border-left: 1px solid var(--gray-200); padding-left: 15px;">
+          <div style="color: #10b981; font-size: 0.85rem; margin-top: 2px; flex-shrink: 0;">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div>
+            <h4 style="font-size: 0.76rem; font-weight: 800; color: var(--dark); margin-bottom: 2px;">Analytics Dashboard</h4>
+            <p style="font-size: 0.62rem; color: var(--gray-500); line-height: 1.3; margin: 0;">Detailed reports on speed, accuracy, and topic weak points.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <!-- ==================== PAGE 3: PRICING & MENTORSHIP ==================== -->
+    <div class="a4-page page-3">
+      <div class="page-header-accent"></div>
+
+
+
+        
+        <!-- Section Title -->
+        <div class="section-title-block" style="margin-bottom: 0;">
+          <div class="section-title-left">
+            <h2>Course Pricing &amp; Plans</h2>
+            <p>Affordable fee tiers, subject domains, and flexible instalment options</p>
+          </div>
+          <span class="section-badge">PRICING &amp; PLANS</span>
+        </div>
+
+        <!-- Pricing Plans Comparison Grid -->
+        <div class="pricing-grid">
+          
+          <!-- Individual Domain Card -->
+          <div class="pricing-card">
+            <div class="pricing-header">
+              <span class="badge-mini" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-size:0.52rem; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase;">Single Domain</span>
+              <h3 style="margin-top:6px; font-size:0.85rem; font-weight:800; color:var(--dark)">Individual domain</h3>
+              <div class="price" style="font-size: 1.35rem;">₹999 <span>/ subject</span></div>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>Recorded Classes (1 Domain)</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>Study Materials (1 Domain)</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>Topic-wise Practice Tests</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-xmark"></i> <span style="color:var(--gray-400)">Section I &amp; III (Eng/GT)</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-xmark"></i> <span style="color:var(--gray-400)">Live Classes &amp; Doubt Support</span></li>
+            </ul>
+            <div class="pricing-btn-wrapper">
+              <a href="https://wa.me/919625986622?text=Hello%20Nudge%20Academy!%20I%20am%20interested%20in%20enrolling%20for%20the%20Individual%20Domain%20program." class="pricing-btn pricing-btn-outline">Select Subject</a>
+            </div>
+          </div>
+
+          <!-- Core Plan Card -->
+          <div class="pricing-card">
+            <div class="pricing-header">
+              <span class="badge-mini" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-size:0.52rem; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase;">Essential Prep</span>
+              <h3 style="margin-top:6px; font-size:0.85rem; font-weight:800; color:var(--dark)">CUET Prep Core</h3>
+              <div class="price" style="font-size: 1.35rem;">₹4,999 <span>/ full course</span></div>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>All Domain Recorded Classes</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>All Study Materials &amp; Notes</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>Full NTA Pattern Mock Tests</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-xmark"></i> <span style="color:var(--gray-400)">Live Classes &amp; Interactives</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-xmark"></i> <span style="color:var(--gray-400)">Live Doubt Clearing Support</span></li>
+            </ul>
+            <div class="pricing-btn-wrapper">
+              <a href="https://wa.me/919625986622?text=Hello%20Nudge%20Academy!%20I%20am%20interested%20in%20enrolling%20for%20the%20CUET%20Prep%20Core%20program." class="pricing-btn pricing-btn-outline">Select Plan</a>
+            </div>
+          </div>
+
+          <!-- Pro Plan Card -->
+          <div class="pricing-card popular">
+            <div class="popular-badge" style="font-size: 0.5rem; padding: 2px 6px;">Most Popular</div>
+            <div class="pricing-header">
+              <span class="badge-mini" style="background:var(--primary-bg); color:var(--primary); border:1px solid rgba(220,38,38,0.15); font-size:0.52rem; font-weight:800; padding:2px 5px; border-radius:4px; text-transform:uppercase;">Comprehensive</span>
+              <h3 style="margin-top:6px; font-size:0.85rem; font-weight:800; color:var(--dark)">CUET Prep Pro</h3>
+              <div class="price" style="font-size: 1.35rem;">₹6,999 <span>/ full course</span></div>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>All Domain Recorded Classes</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>All Study Materials &amp; Notes</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span>Full NTA Pattern Mock Tests</span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span><strong>Live Interactive Classes</strong></span></li>
+              <li class="pricing-feature-item"><i class="fas fa-check"></i> <span><strong>Live Doubt Clearing Support</strong></span></li>
+            </ul>
+            <div class="pricing-btn-wrapper">
+              <a href="https://wa.me/919625986622?text=Hello%20Nudge%20Academy!%20I%20am%20interested%20in%20enrolling%20for%20the%20CUET%20Prep%20Pro%20program." class="pricing-btn pricing-btn-primary">Enroll Now</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pricing Info Grid (EMI & Guarantee) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          
+          <!-- EMI Option Card -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--primary); border-radius: var(--radius-lg); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm);">
+            <div style="color: var(--primary); font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;">
+              <i class="fas fa-credit-card"></i>
+            </div>
+            <div>
+              <h4 style="font-size: 0.78rem; font-weight: 800; color: var(--dark); margin-bottom: 2px;">Flexible Instalment (EMI) Options</h4>
+              <p style="font-size: 0.65rem; color: var(--gray-600); line-height: 1.35; margin: 0;">Pay in full or choose splits: <strong>2 EMIs (50/50)</strong> or <strong>3 EMIs (40/30/30)</strong>. Paid at 30-day intervals with a 3-day grace period.</p>
+            </div>
+          </div>
+
+          <!-- Guarantee Card -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid #10b981; border-radius: var(--radius-lg); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm);">
+            <div style="color: #10b981; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+            <div>
+              <h4 style="font-size: 0.78rem; font-weight: 800; color: #065f46; margin-bottom: 2px;">Nudge Trust Guarantee</h4>
+              <p style="font-size: 0.65rem; color: #166534; line-height: 1.35; margin: 0;">100% transparent fee structure. Zero hidden charges, processing fees, or interest on EMIs.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Digital Portals & Free Tools Demonstration -->
+        <div>
+          <div class="domain-section-title" style="margin-bottom: 10px;">
+            <i class="fas fa-robot"></i> Free AI Tools &amp; Course Mapper
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            
+            <!-- Nudge AI Guide Card -->
+            <div style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid #2563eb; border-radius: var(--radius-lg); padding: 14px 18px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; gap: 6px;">
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <h3 style="font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin: 0;">
+                    <i class="fas fa-comment-dots" style="color: #2563eb;"></i> Nudge AI Guide
+                  </h3>
+                  <span class="badge-mini" style="background:#eff6ff; color:#2563eb; border:1px solid rgba(37,99,235,0.2); font-size:0.5rem; font-weight:800; padding:1px 4px; border-radius:3px; text-transform:uppercase;">24/7 Support</span>
+                </div>
+                <p style="font-size: 0.65rem; color: var(--gray-600); margin: 0; line-height: 1.35;">Instant answers to exam patterns, syllabus queries, eligibility combinations, and preparation strategies.</p>
+              </div>
+              <ul style="list-style: none; margin: 4px 0 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px;">
+                <li style="font-size: 0.62rem; color: var(--dark-700); display: flex; align-items: center; gap: 5px;"><i class="fas fa-check-circle" style="color: #10b981; font-size: 0.6rem;"></i> 24/7 instant doubt clarification &amp; exam insights</li>
+                <li style="font-size: 0.62rem; color: var(--dark-700); display: flex; align-items: center; gap: 5px;"><i class="fas fa-check-circle" style="color: #10b981; font-size: 0.6rem;"></i> Multi-platform access (web/mobile chatbot app)</li>
+              </ul>
+            </div>
+
+            <!-- Paper Selector Tool Card -->
+            <div style="background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--accent-dark); border-radius: var(--radius-lg); padding: 14px 18px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; gap: 6px;">
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                  <h3 style="font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 6px; margin: 0;">
+                    <i class="fas fa-wand-magic-sparkles" style="color: var(--accent-dark);"></i> CUET Paper Selector
+                  </h3>
+                  <span class="badge-mini" style="background:#fffbeb; color:var(--accent-dark); border:1px solid rgba(217,119,6,0.2); font-size:0.5rem; font-weight:800; padding:1px 4px; border-radius:3px; text-transform:uppercase;">982+ Combinations</span>
+                </div>
+                <p style="font-size: 0.65rem; color: var(--gray-600); margin: 0; line-height: 1.35;">Map desired undergraduate courses to required domain exams across 49+ universities instantly.</p>
+              </div>
+              <ul style="list-style: none; margin: 4px 0 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px;">
+                <li style="font-size: 0.62rem; color: var(--dark-700); display: flex; align-items: center; gap: 5px;"><i class="fas fa-check-circle" style="color: #10b981; font-size: 0.6rem;"></i> Prevents registration errors &amp; paper selection mistakes</li>
+                <li style="font-size: 0.62rem; color: var(--dark-700); display: flex; align-items: center; gap: 5px;"><i class="fas fa-check-circle" style="color: #10b981; font-size: 0.6rem;"></i> Free validation tool open for all registration maps</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+
+
+      <!-- Symmetric Contact Card -->
+      <div class="contact-card-symmetric" style="margin-top: 16px; margin-bottom: 0;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; justify-items: center;">
+          
+          <!-- Email -->
+          <a href="mailto:info@nudge.academy" style="text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: var(--dark-700);">
+            <i class="fas fa-envelope" style="color: var(--primary);"></i>
+            <span>info@<strong>nudge.academy</strong></span>
+          </a>
+
+          <!-- WhatsApp -->
+          <a href="https://wa.me/919625986622" style="text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: var(--dark-700);">
+            <i class="fab fa-whatsapp" style="color: #10b981;"></i>
+            <span>WA: <strong>+91 9625986622</strong></span>
+          </a>
+
+          <!-- Website -->
+          <a href="https://nudge.academy" style="text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: var(--dark-700);">
+            <i class="fas fa-globe" style="color: var(--primary);"></i>
+            <span>web: <strong>nudge.academy</strong></span>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://instagram.com/nudge.academy" style="text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: var(--dark-700);">
+            <i class="fab fa-instagram" style="color: #e1306c;"></i>
+            <span>insta: @<strong>nudge.academy</strong></span>
+          </a>
+
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experience Letter Generator - Nudge Academy</title>
+  <meta name="description"
+    content="Generate, customize, and print high-quality professional experience letters and certificates. Interactive signature pads, multiple templates, and custom branding available.">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/nudge-style.css">
+
+  <style>
+    /* Global & UI Styles for the Experience Letter Creator */
+    body {
+      background-color: var(--gray-50);
+    }
+
+    .generator-section {
+      padding: 120px 0 80px 0;
+      min-height: 100vh;
+    }
+
+    .generator-title-block {
+      margin-bottom: 40px;
+    }
+
+    .generator-title-block h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .generator-title-block p {
+      color: var(--gray-500);
+      font-size: 1.1rem;
+    }
+
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Left panel: Editor controls */
+    .editor-panel {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 100px;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+
+    .editor-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .editor-panel::-webkit-scrollbar-track {
+      background: var(--gray-50);
+    }
+
+    .editor-panel::-webkit-scrollbar-thumb {
+      background: var(--gray-300);
+      border-radius: 3px;
+    }
+
+    /* Tabs */
+    .editor-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: 25px;
+      gap: 15px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 0;
+      color: var(--gray-500);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.half-width {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-800);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      color: var(--dark);
+      background: var(--gray-50);
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Accent Presets */
+    .color-presets {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .color-preset {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      cursor: pointer;
+      box-shadow: 0 0 0 1px var(--gray-300);
+      transition: var(--transition);
+    }
+
+    .color-preset:hover, .color-preset.active {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 2px var(--dark);
+    }
+
+    /* Radio Layout Selectors */
+    .layout-presets {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .layout-card {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--gray-50);
+    }
+
+    .layout-card:hover {
+      border-color: var(--gray-400);
+    }
+
+    .layout-card.active {
+      border-color: var(--primary);
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+
+    .layout-card i {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .layout-card span {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Right panel: Letter preview */
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .preview-actions {
+      display: flex;
+      width: 100%;
+      max-width: 800px;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .action-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-action {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .btn-print {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-print:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary-action {
+      background: var(--gray-100);
+      color: var(--dark-800);
+      border: 1px solid var(--gray-200);
+    }
+
+    .btn-secondary-action:hover {
+      background: var(--gray-200);
+    }
+
+    /* Print Guideline toggle check */
+    .guideline-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      cursor: pointer;
+    }
+
+    /* Letter Paper Layout Styles */
+    .letter-paper-wrapper {
+      width: 100%;
+      max-width: 800px;
+      background: var(--gray-200);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+    }
+
+    .letter-paper {
+      background: var(--white);
+      width: 100%;
+      aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
+      padding: 80px 75px 60px 75px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-200);
+      border-radius: 2px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      color: #1e293b;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow: hidden;
+      --letter-accent: #dc2626; /* CSS dynamic property */
+    }
+
+    /* Toggle Guideline borders */
+    .letter-paper.show-guidelines {
+      outline: 1px dashed var(--primary-light);
+    }
+    .letter-paper.show-guidelines::after {
+      content: 'Printable Area Boundary (A4 Size)';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 10px;
+      color: var(--primary);
+      font-family: monospace;
+      opacity: 0.7;
+    }
+
+    /* Content details style mapping */
+    .letter-header {
+      z-index: 10;
+    }
+
+    .letter-body-content {
+      flex-grow: 1;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      z-index: 10;
+    }
+
+    .letter-footer {
+      border-top: 1px solid var(--gray-200);
+      padding-top: 15px;
+      font-size: 11px;
+      color: var(--gray-500);
+      z-index: 10;
+    }
+
+    /* Watermark decoration */
+    .letter-watermark {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      background-image: url('assets/images/NUDGE LOGO.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .letter-paper.show-watermark .letter-watermark {
+      opacity: 0.035;
+    }
+
+    /* Signature canvas styling */
+    .sig-canvas-wrapper {
+      border: 1px dashed var(--gray-300);
+      border-radius: var(--radius);
+      background: var(--gray-50);
+      padding: 10px;
+      position: relative;
+    }
+
+    .canvas-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    /* ===========================================
+       TEMPLATE STYLES (Modern, Classic, Academic, Minimal)
+       =========================================== */
+
+    /* Generic Typography & Layout standard elements */
+    .letter-logo-img {
+      max-height: 55px;
+      object-fit: contain;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .logo-red-filter {
+      filter: brightness(0) saturate(100%) invert(18%) sepia(87%) saturate(5796%) hue-rotate(356deg) brightness(94%) contrast(96%);
+    }
+
+    .letter-ref-date {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      font-size: 13px;
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .letter-title-text {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    .letter-body-p {
+      text-align: justify;
+      margin-bottom: 20px;
+      text-indent: 30px;
+    }
+
+    .letter-sign-block {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .letter-signature-preview {
+      height: 60px;
+      max-width: 200px;
+      object-fit: contain;
+      margin-bottom: 6px;
+    }
+
+    .letter-signatory-name {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 14px;
+    }
+
+    .letter-signatory-title {
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+
+    /* 1. MODERN TECH (Nudge Red style) */
+    .letter-paper.template-modern {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .letter-paper.template-modern .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      border-bottom: 4px solid var(--letter-accent);
+      padding-bottom: 20px;
+    }
+
+    .letter-paper.template-modern .letter-org-info {
+      text-align: right;
+      font-size: 11px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    .letter-paper.template-modern .letter-org-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--letter-accent);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .letter-paper.template-modern .letter-title-text {
+      color: var(--letter-accent);
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 10px;
+      display: inline-block;
+      width: 100%;
+    }
+
+    /* 2. CLASSIC CORPORATE (Serif, Centered) */
+    .letter-paper.template-classic {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+    }
+
+    .letter-paper.template-classic .letter-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .letter-paper.template-classic .letter-logo-img {
+      max-height: 50px;
+      margin-bottom: 12px;
+    }
+
+    .letter-paper.template-classic .letter-org-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+    }
+
+    .letter-paper.template-classic .letter-org-tagline {
+      font-size: 11px;
+      font-style: italic;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .letter-paper.template-classic .letter-org-info {
+      font-size: 11px;
+      color: var(--gray-600);
+      border-top: 1px solid var(--gray-300);
+      border-bottom: 3px double var(--letter-accent);
+      padding: 6px 30px;
+      width: 100%;
+      line-height: 1.4;
+    }
+
+    .letter-paper.template-classic .letter-title-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-top: 20px;
+    }
+
+    /* 3. ACADEMIC GOLD (Framed Elite Border) */
+    .letter-paper.template-academic {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+    }
+
+    .letter-paper.template-academic::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      right: 25px;
+      bottom: 25px;
+      border: 2px solid var(--letter-accent);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .letter-paper.template-academic::after {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      right: 30px;
+      bottom: 30px;
+      border: 1px solid var(--letter-accent);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .letter-paper.template-academic .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--letter-accent);
+      padding-bottom: 15px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .letter-paper.template-academic .letter-logo-img {
+      max-height: 60px;
+    }
+
+    .letter-paper.template-academic .letter-org-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 1px;
+    }
+
+    .letter-paper.template-academic .letter-org-info {
+      font-size: 10px;
+      text-align: right;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    .letter-paper.template-academic .letter-body-content {
+      padding: 0 15px;
+    }
+
+    .letter-paper.template-academic .letter-title-text {
+      color: var(--letter-accent);
+      font-size: 20px;
+      margin-top: 15px;
+      font-weight: 700;
+    }
+
+    .letter-paper.template-academic .letter-footer {
+      border-top: 1px solid var(--letter-accent);
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-top: 12px;
+      text-align: center;
+    }
+
+    /* 4. MINIMAL CRIMSON (Ultra Clean Modern) */
+    .letter-paper.template-minimal {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+    }
+
+    .letter-paper.template-minimal .letter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .letter-paper.template-minimal .letter-logo-img {
+      max-height: 42px;
+    }
+
+    .letter-paper.template-minimal .letter-org-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .letter-paper.template-minimal .letter-org-info {
+      font-size: 11px;
+      color: var(--gray-500);
+      text-align: right;
+      line-height: 1.4;
+    }
+
+    .letter-paper.template-minimal .letter-title-text {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #0f172a;
+      border-left: 3px solid var(--letter-accent);
+      padding-left: 15px;
+      text-align: left;
+      margin-bottom: 30px;
+    }
+
+    .letter-paper.template-minimal .letter-ref-date {
+      background: var(--gray-50);
+      padding: 8px 15px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .letter-paper.template-minimal .letter-footer {
+      border: none;
+      padding-top: 0;
+      font-size: 10px;
+      color: var(--gray-400);
+    }
+
+    /* Cursive Font elements for signatures */
+    .cursive-sig-text {
+      display: none;
+      line-height: 1;
+    }
+
+    .cursive-sig-text.sacramento {
+      font-family: 'Sacramento', cursive;
+      font-size: 3.2rem;
+      font-weight: 500;
+      color: #020617;
+      display: block;
+    }
+
+    .cursive-sig-text.dancing {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1e1b4b;
+      display: block;
+    }
+
+    .cursive-sig-text.greatvibes {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: #0c0a09;
+      display: block;
+    }
+
+    /* Print Optimization Classes */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .header, .footer, .generator-section, .ai-bubble {
+        display: none !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .letter-paper-wrapper {
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        border-radius: 0 !important;
+      }
+
+      .letter-paper {
+        border: none !important;
+        box-shadow: none !important;
+        width: 210mm !important; /* Force exact standard A4 dimensions */
+        height: 297mm !important;
+        padding: 20mm 20mm 15mm 20mm !important; /* industry standard printable margins */
+        margin: 0 !important;
+        background: #ffffff !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+
+    /* Animate changes in page loading */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header id-no-print" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/NUDGE LOGO.png" alt="Nudge Academy">
+        </a>
+
+        <nav class="nav">
+          <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="index.html#tools" class="nav-link">Tools</a>
+            <a href="courses.html" class="nav-link">Courses</a>
+            <a href="fellowship.html" class="nav-link">Fellowship</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+          </div>
+          <div class="nav-cta">
+            <a href="https://web.classplusapp.com/login?orgCode=wjfzco" class="btn btn-primary">
+              Login
+            </a>
+          </div>
+        </nav>
+
+        <div class="menu-toggle">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN GENERATOR SECTION ==================== -->
+  <section class="generator-section no-print">
+    <div class="container">
+      <div class="generator-title-block">
+        <h1>Experience Letter Generator</h1>
+        <p>Enter details below to generate a beautiful, print-ready, high-fidelity experience letter instantly.</p>
+      </div>
+
+      <div class="generator-grid">
+        
+        <!-- Left: Form Editor Panel -->
+        <div class="editor-panel">
+          <div class="editor-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'org-tab')">Organization</button>
+            <button class="tab-btn" onclick="switchTab(event, 'emp-tab')">Employee</button>
+            <button class="tab-btn" onclick="switchTab(event, 'body-tab')">Content</button>
+            <button class="tab-btn" onclick="switchTab(event, 'style-tab')">Sign & Style</button>
+          </div>
+
+          <!-- TAB 1: Organization Details -->
+          <div id="org-tab" class="tab-content active">
+            <div class="form-group">
+              <label class="form-label" for="org-name">Organization Name</label>
+              <input type="text" id="org-name" class="form-input" value="Nudge Academy" placeholder="Enter company name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="org-tagline">Organization Tagline (Optional)</label>
+              <input type="text" id="org-tagline" class="form-input" value="Step into Tomorrow" placeholder="e.g. Innovate & Educate">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="org-address">Address Line 1</label>
+              <input type="text" id="org-address" class="form-input" value="3rd Floor, Hilite Business Park" placeholder="Street Address, Building">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="org-contact">Address Line 2 (Contact Info)</label>
+              <input type="text" id="org-contact" class="form-input" value="Kozhikode, Kerala - 673014 | +91 9625986622 | info@nudge.academy" placeholder="City, State, Zip, Email, Phone">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Organization Logo Source</label>
+              <select id="logo-source" class="form-input" onchange="toggleLogoSource()">
+                <option value="nudge">Default Nudge Academy Logo</option>
+                <option value="upload">Upload Custom Logo File</option>
+                <option value="none">No Logo</option>
+              </select>
+            </div>
+            <div class="form-group" id="logo-upload-group" style="display: none;">
+              <label class="form-label" for="logo-file">Upload Logo File (PNG/JPG)</label>
+              <input type="file" id="logo-file" class="form-input" accept="image/*" onchange="handleLogoUpload(this)">
+            </div>
+          </div>
+
+          <!-- TAB 2: Employee Details -->
+          <div id="emp-tab" class="tab-content">
+            <div class="form-group half-width">
+              <div>
+                <label class="form-label" for="emp-prefix">Salutation</label>
+                <select id="emp-prefix" class="form-input">
+                  <option value="Mr.">Mr.</option>
+                  <option value="Ms.">Ms.</option>
+                  <option value="Dr.">Dr.</option>
+                  <option value="Prof.">Prof.</option>
+                  <option value="None">None</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="emp-name">Employee Name</label>
+                <input type="text" id="emp-name" class="form-input" value="Rohan Sharma" placeholder="John Doe">
+              </div>
+            </div>
+            <div class="form-group half-width">
+              <div>
+                <label class="form-label" for="emp-title">Designation/Job Title</label>
+                <input type="text" id="emp-title" class="form-input" value="Senior Software Engineer" placeholder="e.g. Web Developer">
+              </div>
+              <div>
+                <label class="form-label" for="emp-dept">Department (Optional)</label>
+                <input type="text" id="emp-dept" class="form-input" value="Technology & Product" placeholder="e.g. Engineering">
+              </div>
+            </div>
+            <div class="form-group half-width">
+              <div>
+                <label class="form-label" for="emp-start">Date of Joining</label>
+                <input type="date" id="emp-start" class="form-input" value="2024-02-15">
+              </div>
+              <div>
+                <label class="form-label" for="emp-end">Date of Relieving</label>
+                <input type="date" id="emp-end" class="form-input" value="2026-05-31">
+              </div>
+            </div>
+            <div class="form-group half-width">
+              <div>
+                <label class="form-label" for="emp-type">Employment Type</label>
+                <select id="emp-type" class="form-input">
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Contract">Contract</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="letter-date">Letter Date of Issue</label>
+                <input type="date" id="letter-date" class="form-input" value="2026-05-31">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="letter-ref">Reference Number</label>
+              <input type="text" id="letter-ref" class="form-input" value="NA/HR/EXP/2026/047" placeholder="e.g. CO/2026/001">
+            </div>
+          </div>
+
+          <!-- TAB 3: Body & Content -->
+          <div id="body-tab" class="tab-content">
+            <div class="form-group">
+              <label class="form-label" for="letter-title-input">Certificate Title</label>
+              <input type="text" id="letter-title-input" class="form-input" value="EXPERIENCE CERTIFICATE" placeholder="TO WHOM IT MAY CONCERN">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="emp-responsibilities">Key Roles & Contributions</label>
+              <textarea id="emp-responsibilities" class="form-input" placeholder="e.g. Developing interactive student modules, writing clean code, leading team projects...">Leading full-stack web application development, building interactive tools for student preparation, designing responsive dashboards, optimizing SEO ranking, and integrating AI doubt-solving systems.</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="emp-conduct">Conduct & Performance Rating</label>
+              <select id="emp-conduct" class="form-input">
+                <option value="Outstanding">Outstanding</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Very Good">Very Good</option>
+                <option value="Good">Good</option>
+                <option value="Satisfactory">Satisfactory</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+                <span>Custom Body Paragraph</span>
+                <input type="checkbox" id="custom-text-toggle" onchange="toggleCustomText()" style="cursor: pointer;">
+              </label>
+              <p style="font-size: 0.75rem; color: var(--gray-500); margin-bottom: 6px;">Check to override auto-generated letter text and write custom content directly.</p>
+              <textarea id="custom-body-text" class="form-input" disabled placeholder="Enable custom body text to edit here. Use {name}, {designation}, etc. to format.">This is to certify that Mr. Rohan Sharma was employed with Nudge Academy as a Senior Software Engineer from 15th February 2024 to 31st May 2026. During his tenure, he was engaged as a Full-time employee in the Technology & Product department.
+
+His primary contributions included leading full-stack web application development, building interactive tools for student preparation, designing responsive dashboards, optimizing SEO ranking, and integrating AI doubt-solving systems.
+
+During his service with us, he proved to be an active, diligent, and honest worker. His conduct and performance were rated as Outstanding. We wish him the very best in all his future endeavors.</textarea>
+            </div>
+          </div>
+
+          <!-- TAB 4: Signature & Style Controls -->
+          <div id="style-tab" class="tab-content">
+            <div class="form-group">
+              <label class="form-label">Letterhead Layout Template</label>
+              <div class="layout-presets">
+                <div class="layout-card active" onclick="switchLayout('modern')" id="layout-modern">
+                  <i class="fas fa-file-invoice"></i>
+                  <span>Modern Tech</span>
+                </div>
+                <div class="layout-card" onclick="switchLayout('classic')" id="layout-classic">
+                  <i class="fas fa-landmark"></i>
+                  <span>Classic Corp</span>
+                </div>
+                <div class="layout-card" onclick="switchLayout('academic')" id="layout-academic">
+                  <i class="fas fa-graduation-cap"></i>
+                  <span>Academic Gold</span>
+                </div>
+                <div class="layout-card" onclick="switchLayout('minimal')" id="layout-minimal">
+                  <i class="fas fa-align-left"></i>
+                  <span>Minimalist</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Primary Accent Color</label>
+              <div class="color-presets">
+                <div class="color-preset active" style="background-color: #dc2626;" onclick="setAccentColor('#dc2626', this)"></div>
+                <div class="color-preset" style="background-color: #1e3a8a;" onclick="setAccentColor('#1e3a8a', this)"></div>
+                <div class="color-preset" style="background-color: #065f46;" onclick="setAccentColor('#065f46', this)"></div>
+                <div class="color-preset" style="background-color: #d97706;" onclick="setAccentColor('#d97706', this)"></div>
+                <div class="color-preset" style="background-color: #4f46e5;" onclick="setAccentColor('#4f46e5', this)"></div>
+                <div class="color-preset" style="background-color: #0f172a;" onclick="setAccentColor('#0f172a', this)"></div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="color" id="custom-accent-color" class="form-input" style="padding: 2px; height: 38px; width: 60px; cursor: pointer;" value="#dc2626" oninput="handleCustomColor(this.value)">
+                <span style="font-size: 0.85rem; font-weight: 500;">Custom Hex Color Picker</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+                <span>Show Background Watermark</span>
+                <input type="checkbox" id="watermark-toggle" checked onchange="toggleWatermark()" style="cursor: pointer;">
+              </label>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--gray-200); margin: 20px 0;">
+
+            <div class="form-group half-width">
+              <div>
+                <label class="form-label" for="signer-name">Signatory Name</label>
+                <input type="text" id="signer-name" class="form-input" value="Asif Ali" placeholder="HR Manager Name">
+              </div>
+              <div>
+                <label class="form-label" for="signer-title">Signatory Title</label>
+                <input type="text" id="signer-title" class="form-input" value="CEO & Co-founder" placeholder="e.g. HR Director">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Signature Verification</label>
+              <select id="sig-type" class="form-input" onchange="toggleSigType()">
+                <option value="font-sacramento">Digital Cursive (Sacramento Font)</option>
+                <option value="font-dancing">Digital Cursive (Dancing Script)</option>
+                <option value="font-greatvibes">Digital Cursive (Great Vibes)</option>
+                <option value="draw">Draw Signature on Screen</option>
+                <option value="upload">Upload Signature Image</option>
+                <option value="none">No Signature (Physical Sign Only)</option>
+              </select>
+            </div>
+
+            <!-- Signature Font Config Details -->
+            <div id="sig-text-group" class="form-group">
+              <label class="form-label" for="sig-text-input">Signature Signature Text</label>
+              <input type="text" id="sig-text-input" class="form-input" value="Asif Ali" placeholder="Name to render in cursive">
+            </div>
+
+            <!-- Signature Upload Config Details -->
+            <div id="sig-upload-group" class="form-group" style="display: none;">
+              <label class="form-label" for="sig-file">Upload Signature File (Transparent PNG Recommended)</label>
+              <input type="file" id="sig-file" class="form-input" accept="image/*" onchange="handleSigUpload(this)">
+            </div>
+
+            <!-- Signature Canvas Draw Config Details -->
+            <div id="sig-draw-group" class="form-group" style="display: none;">
+              <div class="sig-canvas-wrapper">
+                <label class="form-label">Draw Inside Box</label>
+                <canvas id="signature-canvas" width="400" height="150" style="cursor: crosshair; display: block; border: 1px solid var(--gray-300); border-radius: var(--radius); width: 100%; height: 120px; background: var(--white);"></canvas>
+                <div class="canvas-actions">
+                  <button type="button" class="btn-action btn-secondary-action" style="padding: 6px 12px; font-size: 0.75rem;" onclick="clearSignatureCanvas()">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Footer -->
+          <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+            <button type="button" class="btn-action btn-secondary-action" style="justify-content: center; width: 100%;" onclick="loadSampleAsif()">
+              <i class="fas fa-history"></i> Load Default (Asif Ali CEO @ Nudge)
+            </button>
+            <button type="button" class="btn-action btn-secondary-action" style="justify-content: center; width: 100%;" onclick="loadSampleJane()">
+              <i class="fas fa-user-tie"></i> Load Sample 2 (Corporate Admin)
+            </button>
+            <button type="button" class="btn-action btn-secondary-action" style="justify-content: center; width: 100%;" onclick="resetFormToBlank()">
+              <i class="fas fa-trash-can"></i> Clear All Fields
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Print Preview Panel -->
+        <div class="preview-panel">
+          <div class="preview-actions">
+            <div class="guideline-toggle" onclick="toggleGuidelines()">
+              <input type="checkbox" id="guidelines-check" checked style="cursor: pointer;">
+              <span>Show Layout Guidelines (A4 boundaries)</span>
+            </div>
+            
+            <div class="action-group">
+              <button class="btn-action btn-print" onclick="triggerPrint()">
+                <i class="fas fa-print"></i> Print / Save as PDF
+              </button>
+            </div>
+          </div>
+
+          <div class="letter-paper-wrapper">
+            <!-- Experience Letter Template Container -->
+            <div class="letter-paper template-modern show-guidelines show-watermark" id="letter-paper" style="--letter-accent: #dc2626;">
+              <!-- Watermark image background layer -->
+              <div class="letter-watermark" id="letter-watermark-bg"></div>
+
+              <!-- Top Section: Header -->
+              <div class="letter-header">
+                <!-- Org Logo -->
+                <img src="assets/images/NUDGE LOGO.png" id="letter-logo" class="letter-logo-img logo-red-filter" alt="Organization Logo">
+                
+                <!-- Org Info columns -->
+                <div class="letter-org-info">
+                  <div class="letter-org-name" id="preview-org-name">Nudge Academy</div>
+                  <div class="letter-org-tagline" id="preview-org-tagline">Step into Tomorrow</div>
+                  <div id="preview-org-address-block">
+                    <span id="preview-org-address">3rd Floor, Hilite Business Park</span><br>
+                    <span id="preview-org-contact">Kozhikode, Kerala - 673014 | +91 9625986622 | info@nudge.academy</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Middle Section: Body -->
+              <div class="letter-body-content">
+                <!-- Ref and Date line -->
+                <div class="letter-ref-date">
+                  <span>Ref No: <span id="preview-ref-no">NA/HR/EXP/2026/047</span></span>
+                  <span>Date: <span id="preview-issue-date">31st May 2026</span></span>
+                </div>
+
+                <!-- Document Title -->
+                <div class="letter-title-text" id="preview-letter-title">EXPERIENCE CERTIFICATE</div>
+
+                <!-- Letter Phrasing Content -->
+                <div id="preview-letter-body" style="font-size: 1.05em; line-height: 1.8;">
+                  <!-- Dynamically Rendered Phrasing -->
+                </div>
+
+                <!-- Sign off Block -->
+                <div class="letter-sign-block">
+                  <div style="margin-bottom: 8px;">Sincerely,</div>
+                  <div style="font-weight: 600; margin-bottom: 12px;" id="preview-signoff-org">For Nudge Academy,</div>
+                  
+                  <!-- Signature slot container -->
+                  <div style="min-height: 60px; display: flex; align-items: center; position: relative;">
+                    <!-- Uploaded or Drawn signature image -->
+                    <img src="" id="preview-signature-img" class="letter-signature-preview" style="display: none;" alt="Authorized Signature">
+                    
+                    <!-- Font-based cursive text signatures -->
+                    <span id="preview-signature-cursive" class="cursive-sig-text sacramento">Asif Ali</span>
+                  </div>
+
+                  <!-- Signatory details -->
+                  <div class="letter-signatory-name" id="preview-signer-name">Asif Ali</div>
+                  <div class="letter-signatory-title" id="preview-signer-title">CEO & Co-founder</div>
+                </div>
+              </div>
+
+              <!-- Bottom Section: Footer (A4 fixed layout) -->
+              <div class="letter-footer">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span id="preview-footer-org">© 2026 Nudge Academy</span>
+                  <span>Confidential Business Document</span>
+                  <span>Page 1 of 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Printing instructions warning -->
+          <div style="max-width: 800px; width: 100%; background: #fffbeb; border: 1px solid #fef3c7; border-radius: var(--radius); padding: 18px; display: flex; gap: 12px; color: #b45309; font-size: 0.85rem;">
+            <i class="fas fa-triangle-exclamation" style="font-size: 1.2rem; margin-top: 2px;"></i>
+            <div>
+              <strong style="font-weight: 700; display: block; margin-bottom: 4px;">Important Note for PDF Export / Printing:</strong>
+              When printing or exporting to PDF, ensure that you check the following settings in your browser's Print Dialog:
+              <ul style="list-style-type: disc; margin-left: 20px; margin-top: 6px;">
+                <li>Set <strong>Destination</strong> to "Save as PDF" or your physical printer.</li>
+                <li>Set <strong>Margins</strong> to "None" or "Default" (The stylesheet sets A4 margins automatically).</li>
+                <li>Check/Enable <strong>Background graphics</strong> (to display letter borders, custom colors, and watermarks).</li>
+                <li>Uncheck/Disable <strong>Headers and footers</strong> (to prevent browser-generated headers showing URL/date).</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer no-print">
+    <div class="container">
+      <div class="footer-content">
+        <p>© 2025 Nudge Academy. All rights reserved. Built with ❤️ for CUET aspirants.
+          <span style="margin-left: 8px;">|</span>
+          <a href="privacy-policy.html" style="margin-left: 8px; color: rgba(255,255,255,0.7); text-decoration: underline;">Privacy Policy</a>
+        </p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/nudge.academy/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/nudge-academy/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://chat.whatsapp.com/LFa9uNOkXsT4VavhHxNWHa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== AI CHAT BUBBLE ==================== -->
+  <div class="ai-bubble no-print">
+    <span class="ai-bubble-text">Ask Nudge AI ✨</span>
+    <a href="https://ai.nudge.academy/" target="_blank" class="ai-bubble-btn" title="AI CUET Guide">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" />
+        <path d="M12 6l1.09 2.41L15.5 9.5l-2.41 1.09L12 13l-1.09-2.41L8.5 9.5l2.41-1.09z" />
+      </svg>
+    </a>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // General Header Scroll Effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    // Drawing Canvas Variables & Logic
+    const canvas = document.getElementById('signature-canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let customLogoData = '';
+    let customSigData = '';
+
+    // Initialize Canvas event listeners
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+
+    // Mobile touch coordinates mapping
+    canvas.addEventListener('touchstart', (e) => {
+      const coords = getEventCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(coords.x, coords.y);
+      isDrawing = true;
+      e.preventDefault();
+    });
+    canvas.addEventListener('touchmove', (e) => {
+      if (!isDrawing) return;
+      const coords = getEventCoords(e);
+      ctx.lineTo(coords.x, coords.y);
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      e.preventDefault();
+    });
+    canvas.addEventListener('touchend', () => {
+      isDrawing = false;
+      saveDrawnSignature();
+    });
+
+    function getEventCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    function startDraw(e) {
+      isDrawing = true;
+      const coords = getEventCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(coords.x, coords.y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const coords = getEventCoords(e);
+      ctx.lineTo(coords.x, coords.y);
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+    }
+
+    function stopDraw() {
+      if (isDrawing) {
+        isDrawing = false;
+        saveDrawnSignature();
+      }
+    }
+
+    function clearSignatureCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      saveDrawnSignature();
+    }
+
+    function saveDrawnSignature() {
+      // Check if canvas is empty
+      const buffer = new Uint32Array(ctx.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
+      const isEmpty = !buffer.some(color => color !== 0);
+      
+      const sigType = document.getElementById('sig-type').value;
+      if (sigType === 'draw') {
+        const previewImg = document.getElementById('preview-signature-img');
+        if (isEmpty) {
+          previewImg.style.display = 'none';
+        } else {
+          previewImg.src = canvas.toDataURL();
+          previewImg.style.display = 'block';
+        }
+      }
+    }
+
+    // Tab switcher
+    function switchTab(e, tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      e.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Toggle Org Logo Source
+    function toggleLogoSource() {
+      const src = document.getElementById('logo-source').value;
+      const uploadGroup = document.getElementById('logo-upload-group');
+      const previewImg = document.getElementById('letter-logo');
+
+      if (src === 'nudge') {
+        uploadGroup.style.display = 'none';
+        previewImg.src = 'assets/images/NUDGE LOGO.png';
+        previewImg.classList.add('logo-red-filter');
+        previewImg.style.display = 'block';
+      } else if (src === 'upload') {
+        uploadGroup.style.display = 'block';
+        previewImg.classList.remove('logo-red-filter');
+        if (customLogoData) {
+          previewImg.src = customLogoData;
+          previewImg.style.display = 'block';
+        } else {
+          previewImg.style.display = 'none';
+        }
+      } else {
+        uploadGroup.style.display = 'none';
+        previewImg.classList.remove('logo-red-filter');
+        previewImg.style.display = 'none';
+      }
+    }
+
+    // Handle Custom Logo Upload
+    function handleLogoUpload(input) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          customLogoData = e.target.result;
+          const logoEl = document.getElementById('letter-logo');
+          logoEl.src = customLogoData;
+          logoEl.classList.remove('logo-red-filter');
+          logoEl.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Toggle Guidelines
+    function toggleGuidelines() {
+      const show = document.getElementById('guidelines-check').checked;
+      const paper = document.getElementById('letter-paper');
+      if (show) {
+        paper.classList.add('show-guidelines');
+      } else {
+        paper.classList.remove('show-guidelines');
+      }
+    }
+
+    // Toggle Background Watermark
+    function toggleWatermark() {
+      const show = document.getElementById('watermark-toggle').checked;
+      const paper = document.getElementById('letter-paper');
+      if (show) {
+        paper.classList.add('show-watermark');
+      } else {
+        paper.classList.remove('show-watermark');
+      }
+    }
+
+    // Switch Layout Class
+    function switchLayout(layoutName) {
+      document.querySelectorAll('.layout-card').forEach(card => card.classList.remove('active'));
+      document.getElementById('layout-' + layoutName).classList.add('active');
+      
+      const paper = document.getElementById('letter-paper');
+      paper.className = 'letter-paper'; // reset classes
+      paper.classList.add('template-' + layoutName);
+      
+      // restore guideline / watermark status
+      if (document.getElementById('guidelines-check').checked) {
+        paper.classList.add('show-guidelines');
+      }
+      if (document.getElementById('watermark-toggle').checked) {
+        paper.classList.add('show-watermark');
+      }
+    }
+
+    // Set accent color via presets
+    function setAccentColor(colorHex, presetEl) {
+      document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+      presetEl.classList.add('active');
+      document.getElementById('custom-accent-color').value = colorHex;
+      applyAccentColor(colorHex);
+    }
+
+    function handleCustomColor(colorHex) {
+      document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+      applyAccentColor(colorHex);
+    }
+
+    function applyAccentColor(colorHex) {
+      document.getElementById('letter-paper').style.setProperty('--letter-accent', colorHex);
+    }
+
+    // Toggle Custom Body Override
+    function toggleCustomText() {
+      const customOn = document.getElementById('custom-text-toggle').checked;
+      const customArea = document.getElementById('custom-body-text');
+      customArea.disabled = !customOn;
+      updateLetterPreview();
+    }
+
+    // Handle Signature Type Swaps
+    function toggleSigType() {
+      const type = document.getElementById('sig-type').value;
+      const textGroup = document.getElementById('sig-text-group');
+      const uploadGroup = document.getElementById('sig-upload-group');
+      const drawGroup = document.getElementById('sig-draw-group');
+      
+      const cursivePreview = document.getElementById('preview-signature-cursive');
+      const imagePreview = document.getElementById('preview-signature-img');
+
+      // Hide all controls first
+      textGroup.style.display = 'none';
+      uploadGroup.style.display = 'none';
+      drawGroup.style.display = 'none';
+      
+      // Hide previews
+      cursivePreview.style.display = 'none';
+      imagePreview.style.display = 'none';
+
+      if (type.startsWith('font-')) {
+        textGroup.style.display = 'block';
+        const fontClass = type.replace('font-', '');
+        cursivePreview.className = 'cursive-sig-text ' + fontClass;
+        cursivePreview.textContent = document.getElementById('sig-text-input').value;
+        cursivePreview.style.display = 'block';
+      } else if (type === 'upload') {
+        uploadGroup.style.display = 'block';
+        if (customSigData) {
+          imagePreview.src = customSigData;
+          imagePreview.style.display = 'block';
+        }
+      } else if (type === 'draw') {
+        drawGroup.style.display = 'block';
+        saveDrawnSignature();
+      }
+    }
+
+    // Handle Signature Image Upload
+    function handleSigUpload(input) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          customSigData = e.target.result;
+          const imagePreview = document.getElementById('preview-signature-img');
+          imagePreview.src = customSigData;
+          imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Date formatting helper: transforms '2026-05-31' to '31st May 2026'
+    function getOrdinalSuffix(day) {
+      if (day > 3 && day < 21) return 'th';
+      switch (day % 10) {
+        case 1:  return "st";
+        case 2:  return "nd";
+        case 3:  return "rd";
+        default: return "th";
+      }
+    }
+
+    function formatDateElegant(dateStr) {
+      if (!dateStr) return '';
+      const date = new Date(dateStr);
+      if (isNaN(date)) return dateStr;
+      const day = date.getDate();
+      const month = date.toLocaleString('en-US', { month: 'long' });
+      const year = date.getFullYear();
+      return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+    }
+
+    // Auto-generate Letter Body text based on details
+    function buildAutoBodyText() {
+      const prefix = document.getElementById('emp-prefix').value;
+      const name = document.getElementById('emp-name').value;
+      const designation = document.getElementById('emp-title').value;
+      const dept = document.getElementById('emp-dept').value;
+      const company = document.getElementById('org-name').value;
+      const type = document.getElementById('emp-type').value;
+      const startStr = formatDateElegant(document.getElementById('emp-start').value);
+      const endStr = formatDateElegant(document.getElementById('emp-end').value);
+      const rating = document.getElementById('emp-conduct').value;
+      const responsibilities = document.getElementById('emp-responsibilities').value;
+
+      // Select proper pronouns
+      let pSub = "They";
+      let pPoss = "their";
+      let pObj = "them";
+
+      if (prefix === 'Mr.') {
+        pSub = "He"; pPoss = "his"; pObj = "him";
+      } else if (prefix === 'Ms.') {
+        pSub = "She"; pPoss = "her"; pObj = "her";
+      }
+
+      const salName = prefix !== 'None' ? `${prefix} ${name}` : name;
+      const deptText = dept ? ` in the ${dept} department` : '';
+
+      let text = `<p class="letter-body-p">This is to certify that <strong>${salName}</strong> was employed with <strong>${company}</strong> as a <strong>${designation}</strong> from ${startStr} to ${endStr}. During ${pPoss} tenure, ${pSub.toLowerCase()} was engaged as a ${type} employee${deptText}.</p>`;
+      
+      if (responsibilities.trim()) {
+        text += `<p class="letter-body-p">${pPoss.charAt(0).toUpperCase() + pPoss.slice(1)} primary contributions included ${responsibilities.trim()}.</p>`;
+      }
+
+      text += `<p class="letter-body-p">During the tenure of ${pPoss} service, ${pSub.toLowerCase()} proved to be an active, diligent, and honest worker. ${pPoss.charAt(0).toUpperCase() + pPoss.slice(1)} conduct and performance were rated as <strong>${rating}</strong>. We wish ${pObj} the very best in all ${pPoss} future endeavors.</p>`;
+
+      return text;
+    }
+
+    // Refresh Letter Preview Pane
+    function updateLetterPreview() {
+      // 1. Text Details
+      const orgName = document.getElementById('org-name').value;
+      document.getElementById('preview-org-name').textContent = orgName;
+      document.getElementById('preview-signoff-org').textContent = `For ${orgName},`;
+      document.getElementById('preview-footer-org').textContent = `© 2026 ${orgName}`;
+
+      const orgTagline = document.getElementById('org-tagline').value;
+      const taglinePreview = document.getElementById('preview-org-tagline');
+      if (orgTagline.trim()) {
+        taglinePreview.textContent = orgTagline;
+        taglinePreview.style.display = 'block';
+      } else {
+        taglinePreview.style.display = 'none';
+      }
+
+      document.getElementById('preview-org-address').textContent = document.getElementById('org-address').value;
+      document.getElementById('preview-org-contact').textContent = document.getElementById('org-contact').value;
+      document.getElementById('preview-ref-no').textContent = document.getElementById('letter-ref').value;
+      
+      // Formatting Dates
+      document.getElementById('preview-issue-date').textContent = formatDateElegant(document.getElementById('letter-date').value);
+
+      // Certificate Title
+      document.getElementById('preview-letter-title').textContent = document.getElementById('letter-title-input').value;
+
+      // Signatory
+      const signerName = document.getElementById('signer-name').value;
+      document.getElementById('preview-signer-name').textContent = signerName;
+      document.getElementById('preview-signer-title').textContent = document.getElementById('signer-title').value;
+      
+      // Update signature font text field
+      const sigType = document.getElementById('sig-type').value;
+      if (sigType.startsWith('font-')) {
+        document.getElementById('preview-signature-cursive').textContent = document.getElementById('sig-text-input').value;
+      }
+
+      // 2. Letter Phrasing content
+      const customOn = document.getElementById('custom-text-toggle').checked;
+      const bodyPreview = document.getElementById('preview-letter-body');
+      
+      if (customOn) {
+        // Raw text format replacement helper
+        let rawText = document.getElementById('custom-body-text').value;
+        // Escape newlines to paragraphs
+        let paragraphs = rawText.split('\n\n').map(p => `<p class="letter-body-p">${p.replace(/\n/g, '<br>')}</p>`).join('');
+        bodyPreview.innerHTML = paragraphs;
+      } else {
+        bodyPreview.innerHTML = buildAutoBodyText();
+        // Keep the sync disabled area filled with updated auto text too
+        document.getElementById('custom-body-text').value = buildAutoBodyText().replace(/<p class="letter-body-p">/g, '').replace(/<\/p>/g, '\n\n').replace(/<strong>/g, '').replace(/<\/strong>/g, '').trim();
+      }
+    }
+
+    // Sync input updates in real time
+    const inputSelectors = [
+      '#org-name', '#org-tagline', '#org-address', '#org-contact',
+      '#emp-prefix', '#emp-name', '#emp-title', '#emp-dept',
+      '#emp-start', '#emp-end', '#emp-type', '#letter-date',
+      '#letter-ref', '#letter-title-input', '#emp-responsibilities',
+      '#emp-conduct', '#custom-body-text', '#signer-name',
+      '#signer-title', '#sig-text-input'
+    ];
+
+    inputSelectors.forEach(selector => {
+      document.querySelector(selector).addEventListener('input', updateLetterPreview);
+    });
+
+    // Change listeners for dropdowns
+    document.getElementById('emp-prefix').addEventListener('change', updateLetterPreview);
+    document.getElementById('emp-type').addEventListener('change', updateLetterPreview);
+    document.getElementById('emp-conduct').addEventListener('change', updateLetterPreview);
+    document.getElementById('sig-text-input').addEventListener('input', () => {
+      document.getElementById('preview-signature-cursive').textContent = document.getElementById('sig-text-input').value;
+    });
+
+    // Populate Asif's Sample Info
+    function loadSampleAsif() {
+      document.getElementById('org-name').value = "Nudge Academy";
+      document.getElementById('org-tagline').value = "Step into Tomorrow";
+      document.getElementById('org-address').value = "3rd Floor, Hilite Business Park";
+      document.getElementById('org-contact').value = "Kozhikode, Kerala - 673014 | +91 9625986622 | info@nudge.academy";
+      document.getElementById('logo-source').value = "nudge";
+      toggleLogoSource();
+
+      document.getElementById('emp-prefix').value = "Mr.";
+      document.getElementById('emp-name').value = "Rohan Sharma";
+      document.getElementById('emp-title').value = "Senior Software Engineer";
+      document.getElementById('emp-dept').value = "Technology & Product";
+      document.getElementById('emp-start').value = "2024-02-15";
+      document.getElementById('emp-end').value = "2026-05-31";
+      document.getElementById('emp-type').value = "Full-time";
+      document.getElementById('letter-date').value = "2026-05-31";
+      document.getElementById('letter-ref').value = "NA/HR/EXP/2026/047";
+
+      document.getElementById('letter-title-input').value = "EXPERIENCE CERTIFICATE";
+      document.getElementById('emp-responsibilities').value = "leading full-stack web application development, building interactive tools for student preparation, designing responsive dashboards, optimizing SEO ranking, and integrating AI doubt-solving systems";
+      document.getElementById('emp-conduct').value = "Outstanding";
+      
+      document.getElementById('custom-text-toggle').checked = false;
+      document.getElementById('custom-body-text').disabled = true;
+
+      document.getElementById('signer-name').value = "Asif Ali";
+      document.getElementById('signer-title').value = "CEO & Co-founder";
+      document.getElementById('sig-type').value = "font-sacramento";
+      document.getElementById('sig-text-input').value = "Asif Ali";
+
+      // Reset style to modern and red preset
+      switchLayout('modern');
+      const redPreset = document.querySelector('.color-preset');
+      setAccentColor('#dc2626', redPreset);
+      document.getElementById('watermark-toggle').checked = true;
+      toggleWatermark();
+
+      toggleSigType();
+      updateLetterPreview();
+    }
+
+    // Populate Sample Jane Doe
+    function loadSampleJane() {
+      document.getElementById('org-name').value = "Apex Consulting Ltd";
+      document.getElementById('org-tagline').value = "Elevating Business Operations";
+      document.getElementById('org-address').value = "Vasant Vihar, Block C, New Delhi";
+      document.getElementById('org-contact').value = "Delhi - 110057 | contact@apex.co.in | www.apex.co.in";
+      document.getElementById('logo-source').value = "none";
+      toggleLogoSource();
+
+      document.getElementById('emp-prefix').value = "Ms.";
+      document.getElementById('emp-name').value = "Jane Doe";
+      document.getElementById('emp-title').value = "Human Resources Specialist";
+      document.getElementById('emp-dept').value = "Corporate Operations";
+      document.getElementById('emp-start').value = "2022-09-01";
+      document.getElementById('emp-end').value = "2025-11-30";
+      document.getElementById('emp-type').value = "Full-time";
+      document.getElementById('letter-date').value = "2025-12-01";
+      document.getElementById('letter-ref').value = "ACL/HR/EXP/2025-983";
+
+      document.getElementById('letter-title-input').value = "EXPERIENCE CERTIFICATE";
+      document.getElementById('emp-responsibilities').value = "managing corporate talent acquisition, setting up onboarding processes, resolving employee relations policies, and coordinating annual appraisal evaluations";
+      document.getElementById('emp-conduct').value = "Excellent";
+      
+      document.getElementById('custom-text-toggle').checked = false;
+      document.getElementById('custom-body-text').disabled = true;
+
+      document.getElementById('signer-name').value = "Vikram Aditya";
+      document.getElementById('signer-title').value = "Managing Director";
+      document.getElementById('sig-type').value = "font-dancing";
+      document.getElementById('sig-text-input').value = "V. Aditya";
+
+      // Reset style to classic steel blue
+      switchLayout('classic');
+      const bluePreset = document.querySelectorAll('.color-preset')[1];
+      setAccentColor('#1e3a8a', bluePreset);
+      document.getElementById('watermark-toggle').checked = false;
+      toggleWatermark();
+
+      toggleSigType();
+      updateLetterPreview();
+    }
+
+    // Reset Form to Empty
+    function resetFormToBlank() {
+      document.getElementById('org-name').value = "";
+      document.getElementById('org-tagline').value = "";
+      document.getElementById('org-address').value = "";
+      document.getElementById('org-contact').value = "";
+      document.getElementById('logo-source').value = "none";
+      toggleLogoSource();
+
+      document.getElementById('emp-prefix').value = "None";
+      document.getElementById('emp-name').value = "";
+      document.getElementById('emp-title').value = "";
+      document.getElementById('emp-dept').value = "";
+      document.getElementById('emp-start').value = "";
+      document.getElementById('emp-end').value = "";
+      document.getElementById('emp-type').value = "Full-time";
+      document.getElementById('letter-date').value = "";
+      document.getElementById('letter-ref').value = "";
+
+      document.getElementById('letter-title-input').value = "EXPERIENCE CERTIFICATE";
+      document.getElementById('emp-responsibilities').value = "";
+      document.getElementById('emp-conduct').value = "Outstanding";
+      
+      document.getElementById('custom-text-toggle').checked = false;
+      document.getElementById('custom-body-text').disabled = true;
+
+      document.getElementById('signer-name').value = "";
+      document.getElementById('signer-title').value = "";
+      document.getElementById('sig-type').value = "none";
+      document.getElementById('sig-text-input').value = "";
+
+      clearSignatureCanvas();
+      toggleSigType();
+      updateLetterPreview();
+    }
+
+    // Trigger Browser Print Dialogue
+    function triggerPrint() {
+      // Temporarily hide guidelines for perfect print formatting if checkbox is on
+      const currentGuidelinesState = document.getElementById('guidelines-check').checked;
+      if (currentGuidelinesState) {
+        document.getElementById('letter-paper').classList.remove('show-guidelines');
+      }
+      
+      // Trigger print dialogue
+      window.print();
+      
+      // Restore guidelines state afterwards
+      if (currentGuidelinesState) {
+        document.getElementById('letter-paper').classList.add('show-guidelines');
+      }
+    }
+
+    // Initialize with Asif's default data on load
+    window.onload = function() {
+      loadSampleAsif();
+    };
+  </script>
+</body>
+
+</html>

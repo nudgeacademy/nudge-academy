@@ -794,6 +794,10 @@
               <p>Review and manage candidates for the 2026 cohort.</p>
             </div>
             <div class="filters">
+              <select id="round-filter" class="filter-select" style="border-color: var(--primary); font-weight: 600; background-color: rgba(99, 102, 241, 0.1);">
+                <option value="round2" selected>Round 2</option>
+                <option value="round1">Round 1</option>
+              </select>
               <select id="sort-filter" class="filter-select">
                 <option value="date-desc">Newest First</option>
                 <option value="date-asc">Oldest First</option>
@@ -1001,11 +1005,16 @@
     const emptyState = document.getElementById('empty-state');
     const tableEl = document.querySelector('table');
     
+    const roundFilter = document.getElementById('round-filter');
     const statusFilter = document.getElementById('status-filter');
     const sortFilter = document.getElementById('sort-filter');
     const examFilter = document.getElementById('exam-filter');
     const searchInput = document.getElementById('search-input');
     const refreshBtn = document.getElementById('refresh-btn');
+
+    function getCollectionName() {
+      return roundFilter.value === 'round1' ? "fellowshipApplications" : "fellowshipApplicationsRound2";
+    }
 
     // Auth logic
     const checkAuth = () => sessionStorage.getItem('adminAuth') === 'true';
@@ -1070,7 +1079,7 @@
       if (!db) return;
       refreshBtn.querySelector('i').classList.add('fa-spin');
       try {
-        const querySnapshot = await getDocs(collection(db, "fellowshipApplications"));
+        const querySnapshot = await getDocs(collection(db, getCollectionName()));
         allApplications = [];
         querySnapshot.forEach((doc) => {
           allApplications.push({ id: doc.id, ...doc.data() });
@@ -1226,7 +1235,7 @@
     window.updateStatus = async function(id, newStatus) {
       if (!db) return;
       try {
-        await updateDoc(doc(db, "fellowshipApplications", id), { status: newStatus });
+        await updateDoc(doc(db, getCollectionName(), id), { status: newStatus });
         const idx = allApplications.findIndex(a => a.id === id);
         if (idx !== -1) allApplications[idx].status = newStatus;
         updateStats();
@@ -1244,7 +1253,7 @@
     window.toggleWhatsApp = async function(id, isChecked) {
       if (!db) return;
       try {
-        await updateDoc(doc(db, "fellowshipApplications", id), { addedToWhatsApp: isChecked });
+        await updateDoc(doc(db, getCollectionName(), id), { addedToWhatsApp: isChecked });
         const idx = allApplications.findIndex(a => a.id === id);
         if (idx !== -1) allApplications[idx].addedToWhatsApp = isChecked;
       } catch(err) {
@@ -1264,7 +1273,7 @@
       if (!db || !currentViewId) return;
       const remarks = document.getElementById('modal-remarks-input').value;
       try {
-        await updateDoc(doc(db, "fellowshipApplications", currentViewId), { reviewerRemarks: remarks });
+        await updateDoc(doc(db, getCollectionName(), currentViewId), { reviewerRemarks: remarks });
         const idx = allApplications.findIndex(a => a.id === currentViewId);
         if (idx !== -1) allApplications[idx].reviewerRemarks = remarks;
         
@@ -1294,7 +1303,7 @@
       const btn = document.getElementById('confirm-delete-btn');
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       try {
-        await updateDoc(doc(db, "fellowshipApplications", currentDeleteId), { status: 'deleted' });
+        await updateDoc(doc(db, getCollectionName(), currentDeleteId), { status: 'deleted' });
         const idx = allApplications.findIndex(a => a.id === currentDeleteId);
         if (idx !== -1) allApplications[idx].status = 'deleted';
         
@@ -1312,7 +1321,7 @@
     window.restoreApplication = async function(id) {
       if (!db) return;
       try {
-        await updateDoc(doc(db, "fellowshipApplications", id), { status: 'applied' });
+        await updateDoc(doc(db, getCollectionName(), id), { status: 'applied' });
         const idx = allApplications.findIndex(a => a.id === id);
         if (idx !== -1) allApplications[idx].status = 'applied';
         updateStats();
@@ -1395,6 +1404,7 @@
     };
 
     // Listeners
+    roundFilter.addEventListener('change', fetchApplications);
     statusFilter.addEventListener('change', renderTable);
     sortFilter.addEventListener('change', renderTable);
     examFilter.addEventListener('change', renderTable);
