@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Fellowship Applications (Round 1 & Round 2)
+    // Allows public submissions and admin dashboard retrieval/updates
+    match /fellowshipApplications/{document} {
+      allow read, write: if true;
+    }
+    match /fellowshipApplicationsRound2/{document} {
+      allow read, write: if true;
+    }
+
+    // 2. Event/Program Registrations
+    // Allows public signups (creates) but prevents public reading/deletes
+    match /iitWithoutJeeRegistrations/{document} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+    match /commerceToCroreRegistrations/{document} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // 3. Account Deletion Requests
+    // Allows public requests (creates) but prevents public reading/deletes
+    match /accountDeletionRequests/{document} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}
