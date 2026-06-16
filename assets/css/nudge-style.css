@@ -2761,6 +2761,10 @@ textarea.form-input {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .featured-courses {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 48px;
