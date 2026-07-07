@@ -147,6 +147,26 @@
         height: auto;
         display: block;
       }
+      .poster-details {
+        background: #fff;
+        padding: 18px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .poster-detail-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #334155;
+      }
+      .poster-detail-item i {
+        color: #b91c1c;
+        width: 18px;
+        text-align: center;
+      }
 
       /* Form Card */
       .reg-form-card {
@@ -303,9 +323,19 @@
     <section class="reg-layout">
       <div class="reg-poster">
         <img
-          src="assets/images/IIT WITHOUT JEE.png"
-          alt="Kottakkal Municipality Orientation Poster"
+          src="kottakkal.png"
+          alt="UNIVERGE - Kottakkal Municipality Orientation Poster"
         />
+        <div class="poster-details">
+          <div class="poster-detail-item">
+            <i class="fas fa-calendar-days"></i>
+            <span>11/07/2026, Saturday &middot; 09:00 AM - 05:00 PM</span>
+          </div>
+          <div class="poster-detail-item">
+            <i class="fas fa-location-dot"></i>
+            <span>CH Auditorium, Kottakkal (Opposite municipal office)</span>
+          </div>
+        </div>
       </div>
 
       <div class="reg-form-card">
@@ -362,8 +392,7 @@
                 <label class="f-label" for="regStream">Stream *</label>
                 <select id="regStream" name="stream" class="f-input" required>
                   <option value="" disabled selected>Select</option>
-                  <option>Science (PCM)</option>
-                  <option>Science (PCB)</option>
+                  <option>Science</option>
                   <option>Commerce</option>
                   <option>Humanities / Arts</option>
                   <option>Other</option>
@@ -381,21 +410,6 @@
                 placeholder="e.g. Govt. Higher Secondary School"
                 required
               />
-            </div>
-
-            <div class="f-row-full">
-              <label class="f-label" for="regSource"
-                >How did you hear about this session?</label
-              >
-              <select id="regSource" name="source" class="f-input">
-                <option value="" disabled selected>Select one</option>
-                <option>Instagram</option>
-                <option>WhatsApp</option>
-                <option>Friend / Classmate</option>
-                <option>Nudge Website</option>
-                <option>YouTube</option>
-                <option>Other</option>
-              </select>
             </div>
 
             <button type="submit" class="f-submit" id="regSubmitBtn">
@@ -505,7 +519,6 @@
             currentClass: fd.get("currentClass"),
             stream: fd.get("stream"),
             school: fd.get("school"),
-            source: fd.get("source") || "",
             program: "Kottakkal Municipality Orientation",
             eventDate: "2026-07-11",
             status: "registered",
