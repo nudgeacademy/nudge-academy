@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applications Review — Kottakkal Municipality Orientation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
+        min-height: 100vh;
+        padding-bottom: 40px;
+      }
+
+      /* ---------- HEADER ---------- */
+      .app-header {
+        background: linear-gradient(120deg, #7f1d1d, #b91c1c 55%, #dc2626);
+        color: #fff;
+        padding: 22px 18px 26px;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 8px 24px rgba(185, 28, 28, 0.25);
+      }
+
+      .app-eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #fecaca;
+        font-weight: 700;
+      }
+
+      .app-title {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-top: 4px;
+        line-height: 1.2;
+      }
+
+      .app-subtitle {
+        font-size: 0.85rem;
+        color: #fecaca;
+        margin-top: 4px;
+      }
+
+      .app-stats {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+        overflow-x: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .app-stats::-webkit-scrollbar {
+        display: none;
+      }
+
+      .stat-pill {
+        flex: 0 0 auto;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        padding: 8px 14px;
+        min-width: 84px;
+      }
+
+      .stat-pill .num {
+        font-size: 1.15rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .stat-pill .lbl {
+        font-size: 0.68rem;
+        color: #fecaca;
+        margin-top: 3px;
+        white-space: nowrap;
+      }
+
+      /* ---------- TOOLBAR ---------- */
+      .toolbar {
+        padding: 16px 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .search-box {
+        position: relative;
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-size: 0.85rem;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 11px 14px 11px 38px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: #0f172a;
+      }
+
+      .search-box input:focus {
+        outline: none;
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+      }
+
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .filter-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-chip {
+        flex: 0 0 auto;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #475569;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.15s ease;
+      }
+
+      .filter-chip.active {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: #fff;
+      }
+
+      .refresh-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2px 2px 0;
+      }
+
+      .result-count {
+        font-size: 0.78rem;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      .refresh-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: #b91c1c;
+        font-weight: 700;
+        font-size: 0.78rem;
+        font-family: inherit;
+        cursor: pointer;
+        padding: 4px 6px;
+      }
+
+      .refresh-btn i.spinning {
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ---------- CARDS ---------- */
+      .app-list {
+        padding: 14px 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .app-card {
+        background: #fff;
+        border: 1px solid #eef0f3;
+        border-radius: 14px;
+        padding: 14px 16px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .applicant-name {
+        font-weight: 700;
+        font-size: 1rem;
+        color: #0f172a;
+      }
+
+      .applicant-meta {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      .submitted-ago {
+        font-size: 0.7rem;
+        color: #94a3b8;
+        white-space: nowrap;
+        flex-shrink: 0;
+        text-align: right;
+      }
+
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 999px;
+      }
+
+      .tag.class {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+
+      .tag.stream {
+        background: #fef2f2;
+        color: #b91c1c;
+      }
+
+      .tag.status {
+        background: #ecfdf5;
+        color: #059669;
+      }
+
+      .card-phone {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-phone a {
+        color: #0f172a;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-phone i {
+        color: #16a34a;
+        font-size: 0.85rem;
+      }
+
+      /* ---------- STATES ---------- */
+      .state-box {
+        margin: 40px 20px;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .state-box i {
+        font-size: 1.8rem;
+        color: #cbd5e1;
+        margin-bottom: 10px;
+      }
+
+      .state-box h3 {
+        font-family: "Playfair Display", serif;
+        color: #334155;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+
+      .state-box p {
+        font-size: 0.85rem;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .state-box code {
+        display: block;
+        margin-top: 10px;
+        background: #f1f5f9;
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 0.72rem;
+        color: #b91c1c;
+        text-align: left;
+        overflow-wrap: break-word;
+      }
+
+      .skeleton {
+        background: #fff;
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin: 0 16px 10px;
+        border: 1px solid #eef0f3;
+      }
+
+      .sk-line {
+        height: 12px;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #eef0f3, #f7f8fa, #eef0f3);
+        background-size: 200% 100%;
+        animation: shimmer 1.3s infinite;
+        margin-bottom: 8px;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      @media (min-width: 720px) {
+        .app-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .toolbar {
+          flex-direction: row;
+          align-items: center;
+        }
+        .search-box {
+          flex: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      button:focus-visible,
+      input:focus-visible,
+      .filter-chip:focus-visible {
+        outline: 2px solid #dc2626;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="app-eyebrow">Internal · Review Only</div>
+      <div class="app-title">Applications — Kottakkal Municipality Orientation</div>
+      <div class="app-subtitle">Live view of everyone registered so far</div>
+
+      <div class="app-stats" id="statsRow">
+        <div class="stat-pill">
+          <div class="num" id="statTotal">–</div>
+          <div class="lbl">Total</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num" id="statScience">–</div>
+          <div class="lbl">Science</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num" id="statCommerce">–</div>
+          <div class="lbl">Commerce</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num" id="statHumanities">–</div>
+          <div class="lbl">Humanities</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num" id="statOther">–</div>
+          <div class="lbl">Other</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="fas fa-magnifying-glass"></i>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name, phone or school"
+        />
+      </div>
+      <div class="filter-row" id="filterRow">
+        <button class="filter-chip active" data-stream="all">All streams</button>
+        <button class="filter-chip" data-stream="Science">Science</button>
+        <button class="filter-chip" data-stream="Commerce">Commerce</button>
+        <button class="filter-chip" data-stream="Humanities / Arts">
+          Humanities
+        </button>
+        <button class="filter-chip" data-stream="Other">Other</button>
+      </div>
+    </div>
+
+    <div class="refresh-row" style="padding: 12px 16px 0">
+      <div class="result-count" id="resultCount">Loading…</div>
+      <button class="refresh-btn" id="refreshBtn">
+        <i class="fas fa-rotate-right"></i> Refresh
+      </button>
+    </div>
+
+    <div id="listContainer">
+      <div class="skeleton">
+        <div class="sk-line" style="width: 40%"></div>
+        <div class="sk-line" style="width: 70%"></div>
+        <div class="sk-line" style="width: 55%"></div>
+      </div>
+      <div class="skeleton">
+        <div class="sk-line" style="width: 35%"></div>
+        <div class="sk-line" style="width: 60%"></div>
+        <div class="sk-line" style="width: 50%"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        query,
+        orderBy,
+        onSnapshot,
+      } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDnSEUKCzaWuh350K2UG3BpWvUblZ_vrTs",
+        authDomain: "nudge-fellowship.firebaseapp.com",
+        projectId: "nudge-fellowship",
+        storageBucket: "nudge-fellowship.firebasestorage.app",
+        messagingSenderId: "522945610876",
+        appId: "1:522945610876:web:d65d745c3798a7d288f5f9",
+        measurementId: "G-62XLV5VTM0",
+      };
+
+      const listContainer = document.getElementById("listContainer");
+      const resultCount = document.getElementById("resultCount");
+      const searchInput = document.getElementById("searchInput");
+      const filterRow = document.getElementById("filterRow");
+      const refreshBtn = document.getElementById("refreshBtn");
+
+      let allApps = [];
+      let activeStream = "all";
+      let searchTerm = "";
+
+      function timeAgo(date) {
+        if (!date) return "";
+        const diffMs = Date.now() - date.getTime();
+        const mins = Math.floor(diffMs / 60000);
+        if (mins < 1) return "just now";
+        if (mins < 60) return mins + "m ago";
+        const hrs = Math.floor(mins / 60);
+        if (hrs < 24) return hrs + "h ago";
+        const days = Math.floor(hrs / 24);
+        return days + "d ago";
+      }
+
+      function escapeHtml(str) {
+        return String(str || "").replace(/[&<>"']/g, (c) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[c]));
+      }
+
+      function renderStats(apps) {
+        document.getElementById("statTotal").textContent = apps.length;
+        document.getElementById("statScience").textContent = apps.filter(
+          (a) => a.stream === "Science"
+        ).length;
+        document.getElementById("statCommerce").textContent = apps.filter(
+          (a) => a.stream === "Commerce"
+        ).length;
+        document.getElementById("statHumanities").textContent = apps.filter(
+          (a) => a.stream === "Humanities / Arts"
+        ).length;
+        document.getElementById("statOther").textContent = apps.filter(
+          (a) => !["Science", "Commerce", "Humanities / Arts"].includes(a.stream)
+        ).length;
+      }
+
+      function applyFiltersAndRender() {
+        let filtered = allApps;
+
+        if (activeStream !== "all") {
+          filtered = filtered.filter((a) => a.stream === activeStream);
+        }
+
+        if (searchTerm.trim()) {
+          const t = searchTerm.trim().toLowerCase();
+          filtered = filtered.filter(
+            (a) =>
+              (a.name || "").toLowerCase().includes(t) ||
+              (a.phone || "").toLowerCase().includes(t) ||
+              (a.school || "").toLowerCase().includes(t)
+          );
+        }
+
+        resultCount.textContent =
+          filtered.length + (filtered.length === 1 ? " application" : " applications");
+
+        if (filtered.length === 0) {
+          listContainer.innerHTML = `
+            <div class="state-box">
+              <i class="fas fa-inbox"></i>
+              <h3>No applications match</h3>
+              <p>Try a different search term or filter.</p>
+            </div>`;
+          return;
+        }
+
+        listContainer.innerHTML = filtered
+          .map((a) => {
+            const phoneDigits = (a.phone || "").replace(/[^\d+]/g, "");
+            return `
+            <div class="app-card">
+              <div class="card-top">
+                <div>
+                  <div class="applicant-name">${escapeHtml(a.name || "Unnamed")}</div>
+                  <div class="applicant-meta">${escapeHtml(a.school || "School not provided")}</div>
+                </div>
+                <div class="submitted-ago">${escapeHtml(timeAgo(a.submittedAtDate))}</div>
+              </div>
+              <div class="card-tags">
+                ${a.currentClass ? `<span class="tag class">${escapeHtml(a.currentClass)}</span>` : ""}
+                ${a.stream ? `<span class="tag stream">${escapeHtml(a.stream)}</span>` : ""}
+                ${a.status ? `<span class="tag status">${escapeHtml(a.status)}</span>` : ""}
+              </div>
+              ${
+                phoneDigits
+                  ? `<div class="card-phone">
+                      <a href="tel:${escapeHtml(phoneDigits)}">
+                        <i class="fas fa-phone"></i> ${escapeHtml(a.phone)}
+                      </a>
+                    </div>`
+                  : ""
+              }
+            </div>`;
+          })
+          .join("");
+      }
+
+      function showError(message, detail) {
+        listContainer.innerHTML = `
+          <div class="state-box">
+            <i class="fas fa-triangle-exclamation"></i>
+            <h3>Couldn't load applications</h3>
+            <p>${escapeHtml(message)}</p>
+            ${detail ? `<code>${escapeHtml(detail)}</code>` : ""}
+          </div>`;
+        resultCount.textContent = "—";
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        searchTerm = e.target.value;
+        applyFiltersAndRender();
+      });
+
+      filterRow.addEventListener("click", (e) => {
+        const btn = e.target.closest(".filter-chip");
+        if (!btn) return;
+        [...filterRow.children].forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        activeStream = btn.dataset.stream;
+        applyFiltersAndRender();
+      });
+
+      refreshBtn.addEventListener("click", () => {
+        const icon = refreshBtn.querySelector("i");
+        icon.classList.add("spinning");
+        setTimeout(() => icon.classList.remove("spinning"), 800);
+      });
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const q = query(
+          collection(db, "iitWithoutJeeRegistrations"),
+          orderBy("submittedAt", "desc")
+        );
+
+        onSnapshot(
+          q,
+          (snapshot) => {
+            allApps = snapshot.docs.map((doc) => {
+              const d = doc.data();
+              let submittedAtDate = null;
+              if (d.submittedAt && typeof d.submittedAt.toDate === "function") {
+                submittedAtDate = d.submittedAt.toDate();
+              } else if (d.submittedAt) {
+                submittedAtDate = new Date(d.submittedAt);
+              }
+              return { ...d, id: doc.id, submittedAtDate };
+            });
+            renderStats(allApps);
+            applyFiltersAndRender();
+          },
+          (err) => {
+            console.error(err);
+            showError(
+              "This page couldn't read the applications collection. Firestore rules likely need public read access enabled for review pages like this.",
+              err.message
+            );
+          }
+        );
+      } catch (err) {
+        console.error(err);
+        showError("Something went wrong connecting to the database.", err.message);
+      }
+    </script>
+  </body>
+</html>
