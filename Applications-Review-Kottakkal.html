@@ -440,9 +440,14 @@
 
     <div class="refresh-row" style="padding: 12px 16px 0">
       <div class="result-count" id="resultCount">Loading…</div>
-      <button class="refresh-btn" id="refreshBtn">
-        <i class="fas fa-rotate-right"></i> Refresh
-      </button>
+      <div style="display: flex; gap: 4px">
+        <button class="refresh-btn" id="refreshBtn">
+          <i class="fas fa-rotate-right"></i> Refresh
+        </button>
+        <button class="refresh-btn" id="exportBtn" style="color: #059669">
+          <i class="fas fa-address-card"></i> Export VCF
+        </button>
+      </div>
     </div>
 
     <div id="listContainer">
@@ -508,6 +513,68 @@
           '"': "&quot;",
           "'": "&#39;",
         }[c]));
+      }
+
+      // Assigns a sequential registration number to each applicant based on
+      // submission order (oldest first = 001). Used for VCF export naming.
+      function assignRegNos(apps) {
+        const sorted = [...apps].sort((a, b) => {
+          const ta = a.submittedAtDate ? a.submittedAtDate.getTime() : 0;
+          const tb = b.submittedAtDate ? b.submittedAtDate.getTime() : 0;
+          return ta - tb;
+        });
+        const regNoMap = new Map();
+        sorted.forEach((a, i) => {
+          regNoMap.set(a.id, String(i + 1).padStart(3, "0"));
+        });
+        return regNoMap;
+      }
+
+      function escapeVcf(str) {
+        return String(str || "")
+          .replace(/\\/g, "\\\\")
+          .replace(/;/g, "\\;")
+          .replace(/,/g, "\\,")
+          .replace(/\n/g, "\\n");
+      }
+
+      function buildVcf(apps) {
+        const regNoMap = assignRegNos(apps);
+        const cards = apps
+          .filter((a) => a.phone)
+          .map((a) => {
+            const regNo = regNoMap.get(a.id) || "000";
+            const cleanName = (a.name || "Unnamed").trim().replace(/\s+/g, " ");
+            const displayName = `${cleanName} ktkl ${regNo}`;
+            const noteParts = [a.currentClass, a.stream, a.school].filter(Boolean);
+            const lines = [
+              "BEGIN:VCARD",
+              "VERSION:3.0",
+              `N:${escapeVcf(displayName)};;;;`,
+              `FN:${escapeVcf(displayName)}`,
+              `TEL;TYPE=CELL:${escapeVcf(a.phone)}`,
+            ];
+            if (noteParts.length) {
+              lines.push(`NOTE:${escapeVcf(noteParts.join(" · "))}`);
+            }
+            lines.push("END:VCARD");
+            return lines.join("\r\n");
+          });
+        return cards.join("\r\n");
+      }
+
+      function downloadVcf() {
+        if (!allApps.length) return;
+        const vcfContent = buildVcf(allApps);
+        const blob = new Blob([vcfContent], { type: "text/vcard;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "kottakkal-orientation-contacts.vcf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       }
 
       function renderStats(apps) {
@@ -617,6 +684,8 @@
         icon.classList.add("spinning");
         setTimeout(() => icon.classList.remove("spinning"), 800);
       });
+
+      document.getElementById("exportBtn").addEventListener("click", downloadVcf);
 
       try {
         const app = initializeApp(firebaseConfig);
