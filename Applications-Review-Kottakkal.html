@@ -358,6 +358,133 @@
         }
       }
 
+      /* ---------- EXPORT MODAL ---------- */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 100;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal-box {
+        background: #fff;
+        width: 100%;
+        max-width: 420px;
+        border-radius: 20px 20px 0 0;
+        padding: 22px 20px 24px;
+        animation: slideUp 0.2s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(24px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @media (min-width: 480px) {
+        .modal-overlay {
+          align-items: center;
+        }
+        .modal-box {
+          border-radius: 18px;
+        }
+      }
+
+      .modal-box h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        color: #0f172a;
+      }
+
+      .modal-sub {
+        font-size: 0.82rem;
+        color: #64748b;
+        margin-top: 6px;
+        line-height: 1.4;
+      }
+
+      .modal-range-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .modal-range-row > div {
+        flex: 1;
+      }
+
+      .modal-range-row label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #475569;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .modal-range-row input {
+        width: 100%;
+        padding: 11px 12px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        font-family: inherit;
+        font-size: 0.95rem;
+      }
+
+      .modal-range-row input:focus {
+        outline: none;
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+      }
+
+      .modal-hint {
+        font-size: 0.72rem;
+        color: #dc2626;
+        margin-top: 8px;
+        min-height: 14px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .modal-btn {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      .modal-btn.cancel {
+        background: #f1f5f9;
+        color: #475569;
+      }
+
+      .modal-btn.confirm {
+        background: #dc2626;
+        color: #fff;
+      }
+
       @media (min-width: 720px) {
         .app-list {
           display: grid;
@@ -463,6 +590,31 @@
       </div>
     </div>
 
+    <div class="modal-overlay" id="exportModalOverlay">
+      <div class="modal-box">
+        <h3>Export contacts</h3>
+        <p class="modal-sub">
+          Enter the registration number range to export (numbers reflect
+          signup order — oldest is 001).
+        </p>
+        <div class="modal-range-row">
+          <div>
+            <label for="rangeFrom">From #</label>
+            <input type="number" id="rangeFrom" min="1" inputmode="numeric" />
+          </div>
+          <div>
+            <label for="rangeTo">To #</label>
+            <input type="number" id="rangeTo" min="1" inputmode="numeric" />
+          </div>
+        </div>
+        <p class="modal-hint" id="modalHint"></p>
+        <div class="modal-actions">
+          <button class="modal-btn cancel" id="modalCancelBtn">Cancel</button>
+          <button class="modal-btn confirm" id="modalExportBtn">Export</button>
+        </div>
+      </div>
+    </div>
+
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
       import {
@@ -538,9 +690,8 @@
           .replace(/\n/g, "\\n");
       }
 
-      function buildVcf(apps) {
-        const regNoMap = assignRegNos(apps);
-        const cards = apps
+      function buildVcfEntries(apps, regNoMap) {
+        return apps
           .filter((a) => a.phone)
           .map((a) => {
             const regNo = regNoMap.get(a.id) || "000";
@@ -560,21 +711,56 @@
             lines.push("END:VCARD");
             return lines.join("\r\n");
           });
-        return cards.join("\r\n");
       }
 
-      function downloadVcf() {
-        if (!allApps.length) return;
-        const vcfContent = buildVcf(allApps);
+      async function shareOrDownloadVcf(vcfContent, fileName) {
         const blob = new Blob([vcfContent], { type: "text/vcard;charset=utf-8" });
+        const file = new File([blob], fileName, { type: "text/vcard" });
+
+        // On iPhone (and other browsers that support sharing files), open the
+        // native share sheet instead of silently downloading.
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: "Kottakkal Orientation Contacts",
+            });
+            return;
+          } catch (err) {
+            if (err && err.name === "AbortError") return; // user cancelled share sheet
+            console.warn("Share failed, falling back to direct download", err);
+          }
+        }
+
+        // Fallback for browsers without file-sharing support (e.g. desktop)
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "kottakkal-orientation-contacts.vcf";
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+      }
+
+      // Exports only the applicants whose registration number (based on
+      // submission order across ALL applicants, not the current filter)
+      // falls within [fromNum, toNum], inclusive.
+      async function exportRange(fromNum, toNum) {
+        const regNoMap = assignRegNos(allApps);
+        const selected = allApps.filter((a) => {
+          const regNo = regNoMap.get(a.id);
+          if (!regNo) return false;
+          const n = parseInt(regNo, 10);
+          return n >= fromNum && n <= toNum;
+        });
+        if (!selected.length) return;
+        const vcfContent = buildVcfEntries(selected, regNoMap).join("\r\n");
+        const fileName = `kottakkal-contacts-${String(fromNum).padStart(
+          3,
+          "0"
+        )}-${String(toNum).padStart(3, "0")}.vcf`;
+        await shareOrDownloadVcf(vcfContent, fileName);
       }
 
       function renderStats(apps) {
@@ -685,7 +871,48 @@
         setTimeout(() => icon.classList.remove("spinning"), 800);
       });
 
-      document.getElementById("exportBtn").addEventListener("click", downloadVcf);
+      document.getElementById("exportBtn").addEventListener("click", openExportModal);
+
+      const exportModalOverlay = document.getElementById("exportModalOverlay");
+      const rangeFromInput = document.getElementById("rangeFrom");
+      const rangeToInput = document.getElementById("rangeTo");
+      const modalHint = document.getElementById("modalHint");
+      const modalCancelBtn = document.getElementById("modalCancelBtn");
+      const modalExportBtn = document.getElementById("modalExportBtn");
+
+      function openExportModal() {
+        if (!allApps.length) return;
+        modalHint.textContent = "";
+        rangeFromInput.value = 1;
+        rangeToInput.value = allApps.length;
+        rangeFromInput.max = allApps.length;
+        rangeToInput.max = allApps.length;
+        exportModalOverlay.classList.add("open");
+        rangeFromInput.focus();
+      }
+
+      function closeExportModal() {
+        exportModalOverlay.classList.remove("open");
+      }
+
+      modalCancelBtn.addEventListener("click", closeExportModal);
+      exportModalOverlay.addEventListener("click", (e) => {
+        if (e.target === exportModalOverlay) closeExportModal();
+      });
+
+      modalExportBtn.addEventListener("click", async () => {
+        const from = parseInt(rangeFromInput.value, 10);
+        const to = parseInt(rangeToInput.value, 10);
+        const max = allApps.length;
+
+        if (!from || !to || from < 1 || to < from || to > max) {
+          modalHint.textContent = `Enter a valid range between 1 and ${max}.`;
+          return;
+        }
+
+        closeExportModal();
+        await exportRange(from, to);
+      });
 
       try {
         const app = initializeApp(firebaseConfig);
