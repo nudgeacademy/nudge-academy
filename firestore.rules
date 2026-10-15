@@ -21,7 +21,15 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
-    // 3. Account Deletion Requests
+    // 3. Student Feedback Questionnaire (student-feedback.html)
+    // Public submissions; admin page reads/deletes behind its password screen
+    match /studentFeedback/{document} {
+      allow create: if true;
+      allow read, delete: if true;
+      allow update: if false;
+    }
+
+    // 4. Account Deletion Requests
     // Allows public requests (creates) but prevents public reading/deletes
     match /accountDeletionRequests/{document} {
       allow create: if true;

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Feedback Admin | Nudge Academy</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E63946; --red-dark: #B5212E; --red-soft: #FFE8EA; --red-tint: #FFF5F6;
+      --ink: #2B2B2B; --muted: #7A7A7A; --line: #ECECEC; --bg: #FAF7F7; --white: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', system-ui, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+    button, input, select { font: inherit; }
+
+    .btn {
+      font-weight: 900; font-size: 14px; letter-spacing: .04em; border-radius: 12px; padding: 10px 16px;
+      cursor: pointer; border: 2px solid transparent; border-bottom-width: 4px; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+    .btn-primary { background: var(--red); color: #fff; border-color: var(--red); border-bottom-color: var(--red-dark); }
+    .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); }
+    .btn-danger { background: #fff; color: var(--red-dark); border-color: #F5C2C7; }
+
+    /* Login */
+    #login { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+    .login-card { background: #fff; border: 2px solid var(--line); border-radius: 24px; padding: 32px 28px; width: 100%; max-width: 380px; text-align: center; }
+    .login-card .badge { width: 72px; height: 72px; border-radius: 22px; background: var(--red); color: #fff; font-size: 38px; display: grid; place-items: center; margin: 0 auto 14px; }
+    .login-card h1 { font-size: 24px; font-weight: 900; }
+    .login-card p { color: var(--muted); font-weight: 700; margin: 4px 0 20px; }
+    .login-card input { width: 100%; padding: 13px 14px; border-radius: 12px; border: 2px solid var(--line); background: #F7F7F7; font-weight: 700; outline: none; margin-bottom: 12px; }
+    .login-card input:focus { border-color: var(--red); background: #fff; }
+    .login-card .btn { width: 100%; justify-content: center; padding: 13px; }
+    .err { color: var(--red-dark); font-weight: 800; font-size: 14px; margin-bottom: 10px; display: none; }
+
+    /* App */
+    header.bar { background: var(--red); color: #fff; }
+    .bar-inner { max-width: 1240px; margin: 0 auto; padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .bar-inner h1 { font-size: 20px; font-weight: 900; display: flex; align-items: center; gap: 8px; margin-right: auto; }
+    .bar-inner .btn-ghost { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.25); border-bottom-color: rgba(0,0,0,.18); }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 20px 16px 60px; }
+
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .kpi { background: #fff; border: 2px solid var(--line); border-radius: 18px; padding: 16px; }
+    .kpi small { display: block; font-size: 12px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .kpi b { display: block; font-size: 30px; font-weight: 900; color: var(--red); margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .kpi span { font-size: 13px; font-weight: 700; color: var(--muted); }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 16px; font-weight: 900; cursor: pointer; color: var(--muted); }
+    .tab.active { border-color: var(--red); color: var(--red-dark); background: var(--red-soft); }
+
+    .charts { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+    .chart { background: #fff; border: 2px solid var(--line); border-radius: 18px; padding: 16px; }
+    .chart h3 { font-size: 15px; font-weight: 900; margin-bottom: 2px; }
+    .chart .sec { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--red); }
+    .chart .n { font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 10px; }
+    .barrow { display: grid; grid-template-columns: minmax(0, 1fr) 2fr 44px; gap: 8px; align-items: center; margin: 7px 0; font-size: 13px; font-weight: 700; }
+    .barrow .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .track { height: 14px; background: var(--red-tint); border-radius: 99px; overflow: hidden; }
+    .fill { height: 100%; background: var(--red); border-radius: 99px; min-width: 2px; }
+    .barrow .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+    .toolbar input, .toolbar select { padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; background: #fff; font-weight: 700; outline: none; }
+    .toolbar input { flex: 1; min-width: 200px; }
+    .toolbar input:focus, .toolbar select:focus { border-color: var(--red); }
+    .table-wrap { background: #fff; border: 2px solid var(--line); border-radius: 18px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; font-size: 12px; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--line); font-weight: 700; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: var(--red-tint); }
+    .tag { display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 800; background: var(--red-soft); color: var(--red-dark); }
+    .tag.ok { background: #EAF6EC; color: #2C7A3F; }
+    .empty { padding: 40px; text-align: center; color: var(--muted); font-weight: 700; }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(30,10,12,.45); display: none; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; z-index: 10; }
+    .modal.open { display: flex; }
+    .sheet { background: #fff; border-radius: 22px; width: 100%; max-width: 680px; overflow: hidden; }
+    .sheet-head { background: var(--red); color: #fff; padding: 18px 20px; display: flex; align-items: center; gap: 12px; }
+    .sheet-head h2 { font-size: 20px; font-weight: 900; margin-right: auto; }
+    .sheet-head small { display: block; font-weight: 700; opacity: .85; font-size: 13px; }
+    .x { background: rgba(255,255,255,.18); border: 0; color: #fff; width: 34px; height: 34px; border-radius: 10px; font-size: 18px; cursor: pointer; }
+    .sheet-body { padding: 8px 20px 20px; }
+    .qa { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .qa:last-child { border-bottom: 0; }
+    .qa .sec { font-size: 11px; font-weight: 900; color: var(--red); letter-spacing: .06em; text-transform: uppercase; }
+    .qa .qq { font-size: 13px; color: var(--muted); font-weight: 700; }
+    .qa .aa { font-size: 16px; font-weight: 800; margin-top: 2px; white-space: pre-wrap; }
+    .qa .aa.none { color: #BDBDBD; }
+    .sheet-foot { padding: 0 20px 20px; display: flex; justify-content: flex-end; gap: 8px; }
+
+    .loading { text-align: center; padding: 60px; color: var(--muted); font-weight: 800; }
+    .spinner { width: 40px; height: 40px; border: 5px solid var(--red-soft); border-top-color: var(--red); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <section id="login">
+    <form class="login-card" id="loginForm">
+      <div class="badge">🐐</div>
+      <h1>Student Feedback</h1>
+      <p>Admin access only</p>
+      <input type="password" id="pass" placeholder="Admin password" autocomplete="current-password" required>
+      <div class="err" id="loginErr">Incorrect password.</div>
+      <button class="btn btn-primary" type="submit">Log in</button>
+    </form>
+  </section>
+
+  <section id="app" hidden>
+    <header class="bar">
+      <div class="bar-inner">
+        <h1>🐐 Student Feedback</h1>
+        <a class="btn btn-ghost" href="student-feedback.html" target="_blank" style="text-decoration:none">Open form ↗</a>
+        <button class="btn btn-ghost" id="refreshBtn">Refresh</button>
+        <button class="btn btn-ghost" id="csvBtn">Export CSV</button>
+        <button class="btn btn-ghost" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div id="loading" class="loading"><div class="spinner"></div>Loading responses...</div>
+      <div id="content" hidden>
+        <div class="kpis" id="kpis"></div>
+        <div class="tabs">
+          <button class="tab active" data-tab="responses">Responses</button>
+          <button class="tab" data-tab="insights">Insights</button>
+        </div>
+
+        <div id="tab-responses">
+          <div class="toolbar">
+            <input id="search" placeholder="Search name, phone, school, place...">
+            <select id="fDistrict"><option value="">All districts</option></select>
+            <select id="fYear"><option value="">All batches</option></select>
+            <select id="fSupport">
+              <option value="">Support: any</option>
+              <option value="yes">Needs support</option>
+              <option value="no">No support needed</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Name</th><th>Phone</th><th>District</th><th>School</th><th>Batch</th><th>Classes</th><th>Pressure</th><th>Support</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-insights" hidden>
+          <div class="charts" id="charts"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div style="margin-right:auto"><h2 id="mName"></h2><small id="mMeta"></small></div>
+        <button class="x" id="mClose" aria-label="Close">✕</button>
+      </div>
+      <div class="sheet-body" id="mBody"></div>
+      <div class="sheet-foot">
+        <a class="btn btn-ghost" id="mCall" style="text-decoration:none">📞 Call</a>
+        <a class="btn btn-ghost" id="mWa" target="_blank" style="text-decoration:none">💬 WhatsApp</a>
+        <button class="btn btn-danger" id="mDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { firebaseConfig, COLLECTION, QUESTIONS, DISTRICTS, answerColumns, labelFor } from "./assets/js/student-feedback-questions.js";
+
+    const db = getFirestore(initializeApp(firebaseConfig));
+    const $ = id => document.getElementById(id);
+    const AUTH_KEY = "feedbackAdminAuth";
+    const ADMIN_PASS = "shuttu";
+    const Q = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+
+    let all = [], current = null;
+
+    // ---------- Auth ----------
+    const authed = () => sessionStorage.getItem(AUTH_KEY) === "true";
+    function showApp() { $("login").hidden = true; $("app").hidden = false; load(); }
+    $("loginForm").onsubmit = e => {
+      e.preventDefault();
+      if ($("pass").value === ADMIN_PASS) { sessionStorage.setItem(AUTH_KEY, "true"); showApp(); }
+      else $("loginErr").style.display = "block";
+    };
+    $("logoutBtn").onclick = () => { sessionStorage.removeItem(AUTH_KEY); location.reload(); };
+    if (authed()) showApp();
+
+    // ---------- Data ----------
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const dateOf = r => r.createdAt?.toDate ? r.createdAt.toDate() : new Date(r.submittedAt || 0);
+    const fmtDate = d => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }) + ", " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+    const lbl = (id, v) => Array.isArray(v) ? v.map(x => labelFor(Q[id], x)).join(", ") : labelFor(Q[id], v);
+
+    async function load() {
+      $("loading").hidden = false; $("content").hidden = true;
+      try {
+        const snap = await getDocs(collection(db, COLLECTION));
+        all = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => dateOf(b) - dateOf(a));
+        fillFilters(); renderKpis(); renderRows(); renderCharts();
+        $("loading").hidden = true; $("content").hidden = false;
+      } catch (err) {
+        console.error(err);
+        $("loading").innerHTML = `Couldn't load responses: ${esc(err.message)}<br><small>Check that the Firestore rules for "${COLLECTION}" are deployed.</small>`;
+      }
+    }
+    $("refreshBtn").onclick = load;
+
+    function fillFilters() {
+      const ds = [...new Set(all.map(r => r.district).filter(Boolean))].sort((a, b) => DISTRICTS.indexOf(a) - DISTRICTS.indexOf(b));
+      const ys = [...new Set(all.map(r => r.passoutYear).filter(Boolean))].sort();
+      $("fDistrict").innerHTML = `<option value="">All districts</option>` + ds.map(d => `<option>${esc(d)}</option>`).join("");
+      $("fYear").innerHTML = `<option value="">All batches</option>` + ys.map(y => `<option>${esc(y)}</option>`).join("");
+    }
+
+    function renderKpis() {
+      const n = all.length;
+      const pct = f => n ? Math.round(all.filter(f).length / n * 100) + "%" : "–";
+      const week = all.filter(r => Date.now() - dateOf(r) < 7 * 864e5).length;
+      $("kpis").innerHTML = [
+        ["Responses", n, `${week} this week`],
+        ["Happy with classes", pct(r => ["adipoli", "good"].includes(r.classesFeel)), "Adipoli + Nallathaanu"],
+        ["Feeling pressure", pct(r => ["some", "high"].includes(r.pressure)), `${all.filter(r => r.pressure === "high").length} high pressure`],
+        ["Need support", pct(r => r.supportNeeded === "yes"), `${all.filter(r => r.supportNeeded === "yes").length} students`],
+        ["Missing classes", pct(r => ["sometimes", "rarely"].includes(r.attendance)), "Idakk / kooduthal miss"]
+      ].map(([s, b, sp]) => `<div class="kpi"><small>${s}</small><b>${b}</b><span>${sp}</span></div>`).join("");
+    }
+
+    function filtered() {
+      const s = $("search").value.trim().toLowerCase();
+      const d = $("fDistrict").value, y = $("fYear").value, sup = $("fSupport").value;
+      return all.filter(r =>
+        (!d || r.district === d) && (!y || r.passoutYear === y) && (!sup || r.supportNeeded === sup) &&
+        (!s || [r.name, r.phone, r.schoolName, r.place, r.constituency, r.district].some(v => String(v || "").toLowerCase().includes(s))));
+    }
+
+    function renderRows() {
+      const list = filtered();
+      $("rows").innerHTML = list.length ? list.map(r => `
+        <tr data-id="${r.id}">
+          <td>${fmtDate(dateOf(r))}</td>
+          <td>${esc(r.name)}</td>
+          <td>${esc(r.phone)}</td>
+          <td>${esc(r.district)}</td>
+          <td>${esc(r.schoolName)}</td>
+          <td>${esc(r.passoutYear)}</td>
+          <td>${esc(lbl("classesFeel", r.classesFeel))}</td>
+          <td>${esc(lbl("pressure", r.pressure))}</td>
+          <td>${r.supportNeeded === "yes" ? '<span class="tag">Needs support</span>' : '<span class="tag ok">OK</span>'}</td>
+        </tr>`).join("") : `<tr><td colspan="9" class="empty">${all.length ? "No responses match these filters." : "No responses yet. Share the form link with students!"}</td></tr>`;
+      $("rows").querySelectorAll("tr[data-id]").forEach(tr => tr.onclick = () => openModal(tr.dataset.id));
+    }
+    ["search", "fDistrict", "fYear", "fSupport"].forEach(id => $(id).addEventListener("input", renderRows));
+
+    // ---------- Insights ----------
+    function tally(key, values) {
+      const counts = {};
+      all.forEach(r => {
+        const v = r[key];
+        (Array.isArray(v) ? v : v ? [v] : []).forEach(x => counts[x] = (counts[x] || 0) + 1);
+      });
+      return values ? values.map(v => [v, counts[v] || 0]) : Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    }
+
+    function chartCard(title, sec, rows, labeler, base) {
+      const max = Math.max(1, ...rows.map(r => r[1]));
+      return `<div class="chart"><div class="sec">${esc(sec)}</div><h3>${esc(title)}</h3><div class="n">${base} answered</div>
+        ${rows.map(([v, c]) => `<div class="barrow"><span class="lbl" title="${esc(labeler(v))}">${esc(labeler(v))}</span>
+          <div class="track"><div class="fill" style="width:${c / max * 100}%"></div></div><span class="val">${c}</span></div>`).join("")}</div>`;
+    }
+
+    function renderCharts() {
+      const html = QUESTIONS.filter(q => q.options).map(q => {
+        const base = all.filter(r => Array.isArray(r[q.id]) ? r[q.id].length : r[q.id]).length;
+        return chartCard(q.q, q.section, tally(q.id, q.options.map(o => o.v)), v => labelFor(q, v), base);
+      });
+      const dist = tally("district");
+      if (dist.length) html.splice(8, 0, chartCard("District", "Family Details", dist, v => v, all.filter(r => r.district).length));
+      $("charts").innerHTML = html.join("");
+    }
+
+    document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+      document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x === t));
+      $("tab-responses").hidden = t.dataset.tab !== "responses";
+      $("tab-insights").hidden = t.dataset.tab !== "insights";
+    });
+
+    // ---------- Detail modal ----------
+    function openModal(id) {
+      current = all.find(r => r.id === id);
+      if (!current) return;
+      const r = current;
+      $("mName").textContent = r.name || "Unnamed";
+      $("mMeta").textContent = `${fmtDate(dateOf(r))} · ${r.phone || ""} · ${r.xp ?? 0} XP`;
+      const digits = String(r.phone || "").replace(/\D/g, "");
+      const intl = digits.length === 10 ? "91" + digits : digits;
+      $("mCall").href = `tel:${r.phone || ""}`;
+      $("mWa").href = `https://wa.me/${intl}`;
+      $("mBody").innerHTML = answerColumns().filter(c => !["name", "phone"].includes(c.k)).map(c => {
+        let v = r[c.k];
+        const asked = !c.q.cond || c.q.cond(r);
+        if (!asked) return "";
+        const text = c.q.options ? lbl(c.k, v) : v;
+        const empty = !text || (Array.isArray(v) && !v.length);
+        return `<div class="qa"><div class="sec">${esc(c.q.section)}</div><div class="qq">${esc(c.label)}</div>
+          <div class="aa ${empty ? "none" : ""}">${empty ? "—" : esc(text)}</div></div>`;
+      }).join("");
+      $("modal").classList.add("open");
+    }
+    const closeModal = () => $("modal").classList.remove("open");
+    $("mClose").onclick = closeModal;
+    $("modal").onclick = e => { if (e.target === $("modal")) closeModal(); };
+    document.addEventListener("keydown", e => e.key === "Escape" && closeModal());
+
+    $("mDelete").onclick = async () => {
+      if (!current) return;
+      const btn = $("mDelete");
+      if (btn.dataset.confirm !== current.id) {
+        btn.dataset.confirm = current.id; btn.textContent = "Click again to delete";
+        setTimeout(() => { btn.dataset.confirm = ""; btn.textContent = "Delete"; }, 3000);
+        return;
+      }
+      btn.textContent = "Deleting...";
+      try {
+        await deleteDoc(doc(db, COLLECTION, current.id));
+        all = all.filter(r => r.id !== current.id);
+        closeModal(); renderKpis(); renderRows(); renderCharts();
+      } catch (err) {
+        console.error(err); btn.textContent = "Delete failed";
+      } finally {
+        btn.dataset.confirm = "";
+        setTimeout(() => btn.textContent = "Delete", 1500);
+      }
+    };
+
+    // ---------- CSV ----------
+    $("csvBtn").onclick = () => {
+      const cols = answerColumns();
+      const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+      const head = ["Submitted", ...cols.map(c => c.label), "XP"];
+      const lines = filtered().map(r => [
+        dateOf(r).toISOString(),
+        ...cols.map(c => c.q.options ? lbl(c.k, r[c.k]) : r[c.k]),
+        r.xp
+      ].map(cell).join(","));
+      const blob = new Blob(["﻿" + [head.map(cell).join(","), ...lines].join("\n")], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `student-feedback-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+  </script>
+</body>
+</html>

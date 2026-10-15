@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Vibe Check with the GOAT | Nudge Academy</title>
+  <meta name="description" content="Quick student feedback questionnaire for Nudge Academy students. Takes under 2 minutes.">
+  <meta name="theme-color" content="#E63946">
+  <link rel="icon" href="assets/images/favicon.png">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E63946;
+      --red-dark: #B5212E;
+      --red-deep: #8E1622;
+      --red-soft: #FFE8EA;
+      --red-tint: #FFF5F6;
+      --ink: #3C3C3C;
+      --muted: #8A8A8A;
+      --line: #E5E5E5;
+      --field: #F7F7F7;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      display: flex; flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      max-width: 1000px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 16px 8px;
+    }
+    .icon-btn {
+      background: none; border: 0; cursor: pointer; color: #AFAFAF;
+      width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { background: #F2F2F2; color: var(--ink); }
+    .icon-btn:disabled { visibility: hidden; }
+    .progress {
+      flex: 1; height: 16px; background: var(--line); border-radius: 99px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0; background: var(--red); border-radius: 99px;
+      position: relative; transition: width .45s cubic-bezier(.3,1.4,.5,1);
+    }
+    .progress-fill::after {
+      content: ""; position: absolute; left: 8px; right: 8px; top: 4px; height: 4px;
+      background: rgba(255,255,255,.35); border-radius: 99px;
+    }
+    .xp {
+      display: flex; align-items: center; gap: 4px; font-weight: 900; color: var(--red);
+      font-size: 17px; flex-shrink: 0;
+    }
+    .xp.bump { animation: bump .4s ease; }
+    @keyframes bump { 50% { transform: scale(1.3); } }
+
+    /* ---------- Main ---------- */
+    main {
+      flex: 1; width: 100%; max-width: 640px; margin: 0 auto;
+      padding: 16px 16px 140px;
+      display: flex; flex-direction: column;
+    }
+    .screen { animation: slideIn .35s ease both; }
+    .screen.leaving { animation: slideOut .22s ease both; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } }
+    @keyframes slideOut { to { opacity: 0; transform: translateX(-40px); } }
+
+    .section-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 8px;
+    }
+    h1.q {
+      font-size: clamp(22px, 5vw, 30px); font-weight: 900; line-height: 1.2; color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* Mascot + bubble */
+    .mascot-row { display: flex; align-items: flex-end; gap: 6px; margin-bottom: 24px; }
+    .goat-slot { width: 150px; height: 172px; flex-shrink: 0; position: relative; }
+    .goat3d { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; outline: none; }
+    .goat3d:active { cursor: grabbing; }
+    .goat { width: 100%; animation: bob 3s ease-in-out infinite; transform-origin: 50% 100%; }
+    .goat.hop { animation: hop .5s ease; }
+    @keyframes bob { 50% { transform: translateY(-4px) rotate(-1deg); } }
+    @keyframes hop { 30% { transform: translateY(-16px) rotate(4deg); } 60% { transform: translateY(0) rotate(-3deg); } }
+    .bubble {
+      position: relative; flex: 1;
+      border: 2px solid var(--line); border-radius: 16px;
+      padding: 14px 16px; font-size: 16px; font-weight: 700; line-height: 1.45;
+      margin-bottom: 52px; background: var(--white);
+    }
+    .bubble::before, .bubble::after {
+      content: ""; position: absolute; left: -12px; bottom: 18px;
+      border: 10px solid transparent; border-right: 12px solid var(--line); border-left: 0;
+    }
+    .bubble::after { left: -9px; border-right-color: var(--white); }
+    .bubble.pop { animation: bubblePop .35s ease; }
+    @keyframes bubblePop { 40% { transform: scale(1.04); border-color: var(--red); } }
+    .intro-bubble { flex: none; margin: 0 0 18px; padding: 8px 14px; font-size: 14px; color: var(--red-dark); }
+    .intro-bubble::before, .intro-bubble::after {
+      left: 50%; bottom: auto; top: -12px; transform: translateX(-50%);
+      border: 10px solid transparent; border-bottom: 12px solid var(--line); border-top: 0;
+    }
+    .intro-bubble::after { top: -9px; border-bottom-color: var(--white); border-right-color: transparent; left: 50%; }
+    .hint { font-size: 14px; color: var(--muted); font-weight: 700; margin: -12px 0 14px; }
+
+    /* Options */
+    .options { display: grid; gap: 12px; }
+    .options.grid { grid-template-columns: repeat(3, 1fr); }
+    .opt {
+      font: inherit; text-align: left; cursor: pointer;
+      display: flex; align-items: center; gap: 14px;
+      background: var(--white); color: var(--ink);
+      border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 16px;
+      padding: 14px 16px; font-size: 17px; font-weight: 800;
+      transition: transform .08s, background .15s, border-color .15s;
+    }
+    .opt:hover { background: var(--red-tint); }
+    .opt:active { transform: translateY(2px); border-bottom-width: 2px; margin-top: 2px; }
+    .opt .emo { font-size: 26px; line-height: 1; width: 32px; text-align: center; }
+    .opt .key {
+      margin-left: auto; font-size: 12px; color: #AFAFAF; border: 2px solid var(--line);
+      border-radius: 8px; min-width: 26px; height: 26px; display: grid; place-items: center;
+    }
+    .options.grid .opt { justify-content: center; font-size: 22px; padding: 18px 8px; }
+    .options.grid .opt .key { display: none; }
+    .opt.selected { border-color: var(--red); background: var(--red-soft); color: var(--red-dark); }
+    .opt.selected .key { border-color: var(--red); color: var(--red); }
+    .opt.multi::after {
+      content: ""; margin-left: auto; width: 22px; height: 22px; border-radius: 7px;
+      border: 2px solid var(--line); flex-shrink: 0;
+    }
+    .opt.multi .key { display: none; }
+    .opt.multi.selected::after {
+      border-color: var(--red); background: var(--red)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/14px no-repeat;
+    }
+
+    /* Inputs */
+    .fields { display: grid; gap: 14px; }
+    .field label { display: block; font-size: 14px; font-weight: 800; color: var(--muted); margin: 0 0 6px 4px; }
+    .field input, .field select, textarea {
+      width: 100%; font: inherit; font-size: 17px; font-weight: 700; color: var(--ink);
+      background: var(--field); border: 2px solid var(--line); border-radius: 14px;
+      padding: 14px 16px; outline: none; appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; background-size: 18px;
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .field input:focus, .field select:focus, textarea:focus { border-color: var(--red); background: var(--white); }
+    .field .opt-tag { font-weight: 700; color: #BDBDBD; }
+    .field.invalid input, .field.invalid select { border-color: var(--red); background: var(--red-tint); }
+
+    /* ---------- Footer (Duolingo check bar) ---------- */
+    footer {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      border-top: 2px solid var(--line); background: var(--white);
+      transition: background .2s, border-color .2s;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    footer.good { background: var(--red-soft); border-top-color: transparent; }
+    .footer-inner {
+      max-width: 1000px; margin: 0 auto; padding: 20px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 104px;
+    }
+    .feedback { display: none; align-items: center; gap: 12px; color: var(--red-dark); }
+    footer.good .feedback { display: flex; animation: pop .3s ease; }
+    footer.good #skipBtn { display: none; }
+    .feedback .tick {
+      width: 52px; height: 52px; border-radius: 50%; background: var(--white);
+      display: grid; place-items: center; font-size: 26px; flex-shrink: 0;
+    }
+    .feedback b { display: block; font-size: 21px; font-weight: 900; }
+    .feedback span { font-size: 14px; font-weight: 800; opacity: .8; }
+    @keyframes pop { from { transform: translateY(10px); opacity: 0; } }
+
+    .btn {
+      font: inherit; font-weight: 900; font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+      border-radius: 16px; padding: 14px 28px; cursor: pointer; border: 2px solid transparent;
+      border-bottom-width: 5px; transition: transform .06s, filter .15s;
+    }
+    .btn:active:not(:disabled) { transform: translateY(3px); border-bottom-width: 2px; }
+    .btn-primary { background: var(--red); color: #fff; border-color: var(--red); border-bottom-color: var(--red-dark); min-width: 150px; margin-left: auto; }
+    .btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
+    .btn-primary:disabled { background: var(--line); border-color: var(--line); color: #AFAFAF; cursor: not-allowed; }
+    .btn-ghost { background: var(--white); color: #AFAFAF; border-color: var(--line); }
+    .btn-ghost:hover { color: var(--ink); }
+
+    /* ---------- Intro / end screens ---------- */
+    .center-screen { text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 4vh; }
+    .center-screen .goat-slot { width: 250px; height: 270px; margin-bottom: 4px; }
+    .center-screen h1 { font-size: clamp(26px, 6vw, 36px); font-weight: 900; line-height: 1.15; margin-bottom: 10px; }
+    .center-screen h1 em { font-style: normal; color: var(--red); }
+    .center-screen p { font-size: 17px; font-weight: 700; color: var(--muted); max-width: 420px; line-height: 1.5; }
+    .stats { display: flex; gap: 12px; margin: 26px 0 0; }
+    .stat {
+      border: 2px solid var(--red); border-radius: 16px; overflow: hidden; min-width: 120px;
+    }
+    .stat small { display: block; background: var(--red); color: #fff; font-size: 12px; font-weight: 900; letter-spacing: .08em; padding: 4px; text-transform: uppercase; }
+    .stat b { display: block; font-size: 24px; font-weight: 900; color: var(--red); padding: 10px; }
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 18px; }
+    .pill { background: var(--red-tint); color: var(--red-dark); font-weight: 800; font-size: 13px; padding: 6px 12px; border-radius: 99px; }
+
+    .spinner { width: 46px; height: 46px; border: 5px solid var(--red-soft); border-top-color: var(--red); border-radius: 50%; animation: spin .8s linear infinite; margin: 20px auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+    .confetti i { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 3px; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+    /* ---------- Goat SVG moods ---------- */
+    .goat .eye-happy, .goat .mouth-happy, .goat .mouth-wow { display: none; }
+    .goat.happy .eye-open, .goat.happy .mouth-idle { display: none; }
+    .goat.happy .eye-happy, .goat.happy .mouth-happy { display: inline; }
+    .goat.wow .mouth-idle { display: none; }
+    .goat.wow .mouth-wow { display: inline; }
+    .goat.wow .lid { transform: translateY(-5px); }
+    .goat .lid { transition: transform .2s; }
+    .goat .blink { animation: blink 4.5s infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+    .goat .ear-l { animation: earL 5s ease-in-out infinite; transform-origin: 92px 98px; }
+    .goat .ear-r { animation: earR 5s ease-in-out infinite 1.3s; transform-origin: 148px 98px; }
+    @keyframes earL { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(-8deg); } 96% { transform: rotate(3deg); } }
+    @keyframes earR { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(8deg); } 96% { transform: rotate(-3deg); } }
+
+    @media (max-width: 480px) {
+      .topbar { padding-top: 14px; }
+      .goat-slot { width: 112px; height: 130px; }
+      .center-screen .goat-slot { width: 220px; height: 240px; }
+      .opt .key { display: none; }
+      .bubble { font-size: 15px; margin-bottom: 36px; }
+      .btn-primary { flex: 1; }
+      footer.good .btn-primary { flex: 0 0 auto; min-width: 130px; }
+      .feedback b { font-size: 18px; }
+      .feedback .tick { width: 42px; height: 42px; font-size: 22px; }
+      .footer-inner { min-height: 92px; padding: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Goat mascot template (cloned wherever needed) -->
+  <template id="goatTpl">
+    <svg class="goat" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="fur" cx="50%" cy="38%" r="65%">
+          <stop offset="0" stop-color="#FFFFFF"/>
+          <stop offset=".6" stop-color="#F4EFE8"/>
+          <stop offset="1" stop-color="#D9CFC2"/>
+        </radialGradient>
+        <linearGradient id="furNeck" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#E3DACE"/><stop offset="1" stop-color="#CFC3B4"/>
+        </linearGradient>
+        <linearGradient id="horn" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#CDBB9A"/><stop offset=".6" stop-color="#A8916C"/><stop offset="1" stop-color="#6F5D45"/>
+        </linearGradient>
+        <linearGradient id="hoodie" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#EF4452"/><stop offset="1" stop-color="#B5212E"/>
+        </linearGradient>
+        <linearGradient id="lens" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3a0b10"/><stop offset=".55" stop-color="#14070a"/><stop offset="1" stop-color="#E63946"/>
+        </linearGradient>
+        <radialGradient id="muzzle" cx="50%" cy="35%" r="70%">
+          <stop offset="0" stop-color="#F6E3DB"/><stop offset="1" stop-color="#DDBFB3"/>
+        </radialGradient>
+        <radialGradient id="iris" cx="45%" cy="40%" r="60%">
+          <stop offset="0" stop-color="#F7D27A"/><stop offset="1" stop-color="#C98A2E"/>
+        </radialGradient>
+      </defs>
+
+      <!-- hoodie -->
+      <path d="M22 262 C24 214 62 188 120 188 C178 188 216 214 218 262 Z" fill="url(#hoodie)"/>
+      <path d="M58 212 C62 238 66 250 68 262 M182 212 C178 238 174 250 172 262" stroke="#9E1C27" stroke-width="3" fill="none" opacity=".5"/>
+      <!-- hood collar -->
+      <path d="M70 196 C82 226 158 226 170 196 C178 206 172 222 160 230 C140 242 100 242 80 230 C68 222 62 206 70 196 Z" fill="#C92A37"/>
+      <!-- neck -->
+      <path d="M94 150 C92 176 88 196 84 212 C104 224 136 224 156 212 C152 196 148 176 146 150 Z" fill="url(#furNeck)"/>
+      <!-- drawstrings -->
+      <path d="M104 222 L100 252 M136 222 L140 252" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+      <rect x="96" y="250" width="8" height="10" rx="3" fill="#E6E6E6"/>
+      <rect x="136" y="250" width="8" height="10" rx="3" fill="#E6E6E6"/>
+      <!-- gold chain -->
+      <path d="M92 206 Q120 236 148 206" stroke="#F2C14E" stroke-width="3.5" fill="none" stroke-dasharray="4 2.5" stroke-linecap="round"/>
+      <circle cx="120" cy="226" r="8" fill="#F2C14E" stroke="#C8962A" stroke-width="2"/>
+      <text x="120" y="230" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="10" fill="#8E5E0E">N</text>
+
+      <!-- horns -->
+      <g fill="url(#horn)">
+        <path d="M100 62 C94 34 78 16 56 12 C50 11 47 15 52 18 C68 26 80 42 86 70 Z"/>
+        <path d="M140 62 C146 34 162 16 184 12 C190 11 193 15 188 18 C172 26 160 42 154 70 Z"/>
+      </g>
+      <g stroke="#6F5D45" stroke-width="1.6" opacity=".55" fill="none" stroke-linecap="round">
+        <path d="M84 50 L94 46 M78 40 L88 34 M70 30 L78 24 M62 22 L68 18"/>
+        <path d="M156 50 L146 46 M162 40 L152 34 M170 30 L162 24 M178 22 L172 18"/>
+      </g>
+
+      <!-- ears -->
+      <g class="ear-l">
+        <ellipse cx="68" cy="104" rx="32" ry="11.5" transform="rotate(-24 68 104)" fill="url(#fur)" stroke="#D2C6B7" stroke-width="1.5"/>
+        <ellipse cx="66" cy="105" rx="22" ry="5.5" transform="rotate(-24 66 105)" fill="#EBB8B0"/>
+      </g>
+      <g class="ear-r">
+        <ellipse cx="172" cy="104" rx="32" ry="11.5" transform="rotate(24 172 104)" fill="url(#fur)" stroke="#D2C6B7" stroke-width="1.5"/>
+        <ellipse cx="174" cy="105" rx="22" ry="5.5" transform="rotate(24 174 105)" fill="#EBB8B0"/>
+        <!-- airpod -->
+        <rect x="150" y="98" width="7" height="13" rx="3.5" fill="#FFFFFF" stroke="#CFCFCF" stroke-width="1"/>
+      </g>
+
+      <!-- head -->
+      <path d="M120 46 C152 46 164 70 162 98 C160 124 150 142 144 160 C138 178 102 178 96 160 C90 142 80 124 78 98 C76 70 88 46 120 46 Z" fill="url(#fur)"/>
+      <!-- face shading -->
+      <path d="M82 104 C86 128 94 146 100 160 C94 150 86 132 82 104 Z M158 104 C154 128 146 146 140 160 C146 150 154 132 158 104 Z" fill="#CDBFAE" opacity=".6"/>
+      <path d="M120 70 C116 90 116 116 120 136 C124 116 124 90 120 70 Z" fill="#FFFFFF" opacity=".7"/>
+      <!-- forehead tuft -->
+      <path d="M104 56 C106 40 114 36 118 46 C120 34 130 34 132 46 C136 38 142 44 138 58 C128 52 114 52 104 56 Z" fill="#FBF8F3" stroke="#E2D8CB" stroke-width="1"/>
+
+      <!-- sunglasses pushed up -->
+      <g transform="rotate(-3 120 66)">
+        <rect x="90" y="58" width="28" height="15" rx="6" fill="url(#lens)" stroke="#111" stroke-width="2"/>
+        <rect x="122" y="58" width="28" height="15" rx="6" fill="url(#lens)" stroke="#111" stroke-width="2"/>
+        <path d="M118 63 Q120 60 122 63" stroke="#111" stroke-width="2.5" fill="none"/>
+        <path d="M94 62 L102 62" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+        <path d="M126 62 L134 62" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+      </g>
+
+      <!-- eyes (open, chill half-lid) -->
+      <g class="eye-open">
+        <g class="blink">
+          <ellipse cx="99" cy="96" rx="10" ry="8" fill="url(#iris)" stroke="#5A4630" stroke-width="1.6"/>
+          <rect x="92" y="94" width="14" height="4.5" rx="2.2" fill="#1B1209"/>
+          <circle cx="96" cy="93" r="2" fill="#fff"/>
+          <ellipse cx="141" cy="96" rx="10" ry="8" fill="url(#iris)" stroke="#5A4630" stroke-width="1.6"/>
+          <rect x="134" y="94" width="14" height="4.5" rx="2.2" fill="#1B1209"/>
+          <circle cx="138" cy="93" r="2" fill="#fff"/>
+        </g>
+        <g class="lid" fill="#EFE8DE" stroke="#8C7A66" stroke-width="1.6">
+          <path d="M88 95 C90 85 108 85 110 95 C104 92 94 92 88 95 Z"/>
+          <path d="M130 95 C132 85 150 85 152 95 C146 92 136 92 130 95 Z"/>
+        </g>
+      </g>
+      <!-- eyes (happy ^ ^) -->
+      <g class="eye-happy" stroke="#3B2E22" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <path d="M90 98 Q99 86 108 98"/>
+        <path d="M132 98 Q141 86 150 98"/>
+      </g>
+
+      <!-- cheeks -->
+      <ellipse cx="92" cy="118" rx="8" ry="4.5" fill="#F29C9C" opacity=".35"/>
+      <ellipse cx="148" cy="118" rx="8" ry="4.5" fill="#F29C9C" opacity=".35"/>
+
+      <!-- muzzle -->
+      <ellipse cx="120" cy="148" rx="24" ry="18" fill="url(#muzzle)"/>
+      <path d="M110 140 C108 144 110 147 113 146" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M130 140 C132 144 130 147 127 146" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M120 147 L120 154" stroke="#B48C80" stroke-width="1.6"/>
+
+      <!-- mouths -->
+      <path class="mouth-idle" d="M108 156 Q118 162 133 154" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <g class="mouth-happy">
+        <path d="M106 155 Q120 174 134 155 Z" fill="#7A2430" stroke="#6B4B43" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M113 163 Q120 170 127 163 Q120 160 113 163 Z" fill="#F2777F"/>
+      </g>
+      <ellipse class="mouth-wow" cx="120" cy="160" rx="6" ry="7" fill="#7A2430" stroke="#6B4B43" stroke-width="2"/>
+
+      <!-- beard -->
+      <path d="M106 168 C108 186 114 198 120 206 C126 198 132 186 134 168 C126 174 114 174 106 168 Z" fill="#FBF8F3" stroke="#E2D8CB" stroke-width="1"/>
+      <path d="M114 178 L117 196 M120 176 L120 200 M126 178 L123 196" stroke="#E2D8CB" stroke-width="1.2"/>
+    </svg>
+  </template>
+
+  <header class="topbar" id="topbar" hidden>
+    <button class="icon-btn" id="backBtn" aria-label="Previous question">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="progress" role="progressbar" aria-label="Progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="xp" id="xp">⚡ <span id="xpVal">0</span></div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer id="footer" hidden>
+    <div class="footer-inner">
+      <button class="btn btn-ghost" id="skipBtn" hidden>Skip</button>
+      <div class="feedback" id="feedback">
+        <div class="tick">🔥</div>
+        <div><b id="fbTitle">Poli!</b><span id="fbSub">+10 XP</span></div>
+      </div>
+      <button class="btn btn-primary" id="nextBtn" disabled>Continue</button>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { firebaseConfig, COLLECTION, QUESTIONS } from "./assets/js/student-feedback-questions.js";
+
+    let db = null;
+    try {
+      db = getFirestore(initializeApp(firebaseConfig));
+    } catch (err) {
+      console.warn("Firebase initialization skipped.", err);
+    }
+
+    const PRAISE = [
+      ["Poli!", "🔥"], ["Slay!", "💅"], ["W answer!", "🏆"], ["No cap, nice!", "🧢"],
+      ["Adipoli!", "✨"], ["Main character energy!", "🎬"], ["Kidu!", "😎"], ["Valid!", "💯"]
+    ];
+    const XP_PER_Q = 10;
+
+    const $ = id => document.getElementById(id);
+    const main = $("main"), footer = $("footer"), topbar = $("topbar");
+    const nextBtn = $("nextBtn"), skipBtn = $("skipBtn"), backBtn = $("backBtn");
+
+    const answers = {};
+    let idx = -1, xp = 0, busy = false, history = [];
+
+    const goatSvg = () => $("goatTpl").content.firstElementChild.cloneNode(true);
+    const isAsked = q => !q.cond || q.cond(answers);
+    const askedList = () => QUESTIONS.filter(isAsked);
+
+    // ---------- Mascot: 3D goat (Three.js), flat SVG until it loads or if WebGL is missing ----------
+    let goat3d = null;
+    import("./assets/js/goat3d.js").then(m => {
+      if (!m.webglAvailable()) return;
+      goat3d = new m.Goat3D({ onSpeak: say });
+      goat3d.setMood(main.querySelector(".goat.happy") ? "happy" : "chill");
+      const slot = main.querySelector(".goat-slot");
+      if (slot) { slot.innerHTML = ""; goat3d.mount(slot); }
+    }).catch(err => console.warn("3D goat unavailable, using SVG.", err));
+
+    function mascot() {
+      const slot = document.createElement("div");
+      slot.className = "goat-slot";
+      if (goat3d) goat3d.mount(slot);
+      else slot.append(goatSvg());
+      return slot;
+    }
+
+    // mood: chill | happy | hype | wow | sad    action: hop | nod | shake | tilt | surprise | bleat | spin | lean
+    function goat(mood, action) {
+      if (goat3d) {
+        if (mood) goat3d.setMood(mood);
+        if (action) goat3d.react(action);
+        return;
+      }
+      const g = main.querySelector(".goat");
+      if (!g) return;
+      g.classList.remove("happy", "wow", "hop");
+      void g.offsetWidth;
+      const cls = { happy: "happy", hype: "happy", wow: "wow", sad: "", chill: "" }[mood];
+      if (cls) g.classList.add(cls);
+      if (action === "hop" || action === "spin") g.classList.add("hop");
+    }
+
+    function say(text) {
+      const b = main.querySelector(".bubble");
+      if (!b) return;
+      b.textContent = text;
+      b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
+    }
+
+    function updateProgress() {
+      const list = askedList();
+      const pos = idx < 0 ? 0 : list.indexOf(QUESTIONS[idx]);
+      $("progressFill").style.width = `${Math.max(4, (pos / list.length) * 100)}%`;
+      $("xpVal").textContent = xp;
+    }
+
+    function swap(build) {
+      const old = main.firstElementChild;
+      const render = () => { main.innerHTML = ""; main.appendChild(build()); window.scrollTo(0, 0); };
+      if (old) { old.classList.add("leaving"); setTimeout(render, 200); } else render();
+    }
+
+    // ---------- Intro ----------
+    function showIntro() {
+      topbar.hidden = true; footer.hidden = false;
+      skipBtn.hidden = true;
+      nextBtn.disabled = false; nextBtn.textContent = "Let's go";
+      swap(() => {
+        const s = document.createElement("section");
+        s.className = "screen center-screen";
+        s.append(mascot());
+        s.insertAdjacentHTML("beforeend", `
+          <div class="bubble intro-bubble">Yo! Tap me or drag to spin 👆</div>
+          <h1>Vibe check with the <em>GOAT</em> 🐐</h1>
+          <p>Ninte course experience-um background-um ariyaan kurach quick questions. Mostly tap cheythaal mathi, type cheyyaan valare kuravaanu.</p>
+          <div class="pills"><span class="pill">⏱️ ~2 min</span><span class="pill">👆 Mostly tap</span><span class="pill">🔒 Private</span></div>`);
+        return s;
+      });
+      setTimeout(() => { goat("happy"); main.querySelector(".goat")?.classList.add("happy"); }, 220);
+      nextBtn.onclick = () => go(1);
+    }
+
+    // ---------- Question ----------
+    function renderQuestion(q) {
+      const s = document.createElement("section");
+      s.className = "screen";
+      s.innerHTML = `<div class="section-chip">${q.section}</div><h1 class="q"></h1>`;
+      s.querySelector(".q").textContent = q.q;
+
+      const row = document.createElement("div");
+      row.className = "mascot-row";
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = q.goat;
+      row.append(mascot(), bubble);
+      s.append(row);
+
+      if (q.type === "multi") s.insertAdjacentHTML("beforeend", `<p class="hint">Onnil kooduthal select cheyyam</p>`);
+
+      if (q.type === "single" || q.type === "multi") {
+        const wrap = document.createElement("div");
+        wrap.className = "options" + (q.grid ? " grid" : "");
+        const cur = answers[q.id];
+        q.options.forEach((o, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "opt" + (q.type === "multi" ? " multi" : "");
+          b.dataset.v = o.v;
+          b.innerHTML = `${o.e ? `<span class="emo">${o.e}</span>` : ""}<span class="t"></span><span class="key">${i + 1}</span>`;
+          b.querySelector(".t").textContent = o.t;
+          const on = q.type === "multi" ? (cur || []).includes(o.v) : cur === o.v;
+          b.classList.toggle("selected", on);
+          b.onclick = () => pick(q, o, wrap);
+          wrap.append(b);
+        });
+        s.append(wrap);
+      }
+
+      if (q.type === "fields") {
+        const wrap = document.createElement("div");
+        wrap.className = "fields";
+        q.fields.forEach(f => {
+          const d = document.createElement("div");
+          d.className = "field";
+          const id = `f_${f.k}`;
+          const lab = `<label for="${id}">${f.label}${f.required ? "" : ' <span class="opt-tag">(optional)</span>'}</label>`;
+          if (f.type === "select") {
+            d.innerHTML = `${lab}<select id="${id}"><option value="">Select cheyyu</option>${f.options.map(o => `<option>${o}</option>`).join("")}</select>`;
+          } else {
+            d.innerHTML = `${lab}<input id="${id}" type="${f.type || "text"}" autocomplete="off" ${f.type === "tel" ? 'inputmode="tel" maxlength="14"' : ""}>`;
+            d.querySelector("input").placeholder = f.ph || "";
+          }
+          const el = d.querySelector("input,select");
+          el.value = answers[f.k] || "";
+          el.addEventListener("input", () => { d.classList.remove("invalid"); refreshNext(q); goatReads(el); });
+          el.addEventListener("focus", () => goat3d?.lookAtElement(el, 4000));
+          wrap.append(d);
+        });
+        s.append(wrap);
+      }
+
+      if (q.type === "text") {
+        const t = document.createElement("textarea");
+        t.id = "f_text"; t.placeholder = q.ph || ""; t.value = answers[q.id] || "";
+        t.addEventListener("input", () => { refreshNext(q); goatReads(t); });
+        t.addEventListener("focus", () => goat3d?.lookAtElement(t, 4000));
+        s.append(t);
+      }
+      return s;
+    }
+
+    // Goat nods along while the student types
+    let lastNod = 0;
+    function goatReads(el) {
+      goat3d?.lookAtElement(el, 2500);
+      if (Date.now() - lastNod > 1400) { lastNod = Date.now(); goat(null, "nod"); }
+    }
+
+    function pick(q, o, wrap) {
+      if (busy) return;
+      if (q.type === "single") {
+        answers[q.id] = o.v;
+      } else {
+        let cur = new Set(answers[q.id] || []);
+        if (cur.has(o.v)) cur.delete(o.v);
+        else {
+          if (o.exclusive) cur = new Set();
+          else q.options.filter(x => x.exclusive).forEach(x => cur.delete(x.v));
+          cur.add(o.v);
+        }
+        answers[q.id] = [...cur];
+      }
+      const sel = q.type === "single" ? [answers[q.id]] : answers[q.id];
+      wrap.querySelectorAll(".opt").forEach(b => b.classList.toggle("selected", sel.includes(b.dataset.v)));
+      const btn = wrap.querySelector(`[data-v="${o.v}"]`);
+      goat3d?.lookAtElement(btn);
+      const on = btn.classList.contains("selected");
+      if (on && o.r === "hype") goat("hype", "hop");
+      else if (on && o.r === "sad") goat("sad", "tilt");
+      else goat(goat3d ? "chill" : "wow", on ? "nod" : "tilt");
+      if (on && o.say) say(o.say);
+      refreshNext(q);
+    }
+
+    const validPhone = v => /^(\+?91[\s-]?)?[6-9]\d{9}$/.test(v.replace(/[\s-]/g, ""));
+
+    function readFields(q, mark) {
+      let ok = true;
+      q.fields.forEach(f => {
+        const el = $(`f_${f.k}`);
+        const v = el.value.trim();
+        let bad = f.required && !v;
+        if (f.type === "tel" && v && !validPhone(v)) bad = true;
+        if (mark) el.closest(".field").classList.toggle("invalid", bad);
+        if (bad) ok = false;
+      });
+      return ok;
+    }
+
+    function isAnswered(q) {
+      if (q.type === "single") return !!answers[q.id];
+      if (q.type === "multi") return (answers[q.id] || []).length > 0;
+      if (q.type === "text") return !!$("f_text")?.value.trim();
+      if (q.type === "fields") return q.fields.every(f => !f.required || $(`f_${f.k}`)?.value.trim());
+      return false;
+    }
+
+    function refreshNext(q) {
+      const ok = isAnswered(q);
+      nextBtn.disabled = !ok && !q.optional;
+      skipBtn.hidden = !q.optional || ok;
+    }
+
+    function showQuestion(i) {
+      idx = i;
+      const q = QUESTIONS[i];
+      topbar.hidden = false; footer.hidden = false;
+      footer.classList.remove("good");
+      backBtn.disabled = history.length === 0;
+      nextBtn.textContent = q === askedList().at(-1) ? "Submit" : "Continue";
+      updateProgress();
+      swap(() => renderQuestion(q));
+      goat("chill");
+      setTimeout(() => {
+        refreshNext(q);
+        const first = main.querySelector("input,select");
+        if (first && !first.value && matchMedia("(min-width: 700px)").matches) first.focus();
+      }, 230);
+      nextBtn.onclick = () => submitAnswer(q);
+      skipBtn.onclick = () => advance(q, true);
+    }
+
+    function submitAnswer(q) {
+      if (busy) return;
+      if (q.type === "fields") {
+        if (!readFields(q, true)) { goat("wow", "shake"); say("Hmm, oru field sheriyaayilla 👀 Red box onnu check cheyyu."); return; }
+        q.fields.forEach(f => answers[f.k] = $(`f_${f.k}`).value.trim());
+      }
+      if (q.type === "text") answers[q.id] = $("f_text").value.trim();
+      advance(q, false);
+    }
+
+    function advance(q, skipped) {
+      busy = true;
+      if (skipped) {
+        if (q.type === "multi") answers[q.id] = [];
+        if (q.type === "text") answers[q.id] = "";
+        goat(null, "shake");
+        busy = false; return go(1);
+      }
+      xp += XP_PER_Q;
+      const [t, e] = PRAISE[Math.floor(Math.random() * PRAISE.length)];
+      $("fbTitle").textContent = t;
+      $("fbSub").textContent = `+${XP_PER_Q} XP`;
+      footer.querySelector(".tick").textContent = e;
+      footer.classList.add("good");
+      $("xpVal").textContent = xp;
+      $("xp").classList.remove("bump"); void $("xp").offsetWidth; $("xp").classList.add("bump");
+      goat("happy", "hop");
+      setTimeout(() => { busy = false; go(1); }, 750);
+    }
+
+    function go(dir) {
+      if (dir < 0) {
+        const prev = history.pop();
+        if (prev === undefined) return;
+        return showQuestion(prev);
+      }
+      if (idx >= 0) history.push(idx);
+      let n = idx + 1;
+      while (n < QUESTIONS.length && !isAsked(QUESTIONS[n])) n++;
+      if (n >= QUESTIONS.length) return finish();
+      showQuestion(n);
+    }
+    backBtn.onclick = () => { if (busy) return; goat(null, "tilt"); go(-1); };
+
+    // ---------- Finish ----------
+    function cleanAnswers() {
+      const out = {};
+      for (const q of QUESTIONS) {
+        if (q.type === "fields") { q.fields.forEach(f => out[f.k] = answers[f.k] || ""); continue; }
+        if (!isAsked(q)) continue;
+        out[q.id] = answers[q.id] ?? (q.type === "multi" ? [] : "");
+      }
+      return out;
+    }
+
+    async function finish() {
+      $("progressFill").style.width = "100%";
+      footer.hidden = true; backBtn.disabled = true;
+      swap(() => {
+        const s = document.createElement("section");
+        s.className = "screen center-screen";
+        s.append(mascot());
+        s.insertAdjacentHTML("beforeend", `<h1>Saving ninte answers...</h1><div class="spinner"></div>`);
+        return s;
+      });
+      goat("wow");
+
+      try {
+        if (!db) throw new Error("Database not available");
+        await addDoc(collection(db, COLLECTION), {
+          ...cleanAnswers(),
+          xp,
+          createdAt: serverTimestamp(),
+          submittedAt: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        });
+        showDone();
+      } catch (err) {
+        console.error(err);
+        showError();
+      }
+    }
+
+    function showDone() {
+      topbar.hidden = true;
+      swap(() => {
+        const s = document.createElement("section");
+        s.className = "screen center-screen";
+        s.append(mascot());
+        const name = (answers.name || "").split(" ")[0];
+        s.insertAdjacentHTML("beforeend", `
+          <div class="bubble intro-bubble">Virtual high-five! Tap me 🙌</div>
+          <h1>Thanks${name ? ", <em></em>" : ""}! Nee oru GOAT aanu 🐐</h1>
+          <p>Ninte answers kitti. Ithu vech nammal classes better aakkum. Stay locked in! 🔒</p>
+          <div class="stats">
+            <div class="stat"><small>Total XP</small><b>⚡ ${xp}</b></div>
+            <div class="stat"><small>Status</small><b>💯 Done</b></div>
+          </div>`);
+        if (name) s.querySelector("h1 em").textContent = name;
+        return s;
+      });
+      setTimeout(() => {
+        goat("happy", "spin");
+        goat3d?.dance(true);
+        main.querySelector(".goat")?.classList.add("happy");
+        confetti();
+      }, 260);
+    }
+
+    function showError() {
+      footer.hidden = false; footer.classList.remove("good");
+      skipBtn.hidden = true;
+      nextBtn.disabled = false; nextBtn.textContent = "Try again";
+      nextBtn.onclick = finish;
+      swap(() => {
+        const s = document.createElement("section");
+        s.className = "screen center-screen";
+        s.append(mascot());
+        s.insertAdjacentHTML("beforeend", `<h1>Ayyo, network pani thannu 😬</h1><p>Answers save aayilla. Internet check cheythitt "Try again" press cheyyu, ninte answers ellaam safe aanu.</p>`);
+        return s;
+      });
+      setTimeout(() => goat("sad", "shake"), 220);
+    }
+
+    function confetti() {
+      const c = document.createElement("div");
+      c.className = "confetti";
+      const colors = ["#E63946", "#FF6B6B", "#B5212E", "#FFC2C7", "#F2C14E", "#FFFFFF"];
+      for (let i = 0; i < 90; i++) {
+        const p = document.createElement("i");
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.background = colors[i % colors.length];
+        p.style.animationDuration = 1.8 + Math.random() * 1.8 + "s";
+        p.style.animationDelay = Math.random() * .6 + "s";
+        if (p.style.background.includes("255, 255, 255")) p.style.outline = "1px solid #FFC2C7";
+        c.append(p);
+      }
+      document.body.append(c);
+      setTimeout(() => c.remove(), 4500);
+    }
+
+    // ---------- Keyboard ----------
+    document.addEventListener("keydown", e => {
+      if (busy || idx < 0 || footer.hidden) return;
+      const q = QUESTIONS[idx];
+      const tag = document.activeElement?.tagName;
+      if (e.key === "Enter" && tag !== "TEXTAREA" && !nextBtn.disabled) { e.preventDefault(); nextBtn.click(); return; }
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      const n = parseInt(e.key, 10);
+      if (q.options && n >= 1 && n <= q.options.length) main.querySelectorAll(".opt")[n - 1]?.click();
+    });
+
+    showIntro();
+  </script>
+</body>
+</html>
