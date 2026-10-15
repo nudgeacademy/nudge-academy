@@ -7,12 +7,7 @@
   <meta name="description" content="Quick student feedback questionnaire for Nudge Academy students. Takes under 2 minutes.">
   <meta name="theme-color" content="#E63946">
   <link rel="icon" href="assets/images/favicon.png">
-  <script type="importmap">
-    { "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-    } }
-  </script>
+  <link rel="preload" as="image" href="assets/images/goat-mascot.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -94,13 +89,7 @@
 
     /* Mascot + bubble */
     .mascot-row { display: flex; align-items: flex-end; gap: 6px; margin-bottom: 24px; }
-    .goat-slot { width: 150px; height: 172px; flex-shrink: 0; position: relative; }
-    .goat3d { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; outline: none; }
-    .goat3d:active { cursor: grabbing; }
-    .goat { width: 100%; animation: bob 3s ease-in-out infinite; transform-origin: 50% 100%; }
-    .goat.hop { animation: hop .5s ease; }
-    @keyframes bob { 50% { transform: translateY(-4px) rotate(-1deg); } }
-    @keyframes hop { 30% { transform: translateY(-16px) rotate(4deg); } 60% { transform: translateY(0) rotate(-3deg); } }
+    .goat-slot { width: 150px; height: 176px; flex-shrink: 0; position: relative; }
     .bubble {
       position: relative; flex: 1;
       border: 2px solid var(--line); border-radius: 16px;
@@ -208,7 +197,7 @@
 
     /* ---------- Intro / end screens ---------- */
     .center-screen { text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 4vh; }
-    .center-screen .goat-slot { width: 250px; height: 270px; margin-bottom: 4px; }
+    .center-screen .goat-slot { width: 250px; height: 294px; margin-bottom: 4px; }
     .center-screen h1 { font-size: clamp(26px, 6vw, 36px); font-weight: 900; line-height: 1.15; margin-bottom: 10px; }
     .center-screen h1 em { font-style: normal; color: var(--red); }
     .center-screen p { font-size: 17px; font-weight: 700; color: var(--muted); max-width: 420px; line-height: 1.5; }
@@ -228,25 +217,62 @@
     .confetti i { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 3px; animation: fall linear forwards; }
     @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
 
-    /* ---------- Goat SVG moods ---------- */
-    .goat .eye-happy, .goat .mouth-happy, .goat .mouth-wow { display: none; }
-    .goat.happy .eye-open, .goat.happy .mouth-idle { display: none; }
-    .goat.happy .eye-happy, .goat.happy .mouth-happy { display: inline; }
-    .goat.wow .mouth-idle { display: none; }
-    .goat.wow .mouth-wow { display: inline; }
-    .goat.wow .lid { transform: translateY(-5px); }
-    .goat .lid { transition: transform .2s; }
-    .goat .blink { animation: blink 4.5s infinite; transform-origin: center; transform-box: fill-box; }
-    @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
-    .goat .ear-l { animation: earL 5s ease-in-out infinite; transform-origin: 92px 98px; }
-    .goat .ear-r { animation: earR 5s ease-in-out infinite 1.3s; transform-origin: 148px 98px; }
-    @keyframes earL { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(-8deg); } 96% { transform: rotate(3deg); } }
-    @keyframes earR { 0%, 88%, 100% { transform: rotate(0); } 92% { transform: rotate(8deg); } 96% { transform: rotate(-3deg); } }
+    /* ---------- GOAT mascot (2D, assets/js/goat-mascot.js) ----------
+       layers: .goat2d > .goat-tilt (pointer lean) > .goat-mood (pose) > .goat-act (one-shot) > .goat-idle (breathing) */
+    .goat2d { position: relative; width: 100%; height: 100%; cursor: pointer; outline: none; -webkit-user-select: none; user-select: none; }
+    .goat2d:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 16px; }
+    .goat2d > .goat-tilt, .goat-mood, .goat-act, .goat-idle { width: 100%; height: 100%; transform-origin: 50% 100%; }
+    .goat-tilt { will-change: transform; }
+    .goat-mood { transition: transform .45s cubic-bezier(.3,1.5,.5,1), filter .45s; }
+    .goat-idle { animation: breathe 3.2s ease-in-out infinite; }
+    .goat-img {
+      width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; display: block; pointer-events: none;
+      filter: drop-shadow(0 10px 12px rgba(120, 10, 20, .22));
+      transition: filter .45s;
+    }
+    @keyframes breathe { 50% { transform: translateY(-1.5%) scale(1.01, 1.015); } }
+
+    .goat2d.mood-happy .goat-mood { transform: rotate(2deg); }
+    .goat2d.mood-hype .goat-mood { transform: scale(1.05) rotate(-2deg); }
+    .goat2d.mood-hype .goat-img { filter: drop-shadow(0 0 16px rgba(255, 160, 50, .65)) saturate(1.15); }
+    .goat2d.mood-wow .goat-mood { transform: scale(1.06); }
+    .goat2d.mood-sad .goat-mood { transform: translateY(5%) rotate(-5deg) scale(.95); }
+    .goat2d.mood-sad .goat-img { filter: drop-shadow(0 0 14px rgba(90, 140, 255, .45)) saturate(.6) brightness(.96); }
+
+    .act-hop { animation: actHop .6s cubic-bezier(.3,1.4,.5,1); }
+    .act-nod { animation: actNod .6s ease; }
+    .act-shake { animation: actShake .6s ease; }
+    .act-tilt { animation: actTilt .8s ease; }
+    .act-surprise { animation: actSurprise .7s cubic-bezier(.3,1.6,.5,1); }
+    .act-bleat { animation: actBleat .7s ease; }
+    .act-spin { animation: actSpin 1s cubic-bezier(.5,0,.3,1); }
+    .act-lean { animation: actLean .6s ease; }
+    @keyframes actHop { 35% { transform: translateY(-14%) scale(.97, 1.04); } 65% { transform: translateY(0) scale(1.04, .96); } }
+    @keyframes actNod { 30% { transform: translateY(3%) rotate(2deg); } 60% { transform: translateY(-1%) rotate(-1deg); } }
+    @keyframes actShake { 20% { transform: rotate(-6deg); } 40% { transform: rotate(5deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(2deg); } }
+    @keyframes actTilt { 40% { transform: rotate(-9deg) translateX(-3%); } }
+    @keyframes actSurprise { 30% { transform: translateY(-8%) scale(1.12); } }
+    @keyframes actBleat { 15% { transform: scale(1.06, .94); } 30% { transform: scale(.95, 1.06) rotate(-3deg); } 45% { transform: scale(1.04, .97) rotate(3deg); } 60% { transform: scale(.98, 1.02); } }
+    @keyframes actSpin { 50% { transform: perspective(600px) rotateY(180deg) translateY(-8%); } 100% { transform: perspective(600px) rotateY(360deg); } }
+    @keyframes actLean { 50% { transform: translateY(2%) scale(1.03); } }
+
+    .goat2d.dancing .goat-idle { animation: dance .55s ease-in-out infinite alternate; }
+    @keyframes dance { from { transform: rotate(-5deg) translateY(0); } to { transform: rotate(5deg) translateY(-6%); } }
+
+    .goat-fx { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+    .goat-fx span {
+      position: absolute; font-size: 22px; opacity: 0;
+      animation: floatUp 1.3s ease-out forwards;
+    }
+    @keyframes floatUp {
+      15% { opacity: 1; transform: translate(0, -10px) scale(1.2) rotate(0); }
+      100% { opacity: 0; transform: translate(var(--dx), -80px) scale(.9) rotate(var(--rot)); }
+    }
 
     @media (max-width: 480px) {
       .topbar { padding-top: 14px; }
-      .goat-slot { width: 112px; height: 130px; }
-      .center-screen .goat-slot { width: 220px; height: 240px; }
+      .goat-slot { width: 112px; height: 132px; }
+      .center-screen .goat-slot { width: 210px; height: 247px; }
       .opt .key { display: none; }
       .bubble { font-size: 15px; margin-bottom: 36px; }
       .btn-primary { flex: 1; }
@@ -262,134 +288,6 @@
 </head>
 <body>
 
-  <!-- Goat mascot template (cloned wherever needed) -->
-  <template id="goatTpl">
-    <svg class="goat" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <radialGradient id="fur" cx="50%" cy="38%" r="65%">
-          <stop offset="0" stop-color="#FFFFFF"/>
-          <stop offset=".6" stop-color="#F4EFE8"/>
-          <stop offset="1" stop-color="#D9CFC2"/>
-        </radialGradient>
-        <linearGradient id="furNeck" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#E3DACE"/><stop offset="1" stop-color="#CFC3B4"/>
-        </linearGradient>
-        <linearGradient id="horn" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0" stop-color="#CDBB9A"/><stop offset=".6" stop-color="#A8916C"/><stop offset="1" stop-color="#6F5D45"/>
-        </linearGradient>
-        <linearGradient id="hoodie" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#EF4452"/><stop offset="1" stop-color="#B5212E"/>
-        </linearGradient>
-        <linearGradient id="lens" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3a0b10"/><stop offset=".55" stop-color="#14070a"/><stop offset="1" stop-color="#E63946"/>
-        </linearGradient>
-        <radialGradient id="muzzle" cx="50%" cy="35%" r="70%">
-          <stop offset="0" stop-color="#F6E3DB"/><stop offset="1" stop-color="#DDBFB3"/>
-        </radialGradient>
-        <radialGradient id="iris" cx="45%" cy="40%" r="60%">
-          <stop offset="0" stop-color="#F7D27A"/><stop offset="1" stop-color="#C98A2E"/>
-        </radialGradient>
-      </defs>
-
-      <!-- hoodie -->
-      <path d="M22 262 C24 214 62 188 120 188 C178 188 216 214 218 262 Z" fill="url(#hoodie)"/>
-      <path d="M58 212 C62 238 66 250 68 262 M182 212 C178 238 174 250 172 262" stroke="#9E1C27" stroke-width="3" fill="none" opacity=".5"/>
-      <!-- hood collar -->
-      <path d="M70 196 C82 226 158 226 170 196 C178 206 172 222 160 230 C140 242 100 242 80 230 C68 222 62 206 70 196 Z" fill="#C92A37"/>
-      <!-- neck -->
-      <path d="M94 150 C92 176 88 196 84 212 C104 224 136 224 156 212 C152 196 148 176 146 150 Z" fill="url(#furNeck)"/>
-      <!-- drawstrings -->
-      <path d="M104 222 L100 252 M136 222 L140 252" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
-      <rect x="96" y="250" width="8" height="10" rx="3" fill="#E6E6E6"/>
-      <rect x="136" y="250" width="8" height="10" rx="3" fill="#E6E6E6"/>
-      <!-- gold chain -->
-      <path d="M92 206 Q120 236 148 206" stroke="#F2C14E" stroke-width="3.5" fill="none" stroke-dasharray="4 2.5" stroke-linecap="round"/>
-      <circle cx="120" cy="226" r="8" fill="#F2C14E" stroke="#C8962A" stroke-width="2"/>
-      <text x="120" y="230" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="10" fill="#8E5E0E">N</text>
-
-      <!-- horns -->
-      <g fill="url(#horn)">
-        <path d="M100 62 C94 34 78 16 56 12 C50 11 47 15 52 18 C68 26 80 42 86 70 Z"/>
-        <path d="M140 62 C146 34 162 16 184 12 C190 11 193 15 188 18 C172 26 160 42 154 70 Z"/>
-      </g>
-      <g stroke="#6F5D45" stroke-width="1.6" opacity=".55" fill="none" stroke-linecap="round">
-        <path d="M84 50 L94 46 M78 40 L88 34 M70 30 L78 24 M62 22 L68 18"/>
-        <path d="M156 50 L146 46 M162 40 L152 34 M170 30 L162 24 M178 22 L172 18"/>
-      </g>
-
-      <!-- ears -->
-      <g class="ear-l">
-        <ellipse cx="68" cy="104" rx="32" ry="11.5" transform="rotate(-24 68 104)" fill="url(#fur)" stroke="#D2C6B7" stroke-width="1.5"/>
-        <ellipse cx="66" cy="105" rx="22" ry="5.5" transform="rotate(-24 66 105)" fill="#EBB8B0"/>
-      </g>
-      <g class="ear-r">
-        <ellipse cx="172" cy="104" rx="32" ry="11.5" transform="rotate(24 172 104)" fill="url(#fur)" stroke="#D2C6B7" stroke-width="1.5"/>
-        <ellipse cx="174" cy="105" rx="22" ry="5.5" transform="rotate(24 174 105)" fill="#EBB8B0"/>
-        <!-- airpod -->
-        <rect x="150" y="98" width="7" height="13" rx="3.5" fill="#FFFFFF" stroke="#CFCFCF" stroke-width="1"/>
-      </g>
-
-      <!-- head -->
-      <path d="M120 46 C152 46 164 70 162 98 C160 124 150 142 144 160 C138 178 102 178 96 160 C90 142 80 124 78 98 C76 70 88 46 120 46 Z" fill="url(#fur)"/>
-      <!-- face shading -->
-      <path d="M82 104 C86 128 94 146 100 160 C94 150 86 132 82 104 Z M158 104 C154 128 146 146 140 160 C146 150 154 132 158 104 Z" fill="#CDBFAE" opacity=".6"/>
-      <path d="M120 70 C116 90 116 116 120 136 C124 116 124 90 120 70 Z" fill="#FFFFFF" opacity=".7"/>
-      <!-- forehead tuft -->
-      <path d="M104 56 C106 40 114 36 118 46 C120 34 130 34 132 46 C136 38 142 44 138 58 C128 52 114 52 104 56 Z" fill="#FBF8F3" stroke="#E2D8CB" stroke-width="1"/>
-
-      <!-- sunglasses pushed up -->
-      <g transform="rotate(-3 120 66)">
-        <rect x="90" y="58" width="28" height="15" rx="6" fill="url(#lens)" stroke="#111" stroke-width="2"/>
-        <rect x="122" y="58" width="28" height="15" rx="6" fill="url(#lens)" stroke="#111" stroke-width="2"/>
-        <path d="M118 63 Q120 60 122 63" stroke="#111" stroke-width="2.5" fill="none"/>
-        <path d="M94 62 L102 62" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/>
-        <path d="M126 62 L134 62" stroke="#fff" stroke-width="2" opacity=".55" stroke-linecap="round"/>
-      </g>
-
-      <!-- eyes (open, chill half-lid) -->
-      <g class="eye-open">
-        <g class="blink">
-          <ellipse cx="99" cy="96" rx="10" ry="8" fill="url(#iris)" stroke="#5A4630" stroke-width="1.6"/>
-          <rect x="92" y="94" width="14" height="4.5" rx="2.2" fill="#1B1209"/>
-          <circle cx="96" cy="93" r="2" fill="#fff"/>
-          <ellipse cx="141" cy="96" rx="10" ry="8" fill="url(#iris)" stroke="#5A4630" stroke-width="1.6"/>
-          <rect x="134" y="94" width="14" height="4.5" rx="2.2" fill="#1B1209"/>
-          <circle cx="138" cy="93" r="2" fill="#fff"/>
-        </g>
-        <g class="lid" fill="#EFE8DE" stroke="#8C7A66" stroke-width="1.6">
-          <path d="M88 95 C90 85 108 85 110 95 C104 92 94 92 88 95 Z"/>
-          <path d="M130 95 C132 85 150 85 152 95 C146 92 136 92 130 95 Z"/>
-        </g>
-      </g>
-      <!-- eyes (happy ^ ^) -->
-      <g class="eye-happy" stroke="#3B2E22" stroke-width="3.5" fill="none" stroke-linecap="round">
-        <path d="M90 98 Q99 86 108 98"/>
-        <path d="M132 98 Q141 86 150 98"/>
-      </g>
-
-      <!-- cheeks -->
-      <ellipse cx="92" cy="118" rx="8" ry="4.5" fill="#F29C9C" opacity=".35"/>
-      <ellipse cx="148" cy="118" rx="8" ry="4.5" fill="#F29C9C" opacity=".35"/>
-
-      <!-- muzzle -->
-      <ellipse cx="120" cy="148" rx="24" ry="18" fill="url(#muzzle)"/>
-      <path d="M110 140 C108 144 110 147 113 146" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      <path d="M130 140 C132 144 130 147 127 146" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      <path d="M120 147 L120 154" stroke="#B48C80" stroke-width="1.6"/>
-
-      <!-- mouths -->
-      <path class="mouth-idle" d="M108 156 Q118 162 133 154" stroke="#6B4B43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      <g class="mouth-happy">
-        <path d="M106 155 Q120 174 134 155 Z" fill="#7A2430" stroke="#6B4B43" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M113 163 Q120 170 127 163 Q120 160 113 163 Z" fill="#F2777F"/>
-      </g>
-      <ellipse class="mouth-wow" cx="120" cy="160" rx="6" ry="7" fill="#7A2430" stroke="#6B4B43" stroke-width="2"/>
-
-      <!-- beard -->
-      <path d="M106 168 C108 186 114 198 120 206 C126 198 132 186 134 168 C126 174 114 174 106 168 Z" fill="#FBF8F3" stroke="#E2D8CB" stroke-width="1"/>
-      <path d="M114 178 L117 196 M120 176 L120 200 M126 178 L123 196" stroke="#E2D8CB" stroke-width="1.2"/>
-    </svg>
-  </template>
 
   <header class="topbar" id="topbar" hidden>
     <button class="icon-btn" id="backBtn" aria-label="Previous question">
@@ -416,6 +314,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     import { firebaseConfig, COLLECTION, QUESTIONS } from "./assets/js/student-feedback-questions.js";
+    import { GoatMascot } from "./assets/js/goat-mascot.js";
 
     let db = null;
     try {
@@ -437,42 +336,23 @@
     const answers = {};
     let idx = -1, xp = 0, busy = false, history = [];
 
-    const goatSvg = () => $("goatTpl").content.firstElementChild.cloneNode(true);
     const isAsked = q => !q.cond || q.cond(answers);
     const askedList = () => QUESTIONS.filter(isAsked);
 
-    // ---------- Mascot: 3D goat (Three.js), flat SVG until it loads or if WebGL is missing ----------
-    let goat3d = null;
-    import("./assets/js/goat3d.js").then(m => {
-      if (!m.webglAvailable()) return;
-      goat3d = new m.Goat3D({ onSpeak: say });
-      goat3d.setMood(main.querySelector(".goat.happy") ? "happy" : "chill");
-      const slot = main.querySelector(".goat-slot");
-      if (slot) { slot.innerHTML = ""; goat3d.mount(slot); }
-    }).catch(err => console.warn("3D goat unavailable, using SVG.", err));
+    // ---------- Mascot: official GOAT artwork, animated in 2D ----------
+    const mascotGoat = new GoatMascot({ src: "assets/images/goat-mascot.webp", onSpeak: say });
 
     function mascot() {
       const slot = document.createElement("div");
       slot.className = "goat-slot";
-      if (goat3d) goat3d.mount(slot);
-      else slot.append(goatSvg());
+      slot.append(mascotGoat.create());
       return slot;
     }
 
     // mood: chill | happy | hype | wow | sad    action: hop | nod | shake | tilt | surprise | bleat | spin | lean
     function goat(mood, action) {
-      if (goat3d) {
-        if (mood) goat3d.setMood(mood);
-        if (action) goat3d.react(action);
-        return;
-      }
-      const g = main.querySelector(".goat");
-      if (!g) return;
-      g.classList.remove("happy", "wow", "hop");
-      void g.offsetWidth;
-      const cls = { happy: "happy", hype: "happy", wow: "wow", sad: "", chill: "" }[mood];
-      if (cls) g.classList.add(cls);
-      if (action === "hop" || action === "spin") g.classList.add("hop");
+      if (mood) mascotGoat.setMood(mood);
+      if (action) mascotGoat.react(action);
     }
 
     function say(text) {
@@ -505,13 +385,13 @@
         s.className = "screen center-screen";
         s.append(mascot());
         s.insertAdjacentHTML("beforeend", `
-          <div class="bubble intro-bubble">Yo! Tap me or drag to spin 👆</div>
+          <div class="bubble intro-bubble">Yo! Tap me 👆</div>
           <h1>Vibe check with the <em>GOAT</em> 🐐</h1>
           <p>Ninte course experience-um background-um ariyaan kurach quick questions. Mostly tap cheythaal mathi, type cheyyaan valare kuravaanu.</p>
           <div class="pills"><span class="pill">⏱️ ~2 min</span><span class="pill">👆 Mostly tap</span><span class="pill">🔒 Private</span></div>`);
         return s;
       });
-      setTimeout(() => { goat("happy"); main.querySelector(".goat")?.classList.add("happy"); }, 220);
+      setTimeout(() => goat("happy"), 220);
       nextBtn.onclick = () => go(1);
     }
 
@@ -568,7 +448,7 @@
           const el = d.querySelector("input,select");
           el.value = answers[f.k] || "";
           el.addEventListener("input", () => { d.classList.remove("invalid"); refreshNext(q); goatReads(el); });
-          el.addEventListener("focus", () => goat3d?.lookAtElement(el, 4000));
+          el.addEventListener("focus", () => mascotGoat.lookAtElement(el, 4000));
           wrap.append(d);
         });
         s.append(wrap);
@@ -578,7 +458,7 @@
         const t = document.createElement("textarea");
         t.id = "f_text"; t.placeholder = q.ph || ""; t.value = answers[q.id] || "";
         t.addEventListener("input", () => { refreshNext(q); goatReads(t); });
-        t.addEventListener("focus", () => goat3d?.lookAtElement(t, 4000));
+        t.addEventListener("focus", () => mascotGoat.lookAtElement(t, 4000));
         s.append(t);
       }
       return s;
@@ -587,7 +467,7 @@
     // Goat nods along while the student types
     let lastNod = 0;
     function goatReads(el) {
-      goat3d?.lookAtElement(el, 2500);
+      mascotGoat.lookAtElement(el, 2500);
       if (Date.now() - lastNod > 1400) { lastNod = Date.now(); goat(null, "nod"); }
     }
 
@@ -608,11 +488,11 @@
       const sel = q.type === "single" ? [answers[q.id]] : answers[q.id];
       wrap.querySelectorAll(".opt").forEach(b => b.classList.toggle("selected", sel.includes(b.dataset.v)));
       const btn = wrap.querySelector(`[data-v="${o.v}"]`);
-      goat3d?.lookAtElement(btn);
+      mascotGoat.lookAtElement(btn);
       const on = btn.classList.contains("selected");
       if (on && o.r === "hype") goat("hype", "hop");
       else if (on && o.r === "sad") goat("sad", "tilt");
-      else goat(goat3d ? "chill" : "wow", on ? "nod" : "tilt");
+      else goat("chill", on ? "nod" : "tilt");
       if (on && o.say) say(o.say);
       refreshNext(q);
     }
@@ -768,8 +648,7 @@
       });
       setTimeout(() => {
         goat("happy", "spin");
-        goat3d?.dance(true);
-        main.querySelector(".goat")?.classList.add("happy");
+        mascotGoat.dance(true);
         confetti();
       }, 260);
     }
